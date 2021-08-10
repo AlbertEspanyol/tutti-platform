@@ -1886,6 +1886,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "app"
 });
@@ -20185,7 +20188,11 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", { staticClass: "success" }, [_vm._v("\n        xd\n    ")]),
       _vm._v(" "),
-      _c("a", [_vm._v("\n        link\n    ")])
+      _c("a", [_vm._v("\n        link\n    ")]),
+      _vm._v(" "),
+      _c("button", { staticClass: "maxPriority" }, [
+        _vm._v("\n        xd\n    ")
+      ])
     ])
   }
 ]

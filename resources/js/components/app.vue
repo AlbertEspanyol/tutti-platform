@@ -36,6 +36,9 @@
         <a>
             link
         </a>
+        <button class="maxPriority">
+            xd
+        </button>
     </div>
 </template>
 
