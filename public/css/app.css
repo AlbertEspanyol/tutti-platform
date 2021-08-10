@@ -152,10 +152,6 @@ a{
     color: var( --info);
 }
 
-/****** Buttons ******/
-button.maxPriority{
-
-}
 
 /****** Inputs *******/
 
@@ -177,9 +173,24 @@ input[type="text" i]:focus-visible{
     outline: none;
 }
 
+::-moz-placeholder{
+    color: var( --tutti-grey-4);
+    font-weight: 500;
+    font-size: var( --text-base);
+    letter-spacing: 0.02em;
+}
+
+:-ms-input-placeholder{
+    color: var( --tutti-grey-4);
+    font-weight: 500;
+    font-size: var( --text-base);
+    letter-spacing: 0.02em;
+}
+
 ::placeholder{
     color: var( --tutti-grey-4);
     font-weight: 500;
     font-size: var( --text-base);
     letter-spacing: 0.02em;
 }
+
