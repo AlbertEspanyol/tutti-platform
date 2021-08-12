@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use ProjWeb2\JUNY20\Model\User;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;

@@ -10,18 +10,27 @@
 </head>
 <body>
 
-<h1>The input element</h1>
+<h1>Register</h1>
 
-<form action="/action_page.php">
-    <label for="fname">First name:</label>
+<button type="button" value="Login" onclick="window.location='{{ url("login") }}'">Login</button>
+
+<form>
+    <label for="fname">Full name:</label>
     <input type="text" id="fname" name="fname"><br><br>
-    <label for="lname">Last name:</label>
-    <input type="text" id="lname" name="lname"><br><br>
-    <input type="submit" value="Submit">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+    <label for="password1">Password:</label>
+    <input type="password" id="password1" name="password1"><br><br>
+    <label for="password2">Repeat Password:</label>
+    <input type="password" id="password2" name="password2"><br><br>
+    <label for="birthday">Birthday:</label>
+    <input type="date" id="birthday" name="birthday"><br><br>
+    <input type="checkbox" value="termsOfService">
+    <label for="checkbox">I agree to all the stetements in Terms Of Service</label><br><br>
+    <input type="submit" value="Register">
 </form>
 
-<p>Click the "Submit" button and the form-data will be sent to a page on the
-    server called "action_page.php".</p>
+<p>Already a member? Log in</p>
 
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
