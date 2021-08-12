@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,14 @@ use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('home');
 });
+
+/*
+Route::get('/register', function () {
+    return view('register');
+});
+*/
+
+Route::get('/register', [RegisterController::class, 'showRegister']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
