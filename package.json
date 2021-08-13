@@ -19,6 +19,14 @@
     },
     "dependencies": {
         "@mdi/font": "^5.9.55",
-        "vue": "^2.6.14"
+        "browser-sync": "^2.27.5",
+        "browser-sync-webpack-plugin": "^2.3.0",
+        "luxon": "^2.0.2",
+        "v-calendar": "^2.3.2",
+        "vue": "^2.6.14",
+        "vue-datetime": "^1.0.0-beta.14",
+        "vue-flatpickr-component": "^9.0.4",
+        "vuejs-datepicker": "^1.6.2",
+        "weekstart": "^1.1.0"
     }
 }

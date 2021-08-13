@@ -42,6 +42,7 @@
     --margin-tiny: 4px;
     --margin-small: 8px;
     --margin-regular: 16px;
+    --margin-half: 24px;
     --margin-medium: 32px;
     --margin-big: 48px;
     --margin-large: 64px;
@@ -65,37 +66,51 @@
     src: url("/assets/fonts/cunia/Cunia.otf");
 }
 
+*, *:after, *:before {
+    box-sizing: border-box;
+}
+
+#app{
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: auto;
+    -moz-column-gap: 1.39%;
+         column-gap: 1.39%;
+    margin: 0 8.9%;
+}
+
 body{
     background: var(--tutti-black);
     margin: 0;
+    overflow: auto;
 }
 
 /****** Tipografía *****/
-
 h1 {
     font-family: Cunia, sans-serif;
     font-size: var( --text-display);
-    margin: 0 16px;
+    margin: 0;
 }
 
 h2 {
     font-size: var( --text-huge);
     font-weight: 900;
-    margin: 0 16px;
+    letter-spacing: 0.05em;
+    margin: 0;
 }
 
 h3 {
     font-size: var( --text-larger);
     font-weight: 900;
     letter-spacing: 0.1em;
-    margin: 0 16px;
+    margin: 0;
 }
 
 h4 {
     font-size: var( --text-large);
     font-weight: 600;
     letter-spacing: 0.07em;
-    margin: 0 16px;
+    margin: 0;
 }
 
 h5 {
@@ -103,13 +118,13 @@ h5 {
     color: var( --tutti-grey-4);
     font-weight: 700;
     letter-spacing: 0.05em;
-    margin: 0 16px;
+    margin: 0;
 }
 
 label {
     font-size: var( --text-tiny);
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.2em;
     margin-bottom: 6px;
 }
 
@@ -152,25 +167,203 @@ a{
     color: var( --info);
 }
 
+/****** Buttons ******/
+
+button{
+    font-family: Rota, sans-serif;
+}
+
+button:focus-visible{
+    outline: none;
+}
+
+/* Max priority */
+
+button.maxPriority{
+    background: url("/assets/images/SquareGradient.png") no-repeat 80% 70%;
+    font-size: var( --text-larger)  ;
+    font-weight: 1000;
+    cursor: pointer;
+    border: none;
+    border-radius: 100px;
+    padding: 0.85em 2em 0.65em 2em;
+    color: var(--tutti-white);
+    text-align: center;
+}
+
+button.maxPriority:hover{
+    border: 6px solid rgba(1,1,1,0.5);
+    margin: -6px;
+    opacity: 85%;
+}
+
+button.maxPriority:active{
+    opacity: 50%;
+}
+
+button.maxPriority.disabled{
+    opacity: 30%;
+    filter: saturate(0);
+}
+
+button.maxPriority.disabled{
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+button.maxPriority.disabled:hover{
+    border: none;
+    margin: 0;
+}
+
+button.maxPriority.disabled:active{
+}
+
+/* Standard Priority */
+
+button.standardPriority{
+    background: var( --tutti-white);
+    font-size: var( --text-large)  ;
+    font-weight: 1000;
+    cursor: pointer;
+    border: none;
+    border-radius: 100px;
+    padding: 0.75em 1.7em 0.55em 1.7em;
+    color: var(--tutti-black);
+    text-align: center;
+}
+
+button.standardPriority:hover{
+    border: 6px solid rgba(1,1,1,0.5);
+    margin: -6px;
+    opacity: 85%;
+}
+
+button.standardPriority:active{
+    opacity: 50%;
+}
+
+button.standardPriority.disabled{
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+button.standardPriority.disabled:hover{
+    border: none;
+    margin: 0;
+}
+
+button.standardPriority.disabled:active{
+}
+
+/* Low priority */
+
+button.lowPriority{
+    background: transparent;
+    font-size: var( --text-medium);
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    height: 36px;
+    cursor: pointer;
+    border: 2px solid var( --tutti-grey-4);
+    border-radius: 100px;
+    padding: 0.14em 1.43em 0 1.43em;
+    color: var(--tutti-grey-4);
+    text-align: center;
+}
+
+button.lowPriority:hover{
+    background: rgba(255,255,255,0.15);
+}
+
+button.lowPriority.disabled{
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+button.lowPriority.disabled:hover{
+    background: transparent;
+}
+
+/* Min priority */
+
+button.minPriority{
+    background: none;
+    font-size: var( --text-medium)  ;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    color: var(--tutti-white);
+}
+
+button.minPriority:hover{
+    text-decoration: underline;
+}
+
+button.minPriority:active{
+    opacity: 50%;
+}
+
+button.minPriority.disabled{
+    opacity: 50%;
+    cursor: not-allowed;
+}
+
+button.minPriority.disabled:hover{
+    text-decoration: none;
+}
+
+button.minPriority.disabled:active{
+}
+
 
 /****** Inputs *******/
 
-input[type="text" i]{
+input{
     caret-shape: bar;
     caret-color: var( --tutti-black);
     background: var( --tutti-white);
     border: none;
     border-radius: 7px;
-    height: 32px;
+    width: 100%;
+    height: var(--icon-big);
     font-family: Rota, sans-serif;
     font-size: var( --text-base);
     font-weight: 600;
     letter-spacing: 0.02em;
     color: var( --tutti-black);
+    padding: 0 var(--icon-small);
 }
 
-input[type="text" i]:focus-visible{
+input:focus-visible{
     outline: none;
+}
+
+input:focus{
+     border: 6px solid rgba(248,247,255,0.3);
+     margin: -6px;
+     border-radius: 13px;
+     height: calc(var(--icon-big) + 12px);
+     width: calc(100% + 12px);
+     background-clip: padding-box;
+     -webkit-background-clip: padding-box;
+ }
+
+input:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+input[type="search" i]::-webkit-search-cancel-button{
+    -webkit-appearance: none;
+    background: url("/assets/icons/close.svg");
+    height: var(--icon-small);
+    width: var(--icon-small);
+    cursor: pointer;
+}
+
+input[type="password" i]{
+    font-size: var(--text-larger);
 }
 
 ::-moz-placeholder{
@@ -192,5 +385,175 @@ input[type="text" i]:focus-visible{
     font-weight: 500;
     font-size: var( --text-base);
     letter-spacing: 0.02em;
+}
+
+/* Checkbox */
+input[type="checkbox" i]{
+    border-radius: 4px;
+    border: 2pt solid var(--tutti-white);
+    height: var(--icon-regular);
+    width: var(--icon-regular);
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    cursor: pointer;
+    margin: 0 var(--margin-small) 0 0;
+    caret-color: transparent;
+    background: transparent;
+    font-family: Rota, sans-serif;
+    letter-spacing: 0;
+    color: var( --tutti-black);
+    padding: 0;
+}
+
+input[type="checkbox" i]:hover{
+    background: rgba(248,247,255, 0.3);
+    transition: 20ms;
+}
+
+input[type="checkbox" i]:focus{
+    margin: 0 var(--margin-small) 0 0;
+}
+
+input[type="checkbox" i]:checked{
+    background: url("/assets/icons/check.svg") no-repeat center var( --tutti-white);
+    background-size: 14px;
+    transition: 20ms;
+}
+
+input[type="checkbox" i]:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+input[type="checkbox" i]:disabled:hover{
+    background: none;
+}
+
+
+/* Radio */
+input[type="radio" i]{
+    border-radius: 100%;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    cursor: pointer;
+    border: 3px solid var(--tutti-white);
+    height: var(--icon-regular);
+    width: var(--icon-regular);
+    margin: 0 var(--margin-small) 0 0;
+    caret-color: transparent;
+    background: transparent;
+    font-family: Rota, sans-serif;
+    letter-spacing: 0;
+    color: var( --tutti-black);
+    padding: 0;
+}
+
+input[type="radio" i]:hover{
+    background: rgba(248,247,255, 0.3);
+    transition: 20ms;
+}
+
+input[type="radio" i]:focus{
+    margin: 0 var(--margin-small) 0 0;
+}
+
+input[type="radio" i]:checked{
+    background: url("/assets/icons/radioFill.svg") no-repeat center var( --tutti-white);
+    background-size: 4px;
+    transition: 20ms;
+}
+
+input[type="radio" i]:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+input[type="radio" i]:disabled:hover{
+    background: none;
+}
+
+/* Select */
+select{
+    background: url("/assets/icons/DownArrow.svg") no-repeat right var( --tutti-white);
+    background-size: 1.5em;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+         appearance: none;
+    border: none;
+    border-radius: 7px;
+    height: var(--icon-big);
+    width: 100%;
+    font-family: Rota, sans-serif;
+    font-size: var( --text-base);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var( --tutti-black);
+    padding: 0 var(--icon-small);
+    line-height: 0.8em;
+}
+
+select:focus-visible{
+    outline: none;
+}
+
+select:focus{
+    border: 6px solid rgba(248,247,255,0.3);
+    margin: -6px;
+    border-radius: 13px;
+    height: calc(var(--icon-big) + 12px);
+    width: calc(100% + 12px);
+    background-clip: padding-box;
+}
+
+select:disabled{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.vdp-datepicker__calendar{
+    position: absolute;
+    z-index: 100;
+    border-radius: 8px;
+    width: 300px;
+    font-family: Rota,sans-serif;
+    font-weight: 500;
+    color: var(--tutti-black);
+    cursor: pointer;
+}
+
+.login{
+    background: url("/assets/images/backgrounds/Spaceship_1.svg") no-repeat var(--tutti-black);
+    background-size: cover;
+}
+
+/****** Footer ********/
+footer{
+    width: 100%;
+    height: 316px;
+    background-color: var(--tutti-grey-2);
+}
+
+/****** ScrollBar *******/
+::-webkit-scrollbar {
+    width: 10px;
+    padding: 8px;
+    background: rgba(12,12,12,0.2);
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(12,12,12,0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(138, 137, 140, 0.3);
+    border-radius: 10px;
+    border: 2px var(--tutti-grey-4);
+    background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(138, 137, 140, 0.3);
 }
 

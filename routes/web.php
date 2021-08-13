@@ -18,5 +18,11 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/access', function () {
+    return view('access');
+});
+
+Route::get('/register', function () {
+    return view('access');
+});
 
