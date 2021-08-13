@@ -1,7 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +20,15 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/access', function () {
-    return view('access');
-});
-
+/*
 Route::get('/register', function () {
-    return view('access');
+    return view('register');
 });
+*/
+
+Route::get('/login', [LoginController::class, 'showLogin']);
+
+Route::get('/register', [RegisterController::class, 'showRegister']);
+
+Route::get('/home', [HomeController::class, 'index']);
 
