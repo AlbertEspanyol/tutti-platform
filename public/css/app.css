@@ -48,15 +48,78 @@
     --margin-large: 64px;
     --margin-huge: 128px;
 
-    font-family: Rota, sans-serif;
+    font-family: "Tutti-Rota", sans-serif;
     color: var( --tutti-white);
 }
 
 @font-face {
-    font-family: Rota;
-    font-style: auto;
-    font-weight: auto;
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 200;
+    src: url("/assets/fonts/rota/Rota-Thin.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 200;
+    src: url("/assets/fonts/rota/Rota-ExtraLight.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 300;
+    src: url("/assets/fonts/rota/Rota-Light.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/assets/fonts/rota/Rota-Regular.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 500;
     src: url("/assets/fonts/rota/Rota-Medium.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 600;
+    src: url("/assets/fonts/rota/Rota-SemiBold.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 700;
+    src: url("/assets/fonts/rota/Rota-Bold.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 800;
+    src: url("/assets/fonts/rota/Rota-ExtraBold.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 900;
+    src: url("/assets/fonts/rota/Rota-Black.otf");
+}
+
+@font-face {
+    font-family: "Tutti-Rota";
+    font-style: normal;
+    font-weight: 1000;
+    src: url("/assets/fonts/rota/Rota-ExtraBlack.otf");
 }
 
 @font-face {
@@ -95,7 +158,7 @@ h1 {
 h2 {
     font-size: var( --text-huge);
     font-weight: 900;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     margin: 0;
 }
 
@@ -123,7 +186,7 @@ h5 {
 
 label {
     font-size: var( --text-tiny);
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.2em;
     margin-bottom: 6px;
 }
@@ -132,6 +195,7 @@ p {
     font-size: var( --text-base);
     font-weight: 500;
     letter-spacing: 0.05em;
+    margin: 0;
 }
 
 p.little{
@@ -170,7 +234,7 @@ a{
 /****** Buttons ******/
 
 button{
-    font-family: Rota, sans-serif;
+    font-family: "Tutti-Rota", sans-serif;
 }
 
 button:focus-visible{
@@ -178,7 +242,6 @@ button:focus-visible{
 }
 
 /* Max priority */
-
 button.maxPriority{
     background: url("/assets/images/SquareGradient.png") no-repeat 80% 70%;
     font-size: var( --text-larger)  ;
@@ -267,7 +330,7 @@ button.lowPriority{
     cursor: pointer;
     border: 2px solid var( --tutti-grey-4);
     border-radius: 100px;
-    padding: 0.14em 1.43em 0 1.43em;
+    padding: 0.3em 1.43em 0.1em 1.43em;
     color: var(--tutti-grey-4);
     text-align: center;
 }

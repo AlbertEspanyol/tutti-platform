@@ -82,7 +82,7 @@
         </select>
         <input type="search">
         <div class="date-container">
-            <datepicker v-model="date"></datepicker>
+            <!-- <datepicker v-model="date"></datepicker> -->
             <img class="date-input-icon" src="storage/assets/icons/calendar.svg" alt="calendar">
         </div>
     </div>
@@ -90,7 +90,7 @@
 
 <script>
 import toggle from "./inputs/toggle";
-import Datepicker from 'vuejs-datepicker'
+//import Datepicker from 'vuejs-datepicker'
 
 export default {
     name: "app",
@@ -101,13 +101,12 @@ export default {
         }
     },
     components: {
-        toggle,
-        Datepicker
+        toggle
     }
 }
 </script>
 
-<style scoped>
+<style>
 .date-container{
     position: relative;
     width: 200px;

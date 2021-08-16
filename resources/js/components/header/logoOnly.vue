@@ -1,6 +1,6 @@
 <template>
     <div class="logo-container">
-        <img class="logo" src="storage/assets/logo/text/Logo_text_svg.svg" alt="logo_noText">
+        <img class="logo" src="/storage/assets/logo/text/Logo_text_svg.svg" alt="logo_noText">
     </div>
 </template>
 

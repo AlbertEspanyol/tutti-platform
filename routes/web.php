@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
@@ -25,6 +26,8 @@ Route::get('/register', function () {
     return view('register');
 });
 */
+
+Route::get('/access', [AccessController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 

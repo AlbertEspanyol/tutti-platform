@@ -6,12 +6,12 @@
 
     <title>Tutti</title>
 
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body class="login">
 <div id="app">
     <logo-only></logo-only>
-    <acess-card></acess-card>
+    <acess-card mode="login"></acess-card>
 </div>
 <footer></footer>
 </body>
