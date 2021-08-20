@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class AccessController extends Controller
 {
@@ -34,11 +35,13 @@ class AccessController extends Controller
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return Application|Factory|View|Response
      */
     public function store(Request $request)
     {
-        //
+        $results = DB::select('select * from users', array(1));
+        echo "<script>console.debug( \"hello\" );</script>";
+        return view('access');
     }
 
     /**

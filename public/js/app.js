@@ -1,6 +1,166 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/@d_hristov/get-value/dist/index.esm.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@d_hristov/get-value/dist/index.esm.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var isobject__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! isobject */ "./node_modules/@d_hristov/get-value/node_modules/isobject/index.js");
+
+
+/*!
+ * get-value <https://github.com/jonschlinkert/get-value>
+ *
+ * Copyright (c) 2014-2018, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+
+var getValue = function (target, path, options) {
+  if (!(0,isobject__WEBPACK_IMPORTED_MODULE_0__.default)(options)) {
+    options = {
+      "default": options
+    };
+  }
+
+  if (!isValidObject(target)) {
+    return typeof options["default"] !== 'undefined' ? options["default"] : target;
+  }
+
+  if (typeof path === 'number') {
+    path = String(path);
+  }
+
+  var isArray = Array.isArray(path);
+  var isString = typeof path === 'string';
+  var splitChar = options.separator || '.';
+  var joinChar = options.joinChar || (typeof splitChar === 'string' ? splitChar : '.');
+
+  if (!isString && !isArray) {
+    return target;
+  }
+
+  if (isString && path in target) {
+    return isValid(path, target, options) ? target[path] : options["default"];
+  }
+
+  var segs = isArray ? path : split(path, splitChar, options);
+  var len = segs.length;
+  var idx = 0;
+
+  do {
+    var prop = segs[idx];
+
+    if (typeof prop === 'number') {
+      prop = String(prop);
+    }
+
+    while (prop && prop.slice(-1) === '\\') {
+      prop = join([prop.slice(0, -1), segs[++idx] || ''], joinChar, options);
+    }
+
+    if (prop in target) {
+      if (!isValid(prop, target, options)) {
+        return options["default"];
+      }
+
+      target = target[prop];
+    } else {
+      var hasProp = false;
+      var n = idx + 1;
+
+      while (n < len) {
+        prop = join([prop, segs[n++]], joinChar, options);
+
+        if (hasProp = prop in target) {
+          if (!isValid(prop, target, options)) {
+            return options["default"];
+          }
+
+          target = target[prop];
+          idx = n - 1;
+          break;
+        }
+      }
+
+      if (!hasProp) {
+        return options["default"];
+      }
+    }
+  } while (++idx < len && isValidObject(target));
+
+  if (idx === len) {
+    return target;
+  }
+
+  return options["default"];
+};
+
+function join(segs, joinChar, options) {
+  if (typeof options.join === 'function') {
+    return options.join(segs);
+  }
+
+  return segs[0] + joinChar + segs[1];
+}
+
+function split(path, splitChar, options) {
+  if (typeof options.split === 'function') {
+    return options.split(path);
+  }
+
+  return path.split(splitChar);
+}
+
+function isValid(key, target, options) {
+  if (typeof options.isValid === 'function') {
+    return options.isValid(key, target);
+  }
+
+  return true;
+}
+
+function isValidObject(val) {
+  return (0,isobject__WEBPACK_IMPORTED_MODULE_0__.default)(val) || Array.isArray(val) || typeof val === 'function';
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getValue);
+
+
+/***/ }),
+
+/***/ "./node_modules/@d_hristov/get-value/node_modules/isobject/index.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@d_hristov/get-value/node_modules/isobject/index.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isObject)
+/* harmony export */ });
+/*!
+ * isobject <https://github.com/jonschlinkert/isobject>
+ *
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
+ */
+
+function isObject(val) {
+  return val != null && typeof val === 'object' && Array.isArray(val) === false;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -1834,10 +1994,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -1848,6 +2008,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuejs-datepicker */ "./node_modules/vuejs-datepicker/dist/vuejs-datepicker.esm.js");
 /* harmony import */ var hooper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! hooper */ "./node_modules/hooper/dist/hooper.esm.js");
 /* harmony import */ var hooper_dist_hooper_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! hooper/dist/hooper.css */ "./node_modules/hooper/dist/hooper.css");
+/* harmony import */ var vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuelidate/lib/validators */ "./node_modules/vuelidate/lib/validators/index.js");
+/* harmony import */ var vue_toastification__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-toastification */ "./node_modules/vue-toastification/dist/esm/index.js");
 //
 //
 //
@@ -1947,11 +2109,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 var REGISTER = 'register';
 var LOGIN = 'login';
+var REQUIRED_ERROR = " is required";
+var MAIL_ERROR = "Email format is not correct";
+var PASSWORD_ERROR = "Password must have more than 6 characters";
+
+var isSelected = function isSelected(value) {
+  return value === true;
+};
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "acessCard",
   props: {
@@ -1961,22 +2149,79 @@ var LOGIN = 'login';
   },
   data: function data() {
     return {
-      date: null,
-      regPassword: {
-        first: {
+      modeSelector: this.mode,
+      register: {
+        name: "",
+        mail: "",
+        password: {
+          first: {
+            text: "",
+            visible: false
+          },
+          second: {
+            text: "",
+            visible: false
+          }
+        },
+        date: null,
+        terms: false
+      },
+      login: {
+        mail: "",
+        password: {
           text: "",
           visible: false
         },
+        remember: false
+      },
+      submitted: false
+    };
+  },
+  computed: {},
+  validations: {
+    register: {
+      name: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required
+      },
+      mail: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required,
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.email
+      },
+      password: {
+        first: {
+          text: {
+            required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required,
+            minLength: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.minLength)(6)
+          }
+        },
         second: {
-          text: "",
-          visible: false
+          text: {
+            required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required,
+            sameAsPassword: (0,vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.sameAs)(function () {
+              return this.register.password.first.text;
+            })
+          }
         }
       },
-      logPassword: {
-        text: "",
-        visible: false
+      date: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required
+      },
+      terms: {
+        isSelected: isSelected
       }
-    };
+    },
+    login: {
+      mail: {
+        required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required,
+        email: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.email
+      },
+      password: {
+        text: {
+          required: vuelidate_lib_validators__WEBPACK_IMPORTED_MODULE_4__.required
+        }
+      },
+      remember: false
+    }
   },
   components: {
     Datepicker: vuejs_datepicker__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -1985,15 +2230,159 @@ var LOGIN = 'login';
   },
   methods: {
     slidePrev: function slidePrev() {
+      this.modeSelector = REGISTER;
       this.$refs.carousel.slidePrev();
+      this.submitted = false;
     },
     slideNext: function slideNext() {
+      this.modeSelector = LOGIN;
       this.$refs.carousel.slideNext();
+      this.submitted = false;
     },
     determineMode: function determineMode() {
       return this.mode === REGISTER ? 0 : 1;
+    },
+    registerNameError: function registerNameError() {
+      return this.submitted && this.$v.register.name.$error;
+    },
+    registerMailError: function registerMailError() {
+      return this.submitted && this.$v.register.mail.$error;
+    },
+    registerPassword1Error: function registerPassword1Error() {
+      return this.submitted && this.$v.register.password.first.$anyError;
+    },
+    registerPassword2Error: function registerPassword2Error() {
+      return this.submitted && this.$v.register.password.second.$anyError;
+    },
+    registerDateError: function registerDateError() {
+      return this.submitted && this.$v.register.date.$error;
+    },
+    loginMailError: function loginMailError() {
+      return this.submitted && this.$v.login.mail.$error;
+    },
+    loginPasswordError: function loginPasswordError() {
+      return this.submitted && this.$v.login.password.$anyError;
+    },
+    extractErrors: function extractErrors() {
+      var errorMsgs = [];
+
+      switch (this.modeSelector) {
+        case REGISTER:
+          if (!this.$v.register.name.required) {
+            errorMsgs.push('Name' + REQUIRED_ERROR);
+          }
+
+          if (!this.$v.register.mail.required) {
+            errorMsgs.push('Email' + REQUIRED_ERROR);
+          } else if (!this.$v.register.mail.email) {
+            errorMsgs.push(MAIL_ERROR);
+          }
+
+          if (this.$v.register.password.first.$anyError) {
+            if (!this.$v.register.password.first.text.required) {
+              errorMsgs.push('Password' + REQUIRED_ERROR);
+            } else if (!this.$v.register.password.first.text.minLength) {
+              errorMsgs.push(PASSWORD_ERROR);
+            }
+          } else if (this.$v.register.password.second.$anyError) {
+            if (!this.$v.register.password.second.text.required) {
+              errorMsgs.push('Password confirmation needed');
+            } else if (!this.$v.register.password.second.sameAsPassword) {
+              errorMsgs.push('Passwords do not coincide');
+            }
+          }
+
+          if (!this.$v.register.date.required) {
+            errorMsgs.push('Birthday' + REQUIRED_ERROR);
+          }
+
+          if (!this.$v.register.terms.isSelected) {
+            errorMsgs.push('Please accept the terms & conditions');
+          }
+
+          break;
+
+        case LOGIN:
+          if (!this.$v.login.mail.required) {
+            errorMsgs.push('Email' + REQUIRED_ERROR);
+          } else {
+            if (!this.$v.login.mail.email) {
+              errorMsgs.push(MAIL_ERROR);
+            }
+          }
+
+          if (!this.$v.login.password.text.required) {
+            errorMsgs.push('Password' + REQUIRED_ERROR);
+          }
+
+          break;
+      }
+
+      var errorString = "";
+      errorMsgs.forEach(function (value) {
+        errorString = errorString + value + '\n';
+      });
+      return errorString;
+    },
+    loginSubmit: function loginSubmit(e) {
+      this.submitted = true;
+
+      if (this.$v.login.$invalid) {
+        this.$toast(this.extractErrors(), {
+          type: vue_toastification__WEBPACK_IMPORTED_MODULE_3__.TYPE.ERROR,
+          position: 'top-center',
+          icon: {
+            iconClass: 'material-icons',
+            iconChildren: 'error',
+            iconTag: 'span'
+          }
+        });
+        return;
+      }
+
+      this.$refs["login-form"].submit();
+    },
+    registerSubmit: function registerSubmit(e) {
+      this.submitted = true;
+      this.$v.register.$touch();
+
+      if (this.$v.register.$invalid) {
+        this.$toast(this.extractErrors(), {
+          type: vue_toastification__WEBPACK_IMPORTED_MODULE_3__.TYPE.ERROR,
+          position: 'top-center',
+          icon: {
+            iconClass: 'material-icons',
+            iconChildren: 'error',
+            iconTag: 'span'
+          }
+        });
+        return;
+      }
+
+      this.$refs["reg-form"].submit();
     }
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: "registerStep2"
 });
 
 /***/ }),
@@ -2237,12 +2626,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _components_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/app */ "./resources/js/components/app.vue");
 /* harmony import */ var _components_header_mainHeader__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/header/mainHeader */ "./resources/js/components/header/mainHeader.vue");
 /* harmony import */ var _components_inputs_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/inputs/toggle */ "./resources/js/components/inputs/toggle.vue");
 /* harmony import */ var _components_header_logoOnly__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/header/logoOnly */ "./resources/js/components/header/logoOnly.vue");
-/* harmony import */ var _components_acess_acessCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/acess/acessCard */ "./resources/js/components/acess/acessCard.vue");
+/* harmony import */ var _components_access_accessCard__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/access/accessCard */ "./resources/js/components/access/accessCard.vue");
+/* harmony import */ var _components_access_registerStep2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/access/registerStep2 */ "./resources/js/components/access/registerStep2.vue");
+/* harmony import */ var vuelidate__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuelidate */ "./node_modules/vuelidate/lib/index.js");
+/* harmony import */ var vuelidate_error_extractor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuelidate-error-extractor */ "./node_modules/vuelidate-error-extractor/dist/vuelidate-error-extractor.esm.js");
+/* harmony import */ var vue_toastification__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-toastification */ "./node_modules/vue-toastification/dist/esm/index.js");
+/* harmony import */ var vue_toastification_dist_index_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-toastification/dist/index.css */ "./node_modules/vue-toastification/dist/index.css");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -2251,14 +2645,41 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-new vue__WEBPACK_IMPORTED_MODULE_5__.default({
+
+
+
+
+
+var options = {
+  timeout: 5000,
+  hideProgressBar: true,
+  maxToasts: 1,
+  toastClassName: "tutti-toast"
+};
+vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vue_toastification__WEBPACK_IMPORTED_MODULE_7__.default, options);
+vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vuelidate__WEBPACK_IMPORTED_MODULE_10__.default);
+vue__WEBPACK_IMPORTED_MODULE_9__.default.use(vuelidate_error_extractor__WEBPACK_IMPORTED_MODULE_6__.default, {
+  messages: {
+    required: "The {attribute} field is required"
+  },
+  attributes: {
+    email: "Email"
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_9__.default.component('formWrapper', vuelidate_error_extractor__WEBPACK_IMPORTED_MODULE_6__.templates.FormWrapper);
+vue__WEBPACK_IMPORTED_MODULE_9__.default.component('formSummary', vuelidate_error_extractor__WEBPACK_IMPORTED_MODULE_6__.templates.multiErrorExtractor.foundation6);
+new vue__WEBPACK_IMPORTED_MODULE_9__.default({
   el: '#app',
   components: {
     App: _components_app__WEBPACK_IMPORTED_MODULE_0__.default,
     mainHeader: _components_header_mainHeader__WEBPACK_IMPORTED_MODULE_1__.default,
     Switch: _components_inputs_toggle__WEBPACK_IMPORTED_MODULE_2__.default,
     logoOnly: _components_header_logoOnly__WEBPACK_IMPORTED_MODULE_3__.default,
-    acessCard: _components_acess_acessCard__WEBPACK_IMPORTED_MODULE_4__.default
+    accessCard: _components_access_accessCard__WEBPACK_IMPORTED_MODULE_4__.default,
+    registerStep2: _components_access_registerStep2__WEBPACK_IMPORTED_MODULE_5__.default,
+    Toast: vue_toastification__WEBPACK_IMPORTED_MODULE_7__.default,
+    Vuelidate: vuelidate__WEBPACK_IMPORTED_MODULE_10__.default,
+    VuelidateErrorExtractor: vuelidate_error_extractor__WEBPACK_IMPORTED_MODULE_6__.default
   }
 });
 
@@ -2319,10 +2740,34 @@ ___CSS_LOADER_EXPORT___.push([module.id, ".hooper-slide {\n  flex-shrink: 0;\n  
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-toastification/dist/index.css":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-toastification/dist/index.css ***!
+  \****************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".Vue-Toastification__container {\n  z-index: 9999;\n  position: fixed;\n  padding: 4px;\n  width: 600px;\n  box-sizing: border-box;\n  display: flex;\n  min-height: 100%;\n  color: #fff;\n  flex-direction: column;\n  pointer-events: none;\n}\n@media only screen and (min-width : 600px) {\n  .Vue-Toastification__container.top-left, .Vue-Toastification__container.top-right, .Vue-Toastification__container.top-center {\n    top: 1em;\n  }\n  .Vue-Toastification__container.bottom-left, .Vue-Toastification__container.bottom-right, .Vue-Toastification__container.bottom-center {\n    bottom: 1em;\n    flex-direction: column-reverse;\n  }\n  .Vue-Toastification__container.top-left, .Vue-Toastification__container.bottom-left {\n    left: 1em;\n  }\n  .Vue-Toastification__container.top-left .Vue-Toastification__toast, .Vue-Toastification__container.bottom-left .Vue-Toastification__toast {\n    margin-right: auto;\n  }\n  .Vue-Toastification__container.top-left .Vue-Toastification__toast--rtl, .Vue-Toastification__container.bottom-left .Vue-Toastification__toast--rtl {\n    margin-right: unset;\n    margin-left: auto;\n  }\n  .Vue-Toastification__container.top-right, .Vue-Toastification__container.bottom-right {\n    right: 1em;\n  }\n  .Vue-Toastification__container.top-right .Vue-Toastification__toast, .Vue-Toastification__container.bottom-right .Vue-Toastification__toast {\n    margin-left: auto;\n  }\n  .Vue-Toastification__container.top-right .Vue-Toastification__toast--rtl, .Vue-Toastification__container.bottom-right .Vue-Toastification__toast--rtl {\n    margin-left: unset;\n    margin-right: auto;\n  }\n  .Vue-Toastification__container.top-center, .Vue-Toastification__container.bottom-center {\n    left: 50%;\n    margin-left: -300px;\n  }\n  .Vue-Toastification__container.top-center .Vue-Toastification__toast, .Vue-Toastification__container.bottom-center .Vue-Toastification__toast {\n    margin-left: auto;\n    margin-right: auto;\n  }\n}\n@media only screen and (max-width : 600px) {\n  .Vue-Toastification__container {\n    width: 100vw;\n    padding: 0;\n    left: 0;\n    margin: 0;\n  }\n  .Vue-Toastification__container .Vue-Toastification__toast {\n    width: 100%;\n  }\n  .Vue-Toastification__container.top-left, .Vue-Toastification__container.top-right, .Vue-Toastification__container.top-center {\n    top: 0;\n  }\n  .Vue-Toastification__container.bottom-left, .Vue-Toastification__container.bottom-right, .Vue-Toastification__container.bottom-center {\n    bottom: 0;\n    flex-direction: column-reverse;\n  }\n}\n\n.Vue-Toastification__toast {\n  display: inline-flex;\n  position: relative;\n  max-height: 800px;\n  min-height: 64px;\n  box-sizing: border-box;\n  margin-bottom: 1rem;\n  padding: 22px 24px;\n  border-radius: 8px;\n  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);\n  justify-content: space-between;\n  font-family: \"Lato\", Helvetica, \"Roboto\", Arial, sans-serif;\n  max-width: 600px;\n  min-width: 326px;\n  pointer-events: auto;\n  overflow: hidden;\n  transform: translateZ(0);\n  direction: ltr;\n}\n.Vue-Toastification__toast--rtl {\n  direction: rtl;\n}\n.Vue-Toastification__toast--default {\n  background-color: #1976d2;\n  color: #fff;\n}\n.Vue-Toastification__toast--info {\n  background-color: #2196f3;\n  color: #fff;\n}\n.Vue-Toastification__toast--success {\n  background-color: #4caf50;\n  color: #fff;\n}\n.Vue-Toastification__toast--error {\n  background-color: #ff5252;\n  color: #fff;\n}\n.Vue-Toastification__toast--warning {\n  background-color: #ffc107;\n  color: #fff;\n}\n@media only screen and (max-width : 600px) {\n  .Vue-Toastification__toast {\n    border-radius: 0px;\n    margin-bottom: 0.5rem;\n  }\n}\n.Vue-Toastification__toast-body {\n  flex: 1;\n  line-height: 24px;\n  font-size: 16px;\n  word-break: break-word;\n  white-space: pre-wrap;\n}\n.Vue-Toastification__toast-component-body {\n  flex: 1;\n}\n.Vue-Toastification__toast.disable-transition {\n  transition: none !important;\n  -webkit-animation: none !important;\n          animation: none !important;\n}\n\n.Vue-Toastification__close-button {\n  font-weight: bold;\n  font-size: 24px;\n  line-height: 24px;\n  background: transparent;\n  outline: none;\n  border: none;\n  padding: 0;\n  padding-left: 10px;\n  cursor: pointer;\n  transition: 0.3s ease;\n  align-items: center;\n  color: #fff;\n  opacity: 0.3;\n  transition: visibility 0s, opacity 0.2s linear;\n}\n.Vue-Toastification__close-button:hover, .Vue-Toastification__close-button:focus {\n  opacity: 1;\n}\n.Vue-Toastification__toast:not(:hover) .Vue-Toastification__close-button.show-on-hover {\n  opacity: 0;\n}\n.Vue-Toastification__toast--rtl .Vue-Toastification__close-button {\n  padding-left: unset;\n  padding-right: 10px;\n}\n\n@-webkit-keyframes scale-x-frames {\n  0% {\n    transform: scaleX(1);\n  }\n  100% {\n    transform: scaleX(0);\n  }\n}\n\n@keyframes scale-x-frames {\n  0% {\n    transform: scaleX(1);\n  }\n  100% {\n    transform: scaleX(0);\n  }\n}\n.Vue-Toastification__progress-bar {\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 100%;\n  height: 5px;\n  z-index: 10000;\n  background-color: rgba(255, 255, 255, 0.7);\n  transform-origin: left;\n  -webkit-animation: scale-x-frames linear 1 forwards;\n          animation: scale-x-frames linear 1 forwards;\n}\n.Vue-Toastification__toast--rtl .Vue-Toastification__progress-bar {\n  right: 0;\n  left: unset;\n  transform-origin: right;\n}\n\n.Vue-Toastification__icon {\n  margin: auto 18px auto 0px;\n  background: transparent;\n  outline: none;\n  border: none;\n  padding: 0;\n  transition: 0.3s ease;\n  align-items: center;\n  width: 20px;\n  height: 100%;\n}\n.Vue-Toastification__toast--rtl .Vue-Toastification__icon {\n  margin: auto 0px auto 18px;\n}\n\n@-webkit-keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n\n@keyframes bounceInRight {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(-25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(-5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n@-webkit-keyframes bounceOutRight {\n  40% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(1000px, 0, 0);\n  }\n}\n@keyframes bounceOutRight {\n  40% {\n    opacity: 1;\n    transform: translate3d(-20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(1000px, 0, 0);\n  }\n}\n@-webkit-keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n@keyframes bounceInLeft {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(-3000px, 0, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(25px, 0, 0);\n  }\n  75% {\n    transform: translate3d(-10px, 0, 0);\n  }\n  90% {\n    transform: translate3d(5px, 0, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n@-webkit-keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n@keyframes bounceOutLeft {\n  20% {\n    opacity: 1;\n    transform: translate3d(20px, 0, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(-2000px, 0, 0);\n  }\n}\n@-webkit-keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n@keyframes bounceInUp {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  from {\n    opacity: 0;\n    transform: translate3d(0, 3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  75% {\n    transform: translate3d(0, 10px, 0);\n  }\n  90% {\n    transform: translate3d(0, -5px, 0);\n  }\n  to {\n    transform: translate3d(0, 0, 0);\n  }\n}\n@-webkit-keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n@keyframes bounceOutUp {\n  20% {\n    transform: translate3d(0, -10px, 0);\n  }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, 20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, -2000px, 0);\n  }\n}\n@-webkit-keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n@keyframes bounceInDown {\n  from, 60%, 75%, 90%, to {\n    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);\n  }\n  0% {\n    opacity: 0;\n    transform: translate3d(0, -3000px, 0);\n  }\n  60% {\n    opacity: 1;\n    transform: translate3d(0, 25px, 0);\n  }\n  75% {\n    transform: translate3d(0, -10px, 0);\n  }\n  90% {\n    transform: translate3d(0, 5px, 0);\n  }\n  to {\n    transform: none;\n  }\n}\n@-webkit-keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n@keyframes bounceOutDown {\n  20% {\n    transform: translate3d(0, 10px, 0);\n  }\n  40%, 45% {\n    opacity: 1;\n    transform: translate3d(0, -20px, 0);\n  }\n  to {\n    opacity: 0;\n    transform: translate3d(0, 2000px, 0);\n  }\n}\n.Vue-Toastification__bounce-enter-active.top-left, .Vue-Toastification__bounce-enter-active.bottom-left {\n  -webkit-animation-name: bounceInLeft;\n          animation-name: bounceInLeft;\n}\n.Vue-Toastification__bounce-enter-active.top-right, .Vue-Toastification__bounce-enter-active.bottom-right {\n  -webkit-animation-name: bounceInRight;\n          animation-name: bounceInRight;\n}\n.Vue-Toastification__bounce-enter-active.top-center {\n  -webkit-animation-name: bounceInDown;\n          animation-name: bounceInDown;\n}\n.Vue-Toastification__bounce-enter-active.bottom-center {\n  -webkit-animation-name: bounceInUp;\n          animation-name: bounceInUp;\n}\n\n.Vue-Toastification__bounce-leave-active.top-left, .Vue-Toastification__bounce-leave-active.bottom-left {\n  -webkit-animation-name: bounceOutLeft;\n          animation-name: bounceOutLeft;\n}\n.Vue-Toastification__bounce-leave-active.top-right, .Vue-Toastification__bounce-leave-active.bottom-right {\n  -webkit-animation-name: bounceOutRight;\n          animation-name: bounceOutRight;\n}\n.Vue-Toastification__bounce-leave-active.top-center {\n  -webkit-animation-name: bounceOutUp;\n          animation-name: bounceOutUp;\n}\n.Vue-Toastification__bounce-leave-active.bottom-center {\n  -webkit-animation-name: bounceOutDown;\n          animation-name: bounceOutDown;\n}\n\n.Vue-Toastification__bounce-move {\n  transition-timing-function: ease-in-out;\n  transition-property: all;\n  transition-duration: 400ms;\n}\n\n/* ----------------------------------------------\n * Modified version from Animista\n * Animista is Licensed under FreeBSD License.\n * See http://animista.net/license for more info. \n * w: http://animista.net, t: @cssanimista\n * ---------------------------------------------- */\n@-webkit-keyframes fadeOutTop {\n  0% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(-50px);\n    opacity: 0;\n  }\n}\n@keyframes fadeOutTop {\n  0% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(-50px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes fadeOutLeft {\n  0% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(-50px);\n    opacity: 0;\n  }\n}\n@keyframes fadeOutLeft {\n  0% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(-50px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes fadeOutBottom {\n  0% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(50px);\n    opacity: 0;\n  }\n}\n@keyframes fadeOutBottom {\n  0% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(50px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes fadeOutRight {\n  0% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(50px);\n    opacity: 0;\n  }\n}\n@keyframes fadeOutRight {\n  0% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(50px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes fadeInLeft {\n  0% {\n    transform: translateX(-50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n@keyframes fadeInLeft {\n  0% {\n    transform: translateX(-50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes fadeInRight {\n  0% {\n    transform: translateX(50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n@keyframes fadeInRight {\n  0% {\n    transform: translateX(50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes fadeInTop {\n  0% {\n    transform: translateY(-50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n}\n@keyframes fadeInTop {\n  0% {\n    transform: translateY(-50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes fadeInBottom {\n  0% {\n    transform: translateY(50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n}\n@keyframes fadeInBottom {\n  0% {\n    transform: translateY(50px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0);\n    opacity: 1;\n  }\n}\n.Vue-Toastification__fade-enter-active.top-left, .Vue-Toastification__fade-enter-active.bottom-left {\n  -webkit-animation-name: fadeInLeft;\n          animation-name: fadeInLeft;\n}\n.Vue-Toastification__fade-enter-active.top-right, .Vue-Toastification__fade-enter-active.bottom-right {\n  -webkit-animation-name: fadeInRight;\n          animation-name: fadeInRight;\n}\n.Vue-Toastification__fade-enter-active.top-center {\n  -webkit-animation-name: fadeInTop;\n          animation-name: fadeInTop;\n}\n.Vue-Toastification__fade-enter-active.bottom-center {\n  -webkit-animation-name: fadeInBottom;\n          animation-name: fadeInBottom;\n}\n\n.Vue-Toastification__fade-leave-active.top-left, .Vue-Toastification__fade-leave-active.bottom-left {\n  -webkit-animation-name: fadeOutLeft;\n          animation-name: fadeOutLeft;\n}\n.Vue-Toastification__fade-leave-active.top-right, .Vue-Toastification__fade-leave-active.bottom-right {\n  -webkit-animation-name: fadeOutRight;\n          animation-name: fadeOutRight;\n}\n.Vue-Toastification__fade-leave-active.top-center {\n  -webkit-animation-name: fadeOutTop;\n          animation-name: fadeOutTop;\n}\n.Vue-Toastification__fade-leave-active.bottom-center {\n  -webkit-animation-name: fadeOutBottom;\n          animation-name: fadeOutBottom;\n}\n\n.Vue-Toastification__fade-move {\n  transition-timing-function: ease-in-out;\n  transition-property: all;\n  transition-duration: 400ms;\n}\n\n/* ----------------------------------------------\n * Modified version from Animista\n * Animista is Licensed under FreeBSD License.\n * See http://animista.net/license for more info. \n * w: http://animista.net, t: @cssanimista\n * ---------------------------------------------- */\n@-webkit-keyframes slideInBlurredLeft {\n  0% {\n    transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);\n    transform-origin: 100% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@keyframes slideInBlurredLeft {\n  0% {\n    transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);\n    transform-origin: 100% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes slideInBlurredTop {\n  0% {\n    transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);\n    transform-origin: 50% 0%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@keyframes slideInBlurredTop {\n  0% {\n    transform: translateY(-1000px) scaleY(2.5) scaleX(0.2);\n    transform-origin: 50% 0%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes slideInBlurredRight {\n  0% {\n    transform: translateX(1000px) scaleX(2.5) scaleY(0.2);\n    transform-origin: 0% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@keyframes slideInBlurredRight {\n  0% {\n    transform: translateX(1000px) scaleX(2.5) scaleY(0.2);\n    transform-origin: 0% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes slideInBlurredBottom {\n  0% {\n    transform: translateY(1000px) scaleY(2.5) scaleX(0.2);\n    transform-origin: 50% 100%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@keyframes slideInBlurredBottom {\n  0% {\n    transform: translateY(1000px) scaleY(2.5) scaleX(0.2);\n    transform-origin: 50% 100%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n  100% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes slideOutBlurredTop {\n  0% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 0%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(-1000px) scaleY(2) scaleX(0.2);\n    transform-origin: 50% 0%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n}\n@keyframes slideOutBlurredTop {\n  0% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 0%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(-1000px) scaleY(2) scaleX(0.2);\n    transform-origin: 50% 0%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes slideOutBlurredBottom {\n  0% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(1000px) scaleY(2) scaleX(0.2);\n    transform-origin: 50% 100%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n}\n@keyframes slideOutBlurredBottom {\n  0% {\n    transform: translateY(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateY(1000px) scaleY(2) scaleX(0.2);\n    transform-origin: 50% 100%;\n    filter: blur(240px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes slideOutBlurredLeft {\n  0% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(-1000px) scaleX(2) scaleY(0.2);\n    transform-origin: 100% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n}\n@keyframes slideOutBlurredLeft {\n  0% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(-1000px) scaleX(2) scaleY(0.2);\n    transform-origin: 100% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n}\n@-webkit-keyframes slideOutBlurredRight {\n  0% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(1000px) scaleX(2) scaleY(0.2);\n    transform-origin: 0% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n}\n@keyframes slideOutBlurredRight {\n  0% {\n    transform: translateX(0) scaleY(1) scaleX(1);\n    transform-origin: 50% 50%;\n    filter: blur(0);\n    opacity: 1;\n  }\n  100% {\n    transform: translateX(1000px) scaleX(2) scaleY(0.2);\n    transform-origin: 0% 50%;\n    filter: blur(40px);\n    opacity: 0;\n  }\n}\n.Vue-Toastification__slideBlurred-enter-active.top-left, .Vue-Toastification__slideBlurred-enter-active.bottom-left {\n  -webkit-animation-name: slideInBlurredLeft;\n          animation-name: slideInBlurredLeft;\n}\n.Vue-Toastification__slideBlurred-enter-active.top-right, .Vue-Toastification__slideBlurred-enter-active.bottom-right {\n  -webkit-animation-name: slideInBlurredRight;\n          animation-name: slideInBlurredRight;\n}\n.Vue-Toastification__slideBlurred-enter-active.top-center {\n  -webkit-animation-name: slideInBlurredTop;\n          animation-name: slideInBlurredTop;\n}\n.Vue-Toastification__slideBlurred-enter-active.bottom-center {\n  -webkit-animation-name: slideInBlurredBottom;\n          animation-name: slideInBlurredBottom;\n}\n\n.Vue-Toastification__slideBlurred-leave-active.top-left, .Vue-Toastification__slideBlurred-leave-active.bottom-left {\n  -webkit-animation-name: slideOutBlurredLeft;\n          animation-name: slideOutBlurredLeft;\n}\n.Vue-Toastification__slideBlurred-leave-active.top-right, .Vue-Toastification__slideBlurred-leave-active.bottom-right {\n  -webkit-animation-name: slideOutBlurredRight;\n          animation-name: slideOutBlurredRight;\n}\n.Vue-Toastification__slideBlurred-leave-active.top-center {\n  -webkit-animation-name: slideOutBlurredTop;\n          animation-name: slideOutBlurredTop;\n}\n.Vue-Toastification__slideBlurred-leave-active.bottom-center {\n  -webkit-animation-name: slideOutBlurredBottom;\n          animation-name: slideOutBlurredBottom;\n}\n\n.Vue-Toastification__slideBlurred-move {\n  transition-timing-function: ease-in-out;\n  transition-property: all;\n  transition-duration: 400ms;\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2336,7 +2781,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.card-container{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 642px;\n    width: 462px;\n    padding: var(--margin-big) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: 48px;\n\n    grid-column-start: 2;\n    grid-row: 2;\n}\n.header{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-left: var(--margin-regular);\n}\n.accessController{\n    margin-right: 18%;\n}\n.input{\n    margin-bottom: var(--margin-regular);\n}\n.input.passwords{\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: var(--margin-small);\n}\n.form-containter{\n    margin-top: var(--margin-medium);\n    margin-right: 18%;\n    margin-left: var(--margin-regular);\n}\n.date-container{\n    position: relative;\n    width: 100%;\n    height: 32px;\n}\n.date-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.password-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    opacity: 0.3;\n    cursor: not-allowed;\n}\n.password-input-icon.active{\n    opacity: 1;\n    cursor: pointer;\n}\n.checkbox-container{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n}\n.terms{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-medium);\n}\n.loginHelpers{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.submitButton{\n    display: flex;\n    margin-top: var(--margin-medium);\n    margin-bottom: var(--margin-big);\n    justify-content: center;\n}\n.separator{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.separator > hr{\n    width: 32%;\n    border: 1px solid var(--tutti-white);\n}\n.separator > p {\n    font-weight: 700;\n    margin: 0 var(--margin-regular);\n}\n.alternatives{\n    margin: var(--margin-medium) auto var(--margin-big);\n    background: var(--tutti-white);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.alternative{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 96px;\n    height: 74px;\n    border-radius: 100px 0 0 100px;\n    background: var(--tutti-white);\n}\n.alternative.left{\n    border-radius: 0 100px 100px 0;\n}\n.alternative:hover{\n    background: rgba(248, 247, 255, 0.5);\n    cursor: pointer;\n}\n.card-footer{\n    display: flex;\n    justify-content: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.access-container{\n    position: relative;\n    grid-column-start: 2;\n    grid-row: 2;\n}\n.card-container{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 642px;\n    width: 462px;\n    padding: var(--margin-big) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: var(--margin-big);\n\n    grid-column-start: 2;\n    grid-row: 2;\n}\n.header{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-left: var(--margin-regular);\n}\n.mode-input{\n    display: none;\n}\n.accessController{\n    margin-right: 18%;\n}\n.input{\n    margin-bottom: var(--margin-regular);\n}\n.error-container{\n    position: absolute;\n    padding: var(--margin-medium);\n    background: var(--error);\n    border-radius: 48px;\n    grid-column-start: 3;\n    grid-row: 2;\n    top:0;\n    left: 462px;\n    margin-top: var(--margin-regular);\n    margin-left: var(--margin-regular);\n}\n.input.error > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.date-container > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.errorMsg{\n    color: var(--error);\n    font-weight: 600;\n    font-size: var(--text-small);\n    letter-spacing: 0.02em;\n    margin-top: var(--margin-small);\n}\n.error-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.passwords{\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: var(--margin-small);\n}\n.form-containter{\n    margin-top: var(--margin-medium);\n    margin-right: 18%;\n    margin-left: var(--margin-regular);\n}\n.date-container{\n    position: relative;\n    width: 100%;\n    height: 32px;\n}\n.date-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.password-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    opacity: 0.3;\n    cursor: not-allowed;\n}\n.password-input-icon.active{\n    opacity: 1;\n    cursor: pointer;\n}\n.password-input-icon.error{\n    margin-right: var(--margin-medium);\n}\n.checkbox-container{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n}\n.terms{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-medium);\n}\n.loginHelpers{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.submitButton{\n    display: flex;\n    margin-top: var(--margin-medium);\n    margin-bottom: var(--margin-big);\n    justify-content: center;\n}\n.separator{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.separator > hr{\n    width: 32%;\n    border: 1px solid var(--tutti-white);\n}\n.separator > p {\n    font-weight: 700;\n    margin: 0 var(--margin-regular);\n}\n.alternatives{\n    margin: var(--margin-medium) 0 var(--margin-big);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.alternative{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 96px;\n    height: 74px;\n    border-radius: 100px 0 0 100px;\n    background: var(--tutti-white);\n}\n.alternative.left{\n    border-radius: 0 100px 100px 0;\n}\n.alternative:hover{\n    background: rgba(248, 247, 255, 0.8);\n    cursor: pointer;\n}\n.card-footer{\n    display: flex;\n    justify-content: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21168,10 +21613,40 @@ var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMP
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-toastification/dist/index.css":
+/*!********************************************************!*\
+  !*** ./node_modules/vue-toastification/dist/index.css ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./index.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-toastification/dist/index.css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_index_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21181,7 +21656,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./acessCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./accessCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&");
 
             
 
@@ -21190,11 +21665,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
 
 /***/ }),
 
@@ -21627,10 +22102,10 @@ module.exports = function (list, options) {
 
 /***/ }),
 
-/***/ "./resources/js/components/acess/acessCard.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/acess/acessCard.vue ***!
-  \*****************************************************/
+/***/ "./resources/js/components/access/accessCard.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/access/accessCard.vue ***!
+  \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21638,9 +22113,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./acessCard.vue?vue&type=template&id=738d9028& */ "./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028&");
-/* harmony import */ var _acessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./acessCard.vue?vue&type=script&lang=js& */ "./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js&");
-/* harmony import */ var _acessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./acessCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./accessCard.vue?vue&type=template&id=490d8438& */ "./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438&");
+/* harmony import */ var _accessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./accessCard.vue?vue&type=script&lang=js& */ "./resources/js/components/access/accessCard.vue?vue&type=script&lang=js&");
+/* harmony import */ var _accessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./accessCard.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -21651,9 +22126,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
-  _acessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__.render,
-  _acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _accessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__.render,
+  _accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
   null,
@@ -21663,7 +22138,46 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/acess/acessCard.vue"
+component.options.__file = "resources/js/components/access/accessCard.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/access/registerStep2.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/access/registerStep2.vue ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./registerStep2.vue?vue&type=template&id=4f871d63&scoped=true& */ "./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true&");
+/* harmony import */ var _registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./registerStep2.vue?vue&type=script&lang=js& */ "./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "4f871d63",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/access/registerStep2.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -21873,10 +22387,10 @@ component.options.__file = "resources/js/components/inputs/toggle.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
+/***/ "./resources/js/components/access/accessCard.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/access/accessCard.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21884,8 +22398,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./acessCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./accessCard.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./registerStep2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -21969,15 +22499,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./acessCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./accessCard.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=style&index=0&lang=css&");
 
 
 /***/ }),
@@ -22047,19 +22577,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438& ***!
+  \**************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_acessCard_vue_vue_type_template_id_738d9028___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./acessCard.vue?vue&type=template&id=738d9028& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_accessCard_vue_vue_type_template_id_490d8438___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./accessCard.vue?vue&type=template&id=490d8438& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./registerStep2.vue?vue&type=template&id=4f871d63&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true&");
 
 
 /***/ }),
@@ -22149,10 +22696,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/acess/acessCard.vue?vue&type=template&id=738d9028& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/accessCard.vue?vue&type=template&id=490d8438& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -22166,247 +22713,30 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "hooper",
-    {
-      ref: "carousel",
-      staticClass: "card-container",
-      attrs: {
-        "initial-slide": _vm.determineMode(),
-        "mouse-drag": false,
-        wheelControl: false,
-        keysControl: false
-      }
-    },
+    "div",
+    { staticClass: "access-container" },
     [
-      _c("slide", [
-        _c("div", { staticClass: "header" }, [
-          _c("h2", [_vm._v("Register")]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "lowPriority accessController",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.slideNext.apply(null, arguments)
-                }
-              }
-            },
-            [_vm._v("Login")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("form", { staticClass: "form-containter" }, [
-          _c("div", { staticClass: "input" }, [
-            _c("label", [_vm._v("Full name *")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "text",
-                placeholder: "Your name",
-                name: "reg_name"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input" }, [
-            _c("label", [_vm._v("Email *")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "email",
-                placeholder: "Your e-mail",
-                name: "reg_mail"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input passwords" }, [
-            _c("div", [
-              _c("label", [_vm._v("Password *")]),
+      _c(
+        "hooper",
+        {
+          ref: "carousel",
+          staticClass: "card-container",
+          attrs: {
+            "initial-slide": _vm.determineMode(),
+            "mouse-drag": false,
+            wheelControl: false,
+            keysControl: false
+          }
+        },
+        [
+          _c("slide", [
+            _c("div", { staticClass: "header" }, [
+              _c("h2", [_vm._v("Register")]),
               _vm._v(" "),
-              _c("div", { staticClass: "date-container" }, [
-                [_vm.regPassword.first.visible ? "text" : "password"] ===
-                "checkbox"
-                  ? 0
-                  : [_vm.regPassword.first.visible ? "text" : "password"] ===
-                    "radio"
-                  ? 0
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.regPassword.first.text,
-                          expression: "regPassword.first.text"
-                        }
-                      ],
-                      attrs: {
-                        placeholder: "Password",
-                        name: "reg_pass1",
-                        type: [
-                          _vm.regPassword.first.visible ? "text" : "password"
-                        ]
-                      },
-                      domProps: { value: _vm.regPassword.first.text },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.regPassword.first,
-                            "text",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                _vm._v(" "),
-                _c("img", {
-                  class:
-                    "password-input-icon " +
-                    [_vm.regPassword.first.text ? "active" : null],
-                  attrs: {
-                    src:
-                      "/storage/assets/icons/" +
-                      [
-                        _vm.regPassword.first.visible
-                          ? "eye-off.svg"
-                          : "eye.svg"
-                      ],
-                    alt: "see_password"
-                  },
-                  on: {
-                    click: function($event) {
-                      _vm.regPassword.first.visible = !_vm.regPassword.first
-                        .visible
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", [
-              _c("label", [_vm._v("Repeat password *")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "date-container" }, [
-                [_vm.regPassword.second.visible ? "text" : "password"] ===
-                "checkbox"
-                  ? 0
-                  : [_vm.regPassword.second.visible ? "text" : "password"] ===
-                    "radio"
-                  ? 0
-                  : _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.regPassword.second.text,
-                          expression: "regPassword.second.text"
-                        }
-                      ],
-                      attrs: {
-                        placeholder: "Type it again",
-                        name: "reg_pass2",
-                        type: [
-                          _vm.regPassword.second.visible ? "text" : "password"
-                        ]
-                      },
-                      domProps: { value: _vm.regPassword.second.text },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.regPassword.second,
-                            "text",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    }),
-                _vm._v(" "),
-                _c("img", {
-                  class:
-                    "password-input-icon " +
-                    [_vm.regPassword.second.text ? "active" : null],
-                  attrs: {
-                    src:
-                      "/storage/assets/icons/" +
-                      [
-                        _vm.regPassword.second.visible
-                          ? "eye-off.svg"
-                          : "eye.svg"
-                      ],
-                    alt: "see_password"
-                  },
-                  on: {
-                    click: function($event) {
-                      _vm.regPassword.second.visible = !_vm.regPassword.second
-                        .visible
-                    }
-                  }
-                })
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input" }, [
-            _c("label", [_vm._v("Birthday *")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "date-container" },
-              [
-                _c("datepicker", {
-                  attrs: { placeholder: "Choose a date" },
-                  model: {
-                    value: _vm.date,
-                    callback: function($$v) {
-                      _vm.date = $$v
-                    },
-                    expression: "date"
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "date-input-icon",
-                  attrs: {
-                    src: "/storage/assets/icons/calendar.svg",
-                    alt: "calendar"
-                  }
-                })
-              ],
-              1
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "terms" }, [
-            _c("input", { attrs: { type: "checkbox", name: "reg_terms" } }),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("I agree to all the statements in "),
-              _c("a", { attrs: { href: "" } }, [_vm._v("Terms of service")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "submitButton" }, [
-            _c(
-              "button",
-              { staticClass: "standardPriority", attrs: { type: "submit" } },
-              [_vm._v("Register")]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c("p", [
-              _vm._v("Already a member? "),
               _c(
-                "a",
+                "button",
                 {
+                  staticClass: "lowPriority accessController",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -22416,151 +22746,487 @@ var render = function() {
                 },
                 [_vm._v("Login")]
               )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("slide", [
-        _c("div", { staticClass: "header" }, [
-          _c("h2", [_vm._v("Login")]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "lowPriority accessController",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.slidePrev.apply(null, arguments)
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                ref: "reg-form",
+                staticClass: "form-containter",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.registerSubmit.apply(null, arguments)
+                  }
                 }
-              }
-            },
-            [_vm._v("Register")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("form", { staticClass: "form-containter" }, [
-          _c("div", { staticClass: "input" }, [
-            _c("label", [_vm._v("Email *")]),
-            _vm._v(" "),
-            _c("input", {
-              attrs: {
-                type: "email",
-                placeholder: "Your e-mail",
-                name: "log_mail"
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input" }, [
-            _c("label", [_vm._v("Password *")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "date-container" }, [
-              [_vm.logPassword.visible ? "text" : "password"] === "checkbox"
-                ? 0
-                : [_vm.logPassword.visible ? "text" : "password"] === "radio"
-                ? 0
-                : _c("input", {
+              },
+              [
+                _c("input", {
+                  staticClass: "mode-input",
+                  attrs: { name: "mode" },
+                  domProps: { value: _vm.modeSelector }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    class: "input " + [_vm.registerNameError() ? "error" : ""]
+                  },
+                  [
+                    _c("div", { staticClass: "input-label" }, [
+                      _vm._v("Full name *")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "date-container" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.trim",
+                            value: _vm.register.name,
+                            expression: "register.name",
+                            modifiers: { trim: true }
+                          }
+                        ],
+                        attrs: {
+                          type: "text",
+                          placeholder: "Your name",
+                          name: "reg_name"
+                        },
+                        domProps: { value: _vm.register.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.register,
+                              "name",
+                              $event.target.value.trim()
+                            )
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.registerNameError()
+                        ? _c("img", {
+                            staticClass: "error-input-icon",
+                            attrs: {
+                              src:
+                                "/storage/assets/icons/error_exclamation.svg",
+                              alt: "error_exclamation"
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    class: "input " + [_vm.registerMailError() ? "error" : ""]
+                  },
+                  [
+                    _c("div", { staticClass: "input-label" }, [
+                      _vm._v("Email *")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "date-container" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.trim",
+                            value: _vm.register.mail,
+                            expression: "register.mail",
+                            modifiers: { trim: true }
+                          }
+                        ],
+                        attrs: {
+                          type: "email",
+                          placeholder: "Your e-mail",
+                          name: "reg_mail"
+                        },
+                        domProps: { value: _vm.register.mail },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.register,
+                              "mail",
+                              $event.target.value.trim()
+                            )
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.registerMailError()
+                        ? _c("img", {
+                            staticClass: "error-input-icon",
+                            attrs: {
+                              src:
+                                "/storage/assets/icons/error_exclamation.svg",
+                              alt: "error_exclamation"
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "passwords" }, [
+                  _c(
+                    "div",
+                    {
+                      class:
+                        "input " + [_vm.registerPassword1Error() ? "error" : ""]
+                    },
+                    [
+                      _c("div", { staticClass: "input-label" }, [
+                        _vm._v("Password *")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "date-container" }, [
+                        [
+                          _vm.register.password.first.visible
+                            ? "text"
+                            : "password"
+                        ] === "checkbox"
+                          ? 0
+                          : [
+                              _vm.register.password.first.visible
+                                ? "text"
+                                : "password"
+                            ] === "radio"
+                          ? 0
+                          : _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.register.password.first.text,
+                                  expression: "register.password.first.text"
+                                }
+                              ],
+                              attrs: {
+                                placeholder: "Password",
+                                name: "reg_pass1",
+                                type: [
+                                  _vm.register.password.first.visible
+                                    ? "text"
+                                    : "password"
+                                ]
+                              },
+                              domProps: {
+                                value: _vm.register.password.first.text
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.register.password.first,
+                                    "text",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                        _vm._v(" "),
+                        _c("img", {
+                          class:
+                            "password-input-icon " +
+                            [
+                              _vm.register.password.first.text
+                                ? "active "
+                                : null
+                            ] +
+                            [_vm.registerPassword1Error() ? "error " : null],
+                          attrs: {
+                            src:
+                              "/storage/assets/icons/" +
+                              [
+                                _vm.register.password.first.visible
+                                  ? "eye-off.svg"
+                                  : "eye.svg"
+                              ],
+                            alt: "see_password"
+                          },
+                          on: {
+                            click: function() {
+                              if (_vm.register.password.first.text) {
+                                _vm.register.password.first.visible = !_vm
+                                  .register.password.first.visible
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.registerPassword1Error()
+                          ? _c("img", {
+                              staticClass: "error-input-icon",
+                              attrs: {
+                                src:
+                                  "/storage/assets/icons/error_exclamation.svg",
+                                alt: "error_exclamation"
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      class:
+                        "input " + [_vm.registerPassword2Error() ? "error" : ""]
+                    },
+                    [
+                      _c("div", { staticClass: "input-label" }, [
+                        _vm._v("Repeat password *")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "date-container" }, [
+                        [
+                          _vm.register.password.second.visible
+                            ? "text"
+                            : "password"
+                        ] === "checkbox"
+                          ? 0
+                          : [
+                              _vm.register.password.second.visible
+                                ? "text"
+                                : "password"
+                            ] === "radio"
+                          ? 0
+                          : _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.register.password.second.text,
+                                  expression: "register.password.second.text"
+                                }
+                              ],
+                              attrs: {
+                                placeholder: "Type it again",
+                                name: "reg_pass2",
+                                type: [
+                                  _vm.register.password.second.visible
+                                    ? "text"
+                                    : "password"
+                                ]
+                              },
+                              domProps: {
+                                value: _vm.register.password.second.text
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.register.password.second,
+                                    "text",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                        _vm._v(" "),
+                        _c("img", {
+                          class:
+                            "password-input-icon " +
+                            [
+                              _vm.register.password.second.text
+                                ? "active "
+                                : null
+                            ] +
+                            [_vm.registerPassword2Error() ? "error " : null],
+                          attrs: {
+                            src:
+                              "/storage/assets/icons/" +
+                              [
+                                _vm.register.password.second.visible
+                                  ? "eye-off.svg"
+                                  : "eye.svg"
+                              ],
+                            alt: "see_password"
+                          },
+                          on: {
+                            click: function() {
+                              if (_vm.register.password.second.text) {
+                                _vm.register.password.second.visible = !_vm
+                                  .register.password.second.visible
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.registerPassword2Error()
+                          ? _c("img", {
+                              staticClass: "error-input-icon",
+                              attrs: {
+                                src:
+                                  "/storage/assets/icons/error_exclamation.svg",
+                                alt: "error_exclamation"
+                              }
+                            })
+                          : _vm._e()
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    class: "input " + [_vm.registerDateError() ? "error" : ""]
+                  },
+                  [
+                    _c("div", { staticClass: "input-label" }, [
+                      _vm._v("Birthday *")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "date-container" },
+                      [
+                        _c("datepicker", {
+                          attrs: { placeholder: "Choose a date" },
+                          model: {
+                            value: _vm.register.date,
+                            callback: function($$v) {
+                              _vm.$set(_vm.register, "date", $$v)
+                            },
+                            expression: "register.date"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("img", {
+                          class: [
+                            _vm.registerDateError()
+                              ? "error-input-icon"
+                              : "date-input-icon"
+                          ],
+                          attrs: {
+                            src:
+                              "/storage/assets/icons/" +
+                              [
+                                _vm.registerDateError()
+                                  ? "error_exclamation.svg"
+                                  : "calendar.svg"
+                              ],
+                            alt: "calendar"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "terms" }, [
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.logPassword.text,
-                        expression: "logPassword.text"
+                        value: _vm.register.terms,
+                        expression: "register.terms"
                       }
                     ],
-                    attrs: {
-                      placeholder: "Password",
-                      name: "reg_pass1",
-                      type: [_vm.logPassword.visible ? "text" : "password"]
+                    attrs: { type: "checkbox", name: "reg_terms" },
+                    domProps: {
+                      checked: Array.isArray(_vm.register.terms)
+                        ? _vm._i(_vm.register.terms, null) > -1
+                        : _vm.register.terms
                     },
-                    domProps: { value: _vm.logPassword.text },
                     on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                      change: function($event) {
+                        var $$a = _vm.register.terms,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.register, "terms", $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.register,
+                                "terms",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.register, "terms", $$c)
                         }
-                        _vm.$set(_vm.logPassword, "text", $event.target.value)
                       }
                     }
                   }),
-              _vm._v(" "),
-              _c("img", {
-                class:
-                  "password-input-icon " +
-                  [_vm.logPassword.text ? "active" : null],
-                attrs: {
-                  src:
-                    "/storage/assets/icons/" +
-                    [_vm.regPassword.first.visible ? "eye-off.svg" : "eye.svg"],
-                  alt: "see_password"
-                },
-                on: {
-                  click: function($event) {
-                    _vm.logPassword.visible = !_vm.logPassword.visible
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "loginHelpers" }, [
-            _c("div", { staticClass: "checkbox-container" }, [
-              _c("input", {
-                attrs: { type: "checkbox", name: "log_remember" }
-              }),
-              _vm._v(" "),
-              _c("p", [_vm._v("Remember me?")])
-            ]),
-            _vm._v(" "),
-            _c("a", { attrs: { href: "" } }, [_vm._v("Forgot my password?")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "submitButton" }, [
-            _c(
-              "button",
-              { staticClass: "standardPriority", attrs: { type: "submit" } },
-              [_vm._v("Login")]
+                  _vm._v(" "),
+                  _c("p", [
+                    _vm._v("I agree to all the statements in "),
+                    _c("a", { attrs: { href: "" } }, [
+                      _vm._v("Terms of service")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "submitButton" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "standardPriority",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Register")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer" }, [
+                  _c("p", [
+                    _vm._v("Already a member? "),
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.slideNext.apply(null, arguments)
+                          }
+                        }
+                      },
+                      [_vm._v("Login")]
+                    )
+                  ])
+                ])
+              ]
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "separator" }, [
-            _c("hr"),
-            _vm._v(" "),
-            _c("p", [_vm._v("Or log in with")]),
-            _vm._v(" "),
-            _c("hr")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "alternatives" }, [
-            _c("div", { staticClass: "alternative" }, [
-              _c("img", {
-                attrs: {
-                  src: "/storage/assets/images/logos/google.png",
-                  alt: "google_logo",
-                  width: "50%"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "alternative left" }, [
-              _c("img", {
-                attrs: {
-                  src: "/storage/assets/images/logos/linkedin.png",
-                  alt: "google_logo",
-                  width: "50%"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-footer" }, [
-            _c("p", [
-              _vm._v("Not a member yet? "),
+          _c("slide", [
+            _c("div", { staticClass: "header" }, [
+              _c("h2", [_vm._v("Login")]),
+              _vm._v(" "),
               _c(
-                "a",
+                "button",
                 {
+                  staticClass: "lowPriority accessController",
                   on: {
                     click: function($event) {
                       $event.preventDefault()
@@ -22570,13 +23236,309 @@ var render = function() {
                 },
                 [_vm._v("Register")]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                ref: "login-form",
+                staticClass: "form-containter",
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.loginSubmit.apply(null, arguments)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  staticClass: "mode-input",
+                  attrs: { name: "mode" },
+                  domProps: { value: _vm.modeSelector }
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { class: "input " + [_vm.loginMailError() ? "error" : ""] },
+                  [
+                    _c("div", { staticClass: "input-label" }, [
+                      _vm._v("Email *")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "date-container" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.login.mail,
+                            expression: "login.mail"
+                          }
+                        ],
+                        attrs: {
+                          type: "email",
+                          placeholder: "Your e-mail",
+                          name: "log_mail"
+                        },
+                        domProps: { value: _vm.login.mail },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.login, "mail", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.loginMailError()
+                        ? _c("img", {
+                            staticClass: "error-input-icon",
+                            attrs: {
+                              src:
+                                "/storage/assets/icons/error_exclamation.svg",
+                              alt: "error_exclamation"
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    class: "input " + [_vm.loginPasswordError() ? "error" : ""]
+                  },
+                  [
+                    _c("div", { staticClass: "input-label" }, [
+                      _vm._v("Password *")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "date-container" }, [
+                      [_vm.login.password.visible ? "text" : "password"] ===
+                      "checkbox"
+                        ? 0
+                        : [_vm.login.password.visible ? "text" : "password"] ===
+                          "radio"
+                        ? 0
+                        : _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.login.password.text,
+                                expression: "login.password.text"
+                              }
+                            ],
+                            attrs: {
+                              placeholder: "Password",
+                              name: "log_pass",
+                              type: [
+                                _vm.login.password.visible ? "text" : "password"
+                              ]
+                            },
+                            domProps: { value: _vm.login.password.text },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.login.password,
+                                  "text",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                      _vm._v(" "),
+                      _c("img", {
+                        class:
+                          "password-input-icon " +
+                          [_vm.login.password.text ? "active " : null] +
+                          [_vm.loginPasswordError() ? "error " : null],
+                        attrs: {
+                          src:
+                            "/storage/assets/icons/" +
+                            [
+                              _vm.login.password.visible
+                                ? "eye-off.svg"
+                                : "eye.svg"
+                            ],
+                          alt: "see_password"
+                        },
+                        on: {
+                          click: function() {
+                            if (_vm.login.password.text) {
+                              _vm.login.password.visible = !_vm.login.password
+                                .visible
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.loginPasswordError()
+                        ? _c("img", {
+                            staticClass: "error-input-icon",
+                            attrs: {
+                              src:
+                                "/storage/assets/icons/error_exclamation.svg",
+                              alt: "error_exclamation"
+                            }
+                          })
+                        : _vm._e()
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "loginHelpers" }, [
+                  _c("div", { staticClass: "checkbox-container" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.login.remember,
+                          expression: "login.remember"
+                        }
+                      ],
+                      attrs: { type: "checkbox", name: "log_remember" },
+                      domProps: {
+                        checked: Array.isArray(_vm.login.remember)
+                          ? _vm._i(_vm.login.remember, null) > -1
+                          : _vm.login.remember
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.login.remember,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                _vm.$set(
+                                  _vm.login,
+                                  "remember",
+                                  $$a.concat([$$v])
+                                )
+                            } else {
+                              $$i > -1 &&
+                                _vm.$set(
+                                  _vm.login,
+                                  "remember",
+                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                )
+                            }
+                          } else {
+                            _vm.$set(_vm.login, "remember", $$c)
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Remember me?")])
+                  ]),
+                  _vm._v(" "),
+                  _c("a", { attrs: { href: "" } }, [
+                    _vm._v("Forgot my password?")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "submitButton" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "standardPriority",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("Login")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "separator" }, [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("Or log in with")]),
+                  _vm._v(" "),
+                  _c("hr")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "alternatives" }, [
+                  _c("div", { staticClass: "alternative" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/storage/assets/images/logos/google.png",
+                        alt: "google_logo",
+                        width: "50%"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "alternative left" }, [
+                    _c("img", {
+                      attrs: {
+                        src: "/storage/assets/images/logos/linkedin.png",
+                        alt: "google_logo",
+                        width: "50%"
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-footer" }, [
+                  _c("p", [
+                    _vm._v("Not a member yet? "),
+                    _c(
+                      "a",
+                      {
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.slidePrev.apply(null, arguments)
+                          }
+                        }
+                      },
+                      [_vm._v("Register")]
+                    )
+                  ])
+                ])
+              ]
+            )
           ])
-        ])
-      ])
+        ],
+        1
+      )
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -23017,6 +23979,1562 @@ function normalizeComponent (
     options: options
   }
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-toastification/dist/esm/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vue-toastification/dist/esm/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "POSITION": () => (/* binding */ POSITION),
+/* harmony export */   "TYPE": () => (/* binding */ TYPE),
+/* harmony export */   "createToastInterface": () => (/* binding */ createToastInterface)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+
+
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+var TYPE;
+(function (TYPE) {
+    TYPE["SUCCESS"] = "success";
+    TYPE["ERROR"] = "error";
+    TYPE["WARNING"] = "warning";
+    TYPE["INFO"] = "info";
+    TYPE["DEFAULT"] = "default";
+})(TYPE || (TYPE = {}));
+var POSITION;
+(function (POSITION) {
+    POSITION["TOP_LEFT"] = "top-left";
+    POSITION["TOP_CENTER"] = "top-center";
+    POSITION["TOP_RIGHT"] = "top-right";
+    POSITION["BOTTOM_LEFT"] = "bottom-left";
+    POSITION["BOTTOM_CENTER"] = "bottom-center";
+    POSITION["BOTTOM_RIGHT"] = "bottom-right";
+})(POSITION || (POSITION = {}));
+var EVENTS;
+(function (EVENTS) {
+    EVENTS["ADD"] = "add";
+    EVENTS["DISMISS"] = "dismiss";
+    EVENTS["UPDATE"] = "update";
+    EVENTS["CLEAR"] = "clear";
+    EVENTS["UPDATE_DEFAULTS"] = "update_defaults";
+})(EVENTS || (EVENTS = {}));
+const VT_NAMESPACE = "Vue-Toastification";
+
+const COMMON = {
+    type: {
+        type: String,
+        default: TYPE.DEFAULT,
+    },
+    classNames: {
+        type: [String, Array],
+        default: () => [],
+    },
+    trueBoolean: {
+        type: Boolean,
+        default: true,
+    },
+};
+const ICON = {
+    type: COMMON.type,
+    customIcon: {
+        type: [String, Boolean, Object, Function],
+        default: true,
+    },
+};
+const CLOSE_BUTTON = {
+    component: {
+        type: [String, Object, Function, Boolean],
+        default: "button",
+    },
+    classNames: COMMON.classNames,
+    showOnHover: Boolean,
+    ariaLabel: {
+        type: String,
+        default: "close",
+    },
+};
+const PROGRESS_BAR = {
+    timeout: {
+        type: [Number, Boolean],
+        default: 5000,
+    },
+    hideProgressBar: Boolean,
+    isRunning: Boolean,
+};
+const TRANSITION = {
+    transition: {
+        type: [Object, String],
+        default: `${VT_NAMESPACE}__bounce`,
+    },
+    transitionDuration: {
+        type: [Number, Object],
+        default: 750,
+    },
+};
+const CORE_TOAST = {
+    position: {
+        type: String,
+        default: POSITION.TOP_RIGHT,
+    },
+    draggable: COMMON.trueBoolean,
+    draggablePercent: {
+        type: Number,
+        default: 0.6,
+    },
+    pauseOnFocusLoss: COMMON.trueBoolean,
+    pauseOnHover: COMMON.trueBoolean,
+    closeOnClick: COMMON.trueBoolean,
+    timeout: PROGRESS_BAR.timeout,
+    hideProgressBar: PROGRESS_BAR.hideProgressBar,
+    toastClassName: COMMON.classNames,
+    bodyClassName: COMMON.classNames,
+    icon: ICON.customIcon,
+    closeButton: CLOSE_BUTTON.component,
+    closeButtonClassName: CLOSE_BUTTON.classNames,
+    showCloseButtonOnHover: CLOSE_BUTTON.showOnHover,
+    accessibility: {
+        type: Object,
+        default: () => ({
+            toastRole: "alert",
+            closeButtonLabel: "close",
+        }),
+    },
+    rtl: Boolean,
+    eventBus: Object,
+};
+const TOAST = {
+    id: {
+        type: [String, Number],
+        required: true,
+    },
+    type: COMMON.type,
+    content: {
+        type: [String, Object, Function],
+        required: true,
+    },
+    onClick: Function,
+    onClose: Function,
+};
+const CONTAINER = {
+    container: {
+        type: undefined,
+        default: () => document.body,
+    },
+    newestOnTop: COMMON.trueBoolean,
+    maxToasts: {
+        type: Number,
+        default: 20,
+    },
+    transition: TRANSITION.transition,
+    transitionDuration: TRANSITION.transitionDuration,
+    toastDefaults: Object,
+    filterBeforeCreate: {
+        type: Function,
+        default: (toast) => toast,
+    },
+    filterToasts: {
+        type: Function,
+        default: (toasts) => toasts,
+    },
+    containerClassName: COMMON.classNames,
+    onMounted: Function,
+};
+var PROPS = {
+    CORE_TOAST,
+    TOAST,
+    CONTAINER,
+    PROGRESS_BAR,
+    ICON,
+    TRANSITION,
+    CLOSE_BUTTON,
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+const isFunction = (value) => typeof value === "function";
+const isString = (value) => typeof value === "string";
+const isNonEmptyString = (value) => isString(value) && value.trim().length > 0;
+const isNumber = (value) => typeof value === "number";
+const isUndefined = (value) => typeof value === "undefined";
+const isObject = (value) => typeof value === "object" && value !== null;
+const isJSX = (obj) => hasProp(obj, "tag") && isNonEmptyString(obj.tag);
+const isTouchEvent = (event) => window.TouchEvent && event instanceof TouchEvent;
+const isToastComponent = (obj) => hasProp(obj, "component") && isToastContent(obj.component);
+const isConstructor = (c) => {
+    return isFunction(c) && hasProp(c, "cid");
+};
+const isVueComponent = (c) => {
+    if (isConstructor(c)) {
+        return true;
+    }
+    if (!isObject(c)) {
+        return false;
+    }
+    if (c.extends || c._Ctor) {
+        return true;
+    }
+    if (isString(c.template)) {
+        return true;
+    }
+    return hasRenderFunction(c);
+};
+const isVueInstanceOrComponent = (obj) => obj instanceof vue__WEBPACK_IMPORTED_MODULE_0__.default || isVueComponent(obj);
+const isToastContent = (obj) => 
+// Ignore undefined
+!isUndefined(obj) &&
+    // Is a string
+    (isString(obj) ||
+        // Regular Vue instance or component
+        isVueInstanceOrComponent(obj) ||
+        // Object with a render function
+        hasRenderFunction(obj) ||
+        // JSX template
+        isJSX(obj) ||
+        // Nested object
+        isToastComponent(obj));
+const isDOMRect = (obj) => isObject(obj) &&
+    isNumber(obj.height) &&
+    isNumber(obj.width) &&
+    isNumber(obj.right) &&
+    isNumber(obj.left) &&
+    isNumber(obj.top) &&
+    isNumber(obj.bottom);
+const hasProp = (obj, propKey) => Object.prototype.hasOwnProperty.call(obj, propKey);
+const hasRenderFunction = (obj
+// eslint-disable-next-line @typescript-eslint/ban-types
+) => hasProp(obj, "render") && isFunction(obj.render);
+/**
+ * ID generator
+ */
+const getId = ((i) => () => i++)(0);
+function getX(event) {
+    return isTouchEvent(event) ? event.targetTouches[0].clientX : event.clientX;
+}
+function getY(event) {
+    return isTouchEvent(event) ? event.targetTouches[0].clientY : event.clientY;
+}
+const removeElement = (el) => {
+    if (!isUndefined(el.remove)) {
+        el.remove();
+    }
+    else if (el.parentNode) {
+        el.parentNode.removeChild(el);
+    }
+};
+const getVueComponentFromObj = (obj) => {
+    if (isToastComponent(obj)) {
+        // Recurse if component prop
+        return getVueComponentFromObj(obj.component);
+    }
+    if (isJSX(obj)) {
+        // Create render function for JSX
+        return {
+            render() {
+                return obj;
+            },
+        };
+    }
+    // Return the actual object if regular vue component
+    return obj;
+};
+
+var script = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    props: PROPS.PROGRESS_BAR,
+    data() {
+        return {
+            hasClass: true,
+        };
+    },
+    computed: {
+        style() {
+            return {
+                animationDuration: `${this.timeout}ms`,
+                animationPlayState: this.isRunning ? "running" : "paused",
+                opacity: this.hideProgressBar ? 0 : 1,
+            };
+        },
+        cpClass() {
+            return this.hasClass ? `${VT_NAMESPACE}__progress-bar` : "";
+        },
+    },
+    mounted() {
+        this.$el.addEventListener("animationend", this.animationEnded);
+    },
+    beforeDestroy() {
+        this.$el.removeEventListener("animationend", this.animationEnded);
+    },
+    methods: {
+        animationEnded() {
+            this.$emit("close-toast");
+        },
+    },
+    watch: {
+        timeout() {
+            this.hasClass = false;
+            this.$nextTick(() => (this.hasClass = true));
+        },
+    },
+});
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+    if (typeof shadowMode !== 'boolean') {
+        createInjectorSSR = createInjector;
+        createInjector = shadowMode;
+        shadowMode = false;
+    }
+    // Vue.extend constructor export interop.
+    const options = typeof script === 'function' ? script.options : script;
+    // render functions
+    if (template && template.render) {
+        options.render = template.render;
+        options.staticRenderFns = template.staticRenderFns;
+        options._compiled = true;
+        // functional template
+        if (isFunctionalTemplate) {
+            options.functional = true;
+        }
+    }
+    // scopedId
+    if (scopeId) {
+        options._scopeId = scopeId;
+    }
+    let hook;
+    if (moduleIdentifier) {
+        // server build
+        hook = function (context) {
+            // 2.3 injection
+            context =
+                context || // cached call
+                    (this.$vnode && this.$vnode.ssrContext) || // stateful
+                    (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
+            // 2.2 with runInNewContext: true
+            if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+                context = __VUE_SSR_CONTEXT__;
+            }
+            // inject component styles
+            if (style) {
+                style.call(this, createInjectorSSR(context));
+            }
+            // register component module identifier for async chunk inference
+            if (context && context._registeredComponents) {
+                context._registeredComponents.add(moduleIdentifier);
+            }
+        };
+        // used by ssr in case component is cached and beforeCreate
+        // never gets called
+        options._ssrRegister = hook;
+    }
+    else if (style) {
+        hook = shadowMode
+            ? function (context) {
+                style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
+            }
+            : function (context) {
+                style.call(this, createInjector(context));
+            };
+    }
+    if (hook) {
+        if (options.functional) {
+            // register for functional component in vue file
+            const originalRender = options.render;
+            options.render = function renderWithStyleInjection(h, context) {
+                hook.call(context);
+                return originalRender(h, context);
+            };
+        }
+        else {
+            // inject component registration as beforeCreate hook
+            const existing = options.beforeCreate;
+            options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+    }
+    return script;
+}
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+var __vue_render__ = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("div", { class: _vm.cpClass, style: _vm.style })
+};
+var __vue_staticRenderFns__ = [];
+__vue_render__._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__ = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$1 = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    props: PROPS.CLOSE_BUTTON,
+    computed: {
+        buttonComponent() {
+            if (this.component !== false) {
+                return getVueComponentFromObj(this.component);
+            }
+            return "button";
+        },
+        classes() {
+            const classes = [`${VT_NAMESPACE}__close-button`];
+            if (this.showOnHover) {
+                classes.push("show-on-hover");
+            }
+            return classes.concat(this.classNames);
+        },
+    },
+});
+
+/* script */
+const __vue_script__$1 = script$1;
+
+/* template */
+var __vue_render__$1 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    _vm.buttonComponent,
+    _vm._g(
+      {
+        tag: "component",
+        class: _vm.classes,
+        attrs: { "aria-label": _vm.ariaLabel }
+      },
+      _vm.$listeners
+    ),
+    [_vm._v("\n  ×\n")]
+  )
+};
+var __vue_staticRenderFns__$1 = [];
+__vue_render__$1._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$1 = undefined;
+  /* scoped */
+  const __vue_scope_id__$1 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$1 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$1 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$1 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+    __vue_inject_styles__$1,
+    __vue_script__$1,
+    __vue_scope_id__$1,
+    __vue_is_functional_template__$1,
+    __vue_module_identifier__$1,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$2 = {};
+
+/* script */
+const __vue_script__$2 = script$2;
+
+/* template */
+var __vue_render__$2 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "svg",
+    {
+      staticClass: "svg-inline--fa fa-check-circle fa-w-16",
+      attrs: {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "check-circle",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512"
+      }
+    },
+    [
+      _c("path", {
+        attrs: {
+          fill: "currentColor",
+          d:
+            "M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z"
+        }
+      })
+    ]
+  )
+};
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$2 = undefined;
+  /* scoped */
+  const __vue_scope_id__$2 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$2 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$2 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$2 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$3 = {};
+
+/* script */
+const __vue_script__$3 = script$3;
+
+/* template */
+var __vue_render__$3 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "svg",
+    {
+      staticClass: "svg-inline--fa fa-info-circle fa-w-16",
+      attrs: {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "info-circle",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512"
+      }
+    },
+    [
+      _c("path", {
+        attrs: {
+          fill: "currentColor",
+          d:
+            "M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+        }
+      })
+    ]
+  )
+};
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$3 = undefined;
+  /* scoped */
+  const __vue_scope_id__$3 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$3 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$3 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$4 = {};
+
+/* script */
+const __vue_script__$4 = script$4;
+
+/* template */
+var __vue_render__$4 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "svg",
+    {
+      staticClass: "svg-inline--fa fa-exclamation-circle fa-w-16",
+      attrs: {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "exclamation-circle",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 512 512"
+      }
+    },
+    [
+      _c("path", {
+        attrs: {
+          fill: "currentColor",
+          d:
+            "M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+        }
+      })
+    ]
+  )
+};
+var __vue_staticRenderFns__$4 = [];
+__vue_render__$4._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$4 = undefined;
+  /* scoped */
+  const __vue_scope_id__$4 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$4 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$4 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$4 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$5 = {};
+
+/* script */
+const __vue_script__$5 = script$5;
+
+/* template */
+var __vue_render__$5 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "svg",
+    {
+      staticClass: "svg-inline--fa fa-exclamation-triangle fa-w-18",
+      attrs: {
+        "aria-hidden": "true",
+        focusable: "false",
+        "data-prefix": "fas",
+        "data-icon": "exclamation-triangle",
+        role: "img",
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 576 512"
+      }
+    },
+    [
+      _c("path", {
+        attrs: {
+          fill: "currentColor",
+          d:
+            "M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+        }
+      })
+    ]
+  )
+};
+var __vue_staticRenderFns__$5 = [];
+__vue_render__$5._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$5 = undefined;
+  /* scoped */
+  const __vue_scope_id__$5 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$5 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$5 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$5 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+    __vue_inject_styles__$5,
+    __vue_script__$5,
+    __vue_scope_id__$5,
+    __vue_is_functional_template__$5,
+    __vue_module_identifier__$5,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$6 = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    props: PROPS.ICON,
+    computed: {
+        customIconChildren() {
+            return hasProp(this.customIcon, "iconChildren")
+                ? this.trimValue(this.customIcon.iconChildren)
+                : "";
+        },
+        customIconClass() {
+            if (isString(this.customIcon)) {
+                return this.trimValue(this.customIcon);
+            }
+            else if (hasProp(this.customIcon, "iconClass")) {
+                return this.trimValue(this.customIcon.iconClass);
+            }
+            return "";
+        },
+        customIconTag() {
+            if (hasProp(this.customIcon, "iconTag")) {
+                return this.trimValue(this.customIcon.iconTag, "i");
+            }
+            return "i";
+        },
+        hasCustomIcon() {
+            return this.customIconClass.length > 0;
+        },
+        component() {
+            if (this.hasCustomIcon) {
+                return this.customIconTag;
+            }
+            if (isToastContent(this.customIcon)) {
+                return getVueComponentFromObj(this.customIcon);
+            }
+            return this.iconTypeComponent;
+        },
+        iconTypeComponent() {
+            const types = {
+                [TYPE.DEFAULT]: __vue_component__$3,
+                [TYPE.INFO]: __vue_component__$3,
+                [TYPE.SUCCESS]: __vue_component__$2,
+                [TYPE.ERROR]: __vue_component__$5,
+                [TYPE.WARNING]: __vue_component__$4,
+            };
+            return types[this.type];
+        },
+        iconClasses() {
+            const classes = [`${VT_NAMESPACE}__icon`];
+            if (this.hasCustomIcon) {
+                return classes.concat(this.customIconClass);
+            }
+            return classes;
+        },
+    },
+    methods: {
+        trimValue(value, empty = "") {
+            return isNonEmptyString(value) ? value.trim() : empty;
+        },
+    },
+});
+
+/* script */
+const __vue_script__$6 = script$6;
+
+/* template */
+var __vue_render__$6 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(_vm.component, { tag: "component", class: _vm.iconClasses }, [
+    _vm._v(_vm._s(_vm.customIconChildren))
+  ])
+};
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$6 = undefined;
+  /* scoped */
+  const __vue_scope_id__$6 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$6 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$6 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$6 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
+    __vue_inject_styles__$6,
+    __vue_script__$6,
+    __vue_scope_id__$6,
+    __vue_is_functional_template__$6,
+    __vue_module_identifier__$6,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$7 = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    components: { ProgressBar: __vue_component__, CloseButton: __vue_component__$1, Icon: __vue_component__$6 },
+    inheritAttrs: false,
+    props: Object.assign({}, PROPS.CORE_TOAST, PROPS.TOAST),
+    data() {
+        const data = {
+            isRunning: true,
+            disableTransitions: false,
+            beingDragged: false,
+            dragStart: 0,
+            dragPos: { x: 0, y: 0 },
+            dragRect: {},
+        };
+        return data;
+    },
+    computed: {
+        classes() {
+            const classes = [
+                `${VT_NAMESPACE}__toast`,
+                `${VT_NAMESPACE}__toast--${this.type}`,
+                `${this.position}`,
+            ].concat(this.toastClassName);
+            if (this.disableTransitions) {
+                classes.push("disable-transition");
+            }
+            if (this.rtl) {
+                classes.push(`${VT_NAMESPACE}__toast--rtl`);
+            }
+            return classes;
+        },
+        bodyClasses() {
+            const classes = [
+                `${VT_NAMESPACE}__toast-${isString(this.content) ? "body" : "component-body"}`,
+            ].concat(this.bodyClassName);
+            return classes;
+        },
+        draggableStyle() {
+            if (this.dragStart === this.dragPos.x) {
+                return {};
+            }
+            if (this.beingDragged) {
+                return {
+                    transform: `translateX(${this.dragDelta}px)`,
+                    opacity: 1 - Math.abs(this.dragDelta / this.removalDistance),
+                };
+            }
+            return {
+                transition: "transform 0.2s, opacity 0.2s",
+                transform: "translateX(0)",
+                opacity: 1,
+            };
+        },
+        dragDelta() {
+            return this.beingDragged ? this.dragPos.x - this.dragStart : 0;
+        },
+        removalDistance() {
+            if (isDOMRect(this.dragRect)) {
+                return ((this.dragRect.right - this.dragRect.left) * this.draggablePercent);
+            }
+            return 0;
+        },
+    },
+    mounted() {
+        if (this.draggable) {
+            this.draggableSetup();
+        }
+        if (this.pauseOnFocusLoss) {
+            this.focusSetup();
+        }
+    },
+    beforeDestroy() {
+        if (this.draggable) {
+            this.draggableCleanup();
+        }
+        if (this.pauseOnFocusLoss) {
+            this.focusCleanup();
+        }
+    },
+    destroyed() {
+        setTimeout(() => {
+            removeElement(this.$el);
+        }, 1000);
+    },
+    methods: {
+        getVueComponentFromObj,
+        closeToast() {
+            this.eventBus.$emit(EVENTS.DISMISS, this.id);
+        },
+        clickHandler() {
+            if (this.onClick) {
+                this.onClick(this.closeToast);
+            }
+            if (this.closeOnClick) {
+                if (!this.beingDragged || this.dragStart === this.dragPos.x) {
+                    this.closeToast();
+                }
+            }
+        },
+        timeoutHandler() {
+            this.closeToast();
+        },
+        hoverPause() {
+            if (this.pauseOnHover) {
+                this.isRunning = false;
+            }
+        },
+        hoverPlay() {
+            if (this.pauseOnHover) {
+                this.isRunning = true;
+            }
+        },
+        focusPause() {
+            this.isRunning = false;
+        },
+        focusPlay() {
+            this.isRunning = true;
+        },
+        focusSetup() {
+            addEventListener("blur", this.focusPause);
+            addEventListener("focus", this.focusPlay);
+        },
+        focusCleanup() {
+            removeEventListener("blur", this.focusPause);
+            removeEventListener("focus", this.focusPlay);
+        },
+        draggableSetup() {
+            const element = this.$el;
+            element.addEventListener("touchstart", this.onDragStart, {
+                passive: true,
+            });
+            element.addEventListener("mousedown", this.onDragStart);
+            addEventListener("touchmove", this.onDragMove, { passive: false });
+            addEventListener("mousemove", this.onDragMove);
+            addEventListener("touchend", this.onDragEnd);
+            addEventListener("mouseup", this.onDragEnd);
+        },
+        draggableCleanup() {
+            const element = this.$el;
+            element.removeEventListener("touchstart", this.onDragStart);
+            element.removeEventListener("mousedown", this.onDragStart);
+            removeEventListener("touchmove", this.onDragMove);
+            removeEventListener("mousemove", this.onDragMove);
+            removeEventListener("touchend", this.onDragEnd);
+            removeEventListener("mouseup", this.onDragEnd);
+        },
+        onDragStart(event) {
+            this.beingDragged = true;
+            this.dragPos = { x: getX(event), y: getY(event) };
+            this.dragStart = getX(event);
+            this.dragRect = this.$el.getBoundingClientRect();
+        },
+        onDragMove(event) {
+            if (this.beingDragged) {
+                event.preventDefault();
+                if (this.isRunning) {
+                    this.isRunning = false;
+                }
+                this.dragPos = { x: getX(event), y: getY(event) };
+            }
+        },
+        onDragEnd() {
+            if (this.beingDragged) {
+                if (Math.abs(this.dragDelta) >= this.removalDistance) {
+                    this.disableTransitions = true;
+                    this.$nextTick(() => this.closeToast());
+                }
+                else {
+                    setTimeout(() => {
+                        this.beingDragged = false;
+                        if (isDOMRect(this.dragRect) &&
+                            this.pauseOnHover &&
+                            this.dragRect.bottom >= this.dragPos.y &&
+                            this.dragPos.y >= this.dragRect.top &&
+                            this.dragRect.left <= this.dragPos.x &&
+                            this.dragPos.x <= this.dragRect.right) {
+                            this.isRunning = false;
+                        }
+                        else {
+                            this.isRunning = true;
+                        }
+                    });
+                }
+            }
+        },
+    },
+});
+
+/* script */
+const __vue_script__$7 = script$7;
+
+/* template */
+var __vue_render__$7 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    {
+      class: _vm.classes,
+      style: _vm.draggableStyle,
+      on: {
+        click: _vm.clickHandler,
+        mouseenter: _vm.hoverPause,
+        mouseleave: _vm.hoverPlay
+      }
+    },
+    [
+      _vm.icon
+        ? _c("Icon", { attrs: { "custom-icon": _vm.icon, type: _vm.type } })
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          class: _vm.bodyClasses,
+          attrs: { role: _vm.accessibility.toastRole || "alert" }
+        },
+        [
+          typeof _vm.content === "string"
+            ? [_vm._v(_vm._s(_vm.content))]
+            : _c(
+                _vm.getVueComponentFromObj(_vm.content),
+                _vm._g(
+                  _vm._b(
+                    {
+                      tag: "component",
+                      attrs: { "toast-id": _vm.id },
+                      on: { "close-toast": _vm.closeToast }
+                    },
+                    "component",
+                    _vm.content.props,
+                    false
+                  ),
+                  _vm.content.listeners
+                )
+              )
+        ],
+        2
+      ),
+      _vm._v(" "),
+      !!_vm.closeButton
+        ? _c("CloseButton", {
+            attrs: {
+              component: _vm.closeButton,
+              "class-names": _vm.closeButtonClassName,
+              "show-on-hover": _vm.showCloseButtonOnHover,
+              "aria-label": _vm.accessibility.closeButtonLabel
+            },
+            on: {
+              click: function($event) {
+                $event.stopPropagation();
+                return _vm.closeToast($event)
+              }
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.timeout
+        ? _c("ProgressBar", {
+            attrs: {
+              "is-running": _vm.isRunning,
+              "hide-progress-bar": _vm.hideProgressBar,
+              timeout: _vm.timeout
+            },
+            on: { "close-toast": _vm.timeoutHandler }
+          })
+        : _vm._e()
+    ],
+    1
+  )
+};
+var __vue_staticRenderFns__$7 = [];
+__vue_render__$7._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$7 = undefined;
+  /* scoped */
+  const __vue_scope_id__$7 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$7 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$7 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$7 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
+    __vue_inject_styles__$7,
+    __vue_script__$7,
+    __vue_scope_id__$7,
+    __vue_is_functional_template__$7,
+    __vue_module_identifier__$7,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+// Transition methods taken from https://github.com/BinarCode/vue2-transitions
+var script$8 = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    inheritAttrs: false,
+    props: PROPS.TRANSITION,
+    methods: {
+        beforeEnter(el) {
+            const enterDuration = typeof this.transitionDuration === "number"
+                ? this.transitionDuration
+                : this.transitionDuration.enter;
+            el.style.animationDuration = `${enterDuration}ms`;
+            el.style.animationFillMode = "both";
+            this.$emit("before-enter", el);
+        },
+        afterEnter(el) {
+            this.cleanUpStyles(el);
+            this.$emit("after-enter", el);
+        },
+        afterLeave(el) {
+            this.cleanUpStyles(el);
+            this.$emit("after-leave", el);
+        },
+        beforeLeave(el) {
+            const leaveDuration = typeof this.transitionDuration === "number"
+                ? this.transitionDuration
+                : this.transitionDuration.leave;
+            el.style.animationDuration = `${leaveDuration}ms`;
+            el.style.animationFillMode = "both";
+            this.$emit("before-leave", el);
+        },
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        leave(el, done) {
+            this.setAbsolutePosition(el);
+            this.$emit("leave", el, done);
+        },
+        setAbsolutePosition(el) {
+            el.style.left = el.offsetLeft + "px";
+            el.style.top = el.offsetTop + "px";
+            el.style.width = getComputedStyle(el).width;
+            el.style.height = getComputedStyle(el).height;
+            el.style.position = "absolute";
+        },
+        cleanUpStyles(el) {
+            el.style.animationFillMode = "";
+            el.style.animationDuration = "";
+        },
+    },
+});
+
+/* script */
+const __vue_script__$8 = script$8;
+
+/* template */
+var __vue_render__$8 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "transition-group",
+    {
+      attrs: {
+        tag: "div",
+        "enter-active-class": _vm.transition.enter
+          ? _vm.transition.enter
+          : _vm.transition + "-enter-active",
+        "move-class": _vm.transition.move
+          ? _vm.transition.move
+          : _vm.transition + "-move",
+        "leave-active-class": _vm.transition.leave
+          ? _vm.transition.leave
+          : _vm.transition + "-leave-active"
+      },
+      on: {
+        leave: _vm.leave,
+        "before-enter": _vm.beforeEnter,
+        "before-leave": _vm.beforeLeave,
+        "after-enter": _vm.afterEnter,
+        "after-leave": _vm.afterLeave
+      }
+    },
+    [_vm._t("default")],
+    2
+  )
+};
+var __vue_staticRenderFns__$8 = [];
+__vue_render__$8._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$8 = undefined;
+  /* scoped */
+  const __vue_scope_id__$8 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$8 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$8 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$8 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
+    __vue_inject_styles__$8,
+    __vue_script__$8,
+    __vue_scope_id__$8,
+    __vue_is_functional_template__$8,
+    __vue_module_identifier__$8,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$9 = vue__WEBPACK_IMPORTED_MODULE_0__.default.extend({
+    components: { Toast: __vue_component__$7, VtTransition: __vue_component__$8 },
+    props: Object.assign({}, PROPS.CORE_TOAST, PROPS.CONTAINER, PROPS.TRANSITION),
+    data() {
+        const data = {
+            count: 0,
+            positions: Object.values(POSITION),
+            toasts: {},
+            defaults: {},
+        };
+        return data;
+    },
+    computed: {
+        toastArray() {
+            return Object.values(this.toasts);
+        },
+        filteredToasts() {
+            return this.defaults.filterToasts(this.toastArray);
+        },
+    },
+    beforeMount() {
+        this.setup(this.container);
+        const events = this.eventBus;
+        events.$on(EVENTS.ADD, this.addToast);
+        events.$on(EVENTS.CLEAR, this.clearToasts);
+        events.$on(EVENTS.DISMISS, this.dismissToast);
+        events.$on(EVENTS.UPDATE, this.updateToast);
+        events.$on(EVENTS.UPDATE_DEFAULTS, this.updateDefaults);
+        this.defaults = this.$props;
+    },
+    methods: {
+        setup(container) {
+            return __awaiter(this, void 0, void 0, function* () {
+                if (isFunction(container)) {
+                    container = yield container();
+                }
+                removeElement(this.$el);
+                container.appendChild(this.$el);
+            });
+        },
+        setToast(props) {
+            if (!isUndefined(props.id)) {
+                this.$set(this.toasts, props.id, props);
+            }
+        },
+        addToast(params) {
+            const props = Object.assign({}, this.defaults, params.type &&
+                this.defaults.toastDefaults &&
+                this.defaults.toastDefaults[params.type], params);
+            const toast = this.defaults.filterBeforeCreate(props, this.toastArray);
+            toast && this.setToast(toast);
+        },
+        dismissToast(id) {
+            const toast = this.toasts[id];
+            if (!isUndefined(toast) && !isUndefined(toast.onClose)) {
+                toast.onClose();
+            }
+            this.$delete(this.toasts, id);
+        },
+        clearToasts() {
+            Object.keys(this.toasts).forEach((id) => {
+                this.dismissToast(id);
+            });
+        },
+        getPositionToasts(position) {
+            const toasts = this.filteredToasts
+                .filter((toast) => toast.position === position)
+                .slice(0, this.defaults.maxToasts);
+            return this.defaults.newestOnTop ? toasts.reverse() : toasts;
+        },
+        updateDefaults(update) {
+            // Update container if changed
+            if (!isUndefined(update.container)) {
+                this.setup(update.container);
+            }
+            this.defaults = Object.assign({}, this.defaults, update);
+        },
+        updateToast({ id, options, create, }) {
+            if (this.toasts[id]) {
+                // If a timeout is defined, and is equal to the one before, change it
+                // a little so the progressBar is reset
+                if (options.timeout && options.timeout === this.toasts[id].timeout) {
+                    options.timeout++;
+                }
+                this.setToast(Object.assign({}, this.toasts[id], options));
+            }
+            else if (create) {
+                this.addToast(Object.assign({}, { id }, options));
+            }
+        },
+        getClasses(position) {
+            const classes = [`${VT_NAMESPACE}__container`, position];
+            return classes.concat(this.defaults.containerClassName);
+        },
+    },
+});
+
+/* script */
+const __vue_script__$9 = script$9;
+
+/* template */
+var __vue_render__$9 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    _vm._l(_vm.positions, function(pos) {
+      return _c(
+        "div",
+        { key: pos },
+        [
+          _c(
+            "VtTransition",
+            {
+              class: _vm.getClasses(pos),
+              attrs: {
+                transition: _vm.defaults.transition,
+                "transition-duration": _vm.defaults.transitionDuration
+              }
+            },
+            _vm._l(_vm.getPositionToasts(pos), function(toast) {
+              return _c(
+                "Toast",
+                _vm._b({ key: toast.id }, "Toast", toast, false)
+              )
+            }),
+            1
+          )
+        ],
+        1
+      )
+    }),
+    0
+  )
+};
+var __vue_staticRenderFns__$9 = [];
+__vue_render__$9._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$9 = undefined;
+  /* scoped */
+  const __vue_scope_id__$9 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$9 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$9 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$9 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
+    __vue_inject_styles__$9,
+    __vue_script__$9,
+    __vue_scope_id__$9,
+    __vue_is_functional_template__$9,
+    __vue_module_identifier__$9,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+const ToastInterface = (Vue, globalOptions = {}, mountContainer = true) => {
+    const events = (globalOptions.eventBus = globalOptions.eventBus || new Vue());
+    if (mountContainer) {
+        const containerComponent = new (Vue.extend(__vue_component__$9))({
+            el: document.createElement("div"),
+            propsData: globalOptions,
+        });
+        const onMounted = globalOptions.onMounted;
+        if (!isUndefined(onMounted)) {
+            onMounted(containerComponent);
+        }
+    }
+    /**
+     * Display a toast
+     */
+    const toast = (content, options) => {
+        const props = Object.assign({}, { id: getId(), type: TYPE.DEFAULT }, options, {
+            content,
+        });
+        events.$emit(EVENTS.ADD, props);
+        return props.id;
+    };
+    /**
+     * Clear all toasts
+     */
+    toast.clear = () => events.$emit(EVENTS.CLEAR);
+    /**
+     * Update Plugin Defaults
+     */
+    toast.updateDefaults = (update) => {
+        events.$emit(EVENTS.UPDATE_DEFAULTS, update);
+    };
+    /**
+     * Dismiss toast specified by an id
+     */
+    toast.dismiss = (id) => {
+        events.$emit(EVENTS.DISMISS, id);
+    };
+    function updateToast(id, { content, options }, create = false) {
+        events.$emit(EVENTS.UPDATE, {
+            id,
+            options: Object.assign({}, options, { content }),
+            create,
+        });
+    }
+    toast.update = updateToast;
+    /**
+     * Display a success toast
+     */
+    toast.success = (content, options) => toast(content, Object.assign({}, options, { type: TYPE.SUCCESS }));
+    /**
+     * Display an info toast
+     */
+    toast.info = (content, options) => toast(content, Object.assign({}, options, { type: TYPE.INFO }));
+    /**
+     * Display an error toast
+     */
+    toast.error = (content, options) => toast(content, Object.assign({}, options, { type: TYPE.ERROR }));
+    /**
+     * Display a warning toast
+     */
+    toast.warning = (content, options) => toast(content, Object.assign({}, options, { type: TYPE.WARNING }));
+    return toast;
+};
+
+function createToastInterface(optionsOrEventBus, Vue$1 = vue__WEBPACK_IMPORTED_MODULE_0__.default) {
+    const isVueInstance = (obj) => obj instanceof Vue$1;
+    if (isVueInstance(optionsOrEventBus)) {
+        return ToastInterface(Vue$1, { eventBus: optionsOrEventBus }, false);
+    }
+    return ToastInterface(Vue$1, optionsOrEventBus, true);
+}
+const VueToastificationPlugin = (Vue, options) => {
+    const toast = createToastInterface(options, Vue);
+    Vue.$toast = toast;
+    Vue.prototype.$toast = toast;
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueToastificationPlugin);
+
+//# sourceMappingURL=index.js.map
 
 
 /***/ }),
@@ -37514,6 +40032,3291 @@ __vue_render__$4._withStripped = true;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Datepicker);
 
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate-error-extractor/dist/vuelidate-error-extractor.esm.js":
+/*!**************************************************************************************!*\
+  !*** ./node_modules/vuelidate-error-extractor/dist/vuelidate-error-extractor.esm.js ***!
+  \**************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "singleErrorExtractorMixin": () => (/* binding */ singleErrorExtractorMixin),
+/* harmony export */   "multiErrorExtractorMixin": () => (/* binding */ multiErrorExtractorMixin),
+/* harmony export */   "configs": () => (/* binding */ index$1),
+/* harmony export */   "templates": () => (/* binding */ index),
+/* harmony export */   "version": () => (/* binding */ version)
+/* harmony export */ });
+/* harmony import */ var _d_hristov_get_value__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @d_hristov/get-value */ "./node_modules/@d_hristov/get-value/dist/index.esm.js");
+/*!
+ * vuelidate-error-extractor v2.4.1 
+ * (c) 2019 Dobromir Hristov
+ * Released under the MIT License.
+ */
+
+
+/**
+ * Gets object values deeply by using a dot notation path
+ * @param {object} obj
+ * @param {string} path
+ * @param {*} [def]
+ * @return {*}
+ */
+function get (obj, path, def) {
+  return (0,_d_hristov_get_value__WEBPACK_IMPORTED_MODULE_0__.default)(obj, path, { default: def })
+}
+
+function formatErrorMessage (message) {
+  return ("[vuelidate-error-extractor]: " + message)
+}
+
+/**
+ * Replace dot notated strings in curly braces for values
+ * @param {String} template - Template to search
+ * @param {Object} object - Object with data to traverse
+ * @return {string}
+ */
+function template (template, object) {
+  if (typeof template !== 'string') {
+    throw new TypeError(formatErrorMessage(("Expected a string in the first argument, got " + (typeof template))))
+  }
+
+  if (typeof object !== 'object') {
+    throw new TypeError(formatErrorMessage(("Expected an Object/Array in the second argument, got " + (typeof object))))
+  }
+  var regx = /{(.*?)}/g;
+
+  return template.replace(regx, function (_, key) { return get(object, key, ''); })
+}
+
+/**
+ * Return the proper validation object
+ * @param {String} validationKey - Key by which we will get the translation
+ * @param {String} key - Key to get the error status from
+ * @param {Object} params - All the extra params that will be merged with the Given validatorParams prop.
+ * @return {Object}
+ */
+function getValidationObject (validationKey, key, params) {
+  if ( params === void 0 ) params = {};
+
+  return {
+    validationKey: validationKey,
+    hasError: !this.preferredValidator[key],
+    $params: this.preferredValidator.$params[key],
+    $dirty: this.preferredValidator.$dirty,
+    $error: this.preferredValidator.$error,
+    $invalid: this.preferredValidator.$invalid,
+    // Add the label for the :attribute parameter that is used in most Laravel validations
+    params: Object.assign({}, {
+      attribute: this.resolvedAttribute,
+      label: this.label
+    }, params, this.validatorParams)
+  }
+}
+
+/**
+ * The flat
+ * @typedef VeeFlatMultiError
+ * @property {string} fieldName - The name of the field validated. Can be dot.path based.
+ * @property {string} validationKey - Name of the validation rule
+ * @property {boolean} hasError - Whether it has an error or not
+ * @property {object} params - The object holding merged params from Vuelidate + custom provided ones
+ * @property {boolean} $dirty - Whether its dirty. Vuelidate.$dirty
+ * @property {boolean} $error - Whether there is an error or not. Vuelidate.$error
+ * @property {boolean} $invalid - Whether the field is invalid. Vuelidate.$invalid
+ */
+
+/**
+ * A collection of VeeFlatMultiError objects
+ * @typedef {VeeFlatMultiError[]} VeeFlatMultiErrorBag
+ */
+
+/**
+ * Flattens a deep Vuelidate Validator object to a normalized flat structure
+ * @param {object} validator - Vuelidate Validator object
+ * @param {string} [fieldName] - Name of validated field. Builds a dot.path when used on deep objects. Passed by recursive call to same function.
+ * @return {VeeFlatMultiErrorBag}
+ */
+function flattenValidatorObjects (validator, fieldName) {
+  // loop the validator objects
+  return Object.entries(validator)
+  // leave those that dont have $ in their name with exception of $each
+    .filter(function (ref) {
+      var key = ref[0];
+      var value = ref[1];
+
+      return !key.startsWith('$') || key === '$each';
+  })
+    .reduce(function (errors, ref) {
+      var key = ref[0];
+      var value = ref[1];
+
+      // if its an object, its probably a deeply nested object
+      if (typeof value === 'object') {
+        var nestedValidatorName =
+          // Key can be "$each", a "string" or a "number" from inside "$each".
+          // If "key" is "$each" or a string (from a nested object like "address.postal_code"), use the passed fieldName as its a recursive call from previous call.
+          (key === '$each' || !isNaN(parseInt(key))) ? fieldName
+            // if fieldName is available, build it like `model.brand` from `model.$each.0.brand`.
+            : fieldName ? (fieldName + "." + key)
+            // fallback to the "key" if "fieldName" is not available
+            : key;
+        // recursively call the flatten again on the same error object, looking deep into it.
+        return errors.concat(flattenValidatorObjects(value, nestedValidatorName))
+      } // else its the validated prop
+      var params = Object.assign({}, validator.$params[key]);
+      // delete type as it is coming for Vuelidate and may interfere with user custom attributes
+      delete params.type;
+      errors.push({
+        fieldName: fieldName,
+        validationKey: key,
+        hasError: !value,
+        params: params,
+        $dirty: validator.$dirty,
+        $error: validator.$error,
+        $invalid: validator.$invalid
+      });
+      return errors
+    }, [])
+}
+
+/**
+ * Fetches error message by its key from the provided messages object
+ * Key can be a deep dot notation path 'path.to.object' in "{ path:{ to: { object: {} } } }"
+ * @param {object} messages
+ * @param {string} key
+ * @param {object} [params]
+ * @return {string}
+ */
+function getErrorString (messages, key, params) {
+  var msg = get(messages, key, false);
+  if (!msg) {
+    return key
+  }
+  return template(msg, params)
+}
+
+/**
+ * Strip the "$each.0" from field names
+ * @type {RegExp}
+ */
+var NORMALIZE_ATTR_REGEX = /\$each\.\d\./g;
+
+/**
+ * Retrieves a validations attribute from the provided attributes object
+ * @param {object} attributes - Map of attribute name as key to attribute value
+ * @param {string} fieldName - The attribute key. Can be dot.notation.
+ * @return {string}
+ */
+function getAttribute (attributes, fieldName) {
+  // strip out the $each and fetch the attribute from the attributes object. Return the name if it does exist on the object
+  var normalizedName = fieldName.replace(NORMALIZE_ATTR_REGEX, '');
+  return get(attributes, normalizedName, normalizedName)
+}
+
+/**
+ * Retrieves the translated attribute value by its key.
+ * If key is not present in the provided attributes parameter,
+ * we build it using the $_VEE_i18nDefaultAttribute key.
+ * @param {object} attributes - Map of attribute name as keys and paths to translations as values
+ * @param {string} fieldName - Attribute name, can be name or dot notation path to key
+ * @return {string}
+ */
+function getI18nAttribute (attributes, fieldName) {
+  // strip out the $each from the name
+  var normalizedName = fieldName.replace(NORMALIZE_ATTR_REGEX, '');
+  // fetches the attribute key from the i18nAttributes property. Can be dot.notation based.
+  var attributeKey = get(attributes, normalizedName);
+  // if there is such a key in the passed attributes param, we translate with it directly
+  if (attributeKey) {
+    return this.$t(attributeKey)
+  } else {
+    // We dont have the key defined and no __default attribute, so we just return the key so its not empty
+    if (!this.$_VEE_i18nDefaultAttribute) {
+      return normalizedName
+    }
+    // use the defaultAttribute to build the path to the attribute translation
+    return this.$t(((this.$_VEE_i18nDefaultAttribute) + "." + normalizedName))
+  }
+}
+
+/**
+ * Resolves the attribute depending if in i18n mode or not
+ * @param {Object.<string, string>} i18nAttributes
+ * @param {Object.<string, string>} attributes
+ * @param {string} name - Validated field name. Dot.path based
+ * @return {string}
+ */
+function resolveAttribute (i18nAttributes, attributes, name) {
+  // if its in 18n mode and has i18n attributes defined, extract them
+  if (this.$_VEE_hasI18n && this.$_VEE_hasI18nAttributes) {
+    return getI18nAttribute.call(this, i18nAttributes, name)
+  } else {
+    return getAttribute(attributes, name)
+  }
+}
+
+var baseErrorsMixin = {
+  inject: {
+    /**
+     * Inject the validator from a parent FormWrapper component
+     */
+    formValidator: { default: false },
+    /**
+     * Injects an error messages dictionary from a parent FormWrapper
+     */
+    formMessages: { default: function () { return ({}); } }
+  },
+  props: {
+    /**
+     * The Vuelidate validator object
+     * Not required as a field may loose its validator under some validation rule change
+     */
+    validator: {
+      type: Object,
+      default: function () { return ({
+        $dirty: false,
+        $error: false,
+        $invalid: true,
+        $pending: false,
+        $params: []
+      }); }
+    },
+    /**
+     * A dictionary of error messages that can override the globally defined ones.
+     * @type {Object.<string, string>}
+     */
+    messages: {
+      type: Object,
+      default: function () { return ({}); }
+    }
+  },
+  computed: {
+    /**
+     * Filters out only the active errors
+     * @return {array}
+     */
+    activeErrors: function activeErrors () {
+      return this.errors.filter(function (error) { return error.hasError && error.$dirty; })
+    },
+    /**
+     * Returns a merged messages object from the global ones, the injected ones from form-wrapper and the locally provided messages prop
+     * @return {object}
+     */
+    mergedMessages: function mergedMessages () {
+      return Object.assign({}, this.$vuelidateErrorExtractor.messages, this.formMessages, this.messages)
+    },
+    /**
+     * Returns the first available error object
+     * @return {string}
+     */
+    firstError: function firstError () {
+      return this.activeErrors.length ? this.activeErrors[0] : ''
+    },
+    /**
+     * Returns the first available error message
+     * @return {string}
+     */
+    firstErrorMessage: function firstErrorMessage () {
+      return this.activeErrors.length ? this.activeErrorMessages[0] : ''
+    },
+    /**
+     * A convenience method to check if the validator has errors
+     * @return {boolean}
+     */
+    hasErrors: function hasErrors () {
+      return this.preferredValidator.$error
+    },
+    /**
+     * Returns an array of all the active error messages.
+     * Use this if you just need to loop over the error messages as it is cached.
+     * @return {string[]}
+     */
+    activeErrorMessages: function activeErrorMessages () {
+      var this$1 = this;
+
+      return this.activeErrors.map(function (error) { return this$1.getErrorMessage(error.validationKey, error.params); })
+    },
+    /**
+     * Returns a boolean whether plugin is in i18n mode
+     * @return {boolean}
+     */
+    $_VEE_hasI18n: function $_VEE_hasI18n () {
+      return !!this.$vuelidateErrorExtractor.i18n
+    },
+    /**
+     * Returns a boolean whether i18nAttributes are available
+     * @return {boolean}
+     */
+    $_VEE_hasI18nAttributes: function $_VEE_hasI18nAttributes () {
+      return !!this.$vuelidateErrorExtractor.i18nAttributes
+    },
+    /**
+     * Returns the __default attribute from the i18nAttributes property
+     * @return {string}
+     */
+    $_VEE_i18nDefaultAttribute: function $_VEE_i18nDefaultAttribute () {
+      return this.$_VEE_hasI18nAttributes
+        ? this.$vuelidateErrorExtractor.i18nAttributes['__default']
+        : ''
+    }
+  },
+  methods: {
+    /**
+     * The recommended method to fetch error messages with.
+     * It will choose between using i18n or the plain error method
+     * @param {string} key
+     * @param {object} [params]
+     * @return {string}
+     */
+    getErrorMessage: function getErrorMessage (key, params) {
+      return this.$_VEE_hasI18n
+        ? this.getI18nMessage(key, params)
+        : this.getPlainMessage(key, params)
+    },
+    /**
+     * Returns the translated error message
+     * If a locally provided error message with the same key exists,
+     * it will take weight over the default dictionary
+     * @param {string} key
+     * @param {object} [params]
+     * @return {string}
+     */
+    getI18nMessage: function getI18nMessage (key, params) {
+      var localMessageOverride = get(this.mergedMessages, key);
+      if (localMessageOverride) {
+        return this.$t(localMessageOverride, params)
+      }
+      // fallback to the default dictionary in i18n
+      return this.$t(this.$vuelidateErrorExtractor.i18n + '.' + key, params)
+    },
+    /**
+     * Gets the error message from the provided dictionary
+     * @param {string} key
+     * @param {object} [params]
+     * @return {string}
+     */
+    getPlainMessage: function getPlainMessage (key, params) {
+      return getErrorString(this.mergedMessages, key, params)
+    }
+  }
+};
+
+var singleErrorExtractorMixin = {
+  props: {
+    /**
+     * A generic label that is shown as a Label above the input and replaces the attribute placeholder if not provided.
+     * @type {string}
+     */
+    label: { type: String, default: '' },
+    /**
+     * Replaces the {attribute} placeholder in the error message fields.
+     * @type {string}
+     */
+    attribute: { type: String, default: '' },
+    /**
+     * Used to find the attribute and validator of the field when used with a FormWrapper component.
+     * @type {string}
+     */
+    name: { type: String, default: '' },
+    /**
+     * Params that are passed for the validation.
+     * @type { Object.<string, (string|number)> }
+     * Example: {other: $t('auth.password')} when using a sameAs validation and we need a translated "other" field.
+     */
+    validatorParams: {
+      type: Object,
+      default: function () { return ({}); }
+    },
+    /**
+     * Whether to show only one error at a time
+     * @type {boolean}
+     */
+    showSingleError: {
+      type: Boolean,
+      default: false
+    }
+  },
+  extends: baseErrorsMixin,
+  computed: {
+    /**
+     * Returns the appropriate validator based on provided validator props, injected validator and so on.
+     * @return {object}
+     */
+    preferredValidator: function preferredValidator () {
+      // if validator is passed is present on propsData, user has explicitly provided it.
+      if (this.$options.propsData.hasOwnProperty('validator')) { return this.validator }
+      return this.name ? get(this.formValidator, this.name, this.validator) : this.validator
+    },
+    /**
+     * Returns an array of possible error objects
+     * @return {any[]}
+     */
+    errors: function errors () {
+      var this$1 = this;
+
+      var vualidateParams = this.preferredValidator.$params;
+      /** @type {Object.<string, { validationKey: string, params: { ext: string, vue: string }[]}>} */
+      var remappedValidation = this.$vuelidateErrorExtractor.validationKeys || {};
+      // Map all the params in the validator object. They correspond to every validation rule.
+      return Object.keys(vualidateParams).map(function (validationRuleKey) {
+        var vuelidateValidatorObject = vualidateParams[validationRuleKey];
+        // Check of we have defined our validation remap in the settings
+        if (remappedValidation.hasOwnProperty(validationRuleKey)) {
+          var params$1 = remappedValidation[validationRuleKey].params.reduce(function (all, paramKey) {
+            // Use the extra supplied data via validator-params prop or use the one from vuelidate
+            all[paramKey.ext] = this$1.validatorParams[paramKey.vue] || vuelidateValidatorObject[paramKey.vue];
+            return all
+          }, {});
+          return getValidationObject.call(this$1, remappedValidation[validationRuleKey].validationKey, validationRuleKey, params$1)
+        }
+        var params = Object.assign({}, vuelidateValidatorObject, this$1.validatorParams);
+        delete params.type;
+        // We are using the Vuelidate keys
+        return getValidationObject.call(this$1, validationRuleKey, validationRuleKey, params)
+      })
+    },
+    /**
+     * Generic helper object to assign events easier.
+     * @return {{ input: function }}
+     */
+    events: function events () {
+      var this$1 = this;
+
+      return { input: function () { return this$1.preferredValidator.$touch(); } }
+    },
+    /**
+     * Returns true if field is dirty and has no errors, else null
+     * @return {?Boolean}
+     */
+    isValid: function isValid () {
+      return this.preferredValidator.$dirty ? !this.hasErrors : null
+    },
+    /**
+     * Returns the attribute property depending on provided props - label, attribute, name etc.
+     * @return {string}
+     */
+    resolvedAttribute: function resolvedAttribute () {
+      // if an attribute is provided, just return it as its with highest priority
+      if (this.attribute) { return this.$_VEE_hasI18n ? this.$t(this.attribute) : this.attribute }
+      // if there is no name prop, we cant reach into the attributes object, so we use the label instead
+      if (!this.name) { return this.label }
+      return resolveAttribute.call(this, this.$vuelidateErrorExtractor.i18nAttributes, this.$vuelidateErrorExtractor.attributes, this.name)
+    }
+  }
+};
+
+//
+
+var script = {
+  mixins: [singleErrorExtractorMixin],
+  computed: {
+    attributes: function attributes () {
+      return {
+        class: { 'is-invalid-input': this.hasErrors }
+      }
+    }
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+var __vue_script__ = script;
+
+/* template */
+var __vue_render__ = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    { staticClass: "form-group", class: { error: _vm.hasErrors } },
+    [
+      _vm._t("label", [
+        _vm.label
+          ? _c("label", { class: { "is-invalid-label": _vm.hasErrors } }, [
+              _vm._v(_vm._s(_vm.label) + " " + _vm._s(_vm.errors ? "*" : ""))
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm._t("default", null, {
+        attributes: _vm.attributes,
+        errorMessages: _vm.activeErrorMessages,
+        errors: _vm.activeErrors,
+        events: _vm.events,
+        firstErrorMessage: _vm.firstErrorMessage,
+        hasErrors: _vm.hasErrors,
+        validator: _vm.preferredValidator
+      }),
+      _vm._v(" "),
+      _vm._t(
+        "errors",
+        [
+          _vm.hasErrors
+            ? _c(
+                "div",
+                { staticClass: "form-error is-visible" },
+                [
+                  _vm.showSingleError
+                    ? _c(
+                        "div",
+                        {
+                          attrs: {
+                            "data-validation-attr": _vm.firstError.validationKey
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n        " +
+                              _vm._s(_vm.firstErrorMessage) +
+                              "\n      "
+                          )
+                        ]
+                      )
+                    : _vm._l(_vm.activeErrorMessages, function(error, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: _vm.activeErrors[index].validationKey,
+                            attrs: {
+                              "data-validation-attr":
+                                _vm.activeErrors[index].validationKey
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n          " + _vm._s(error) + "\n        "
+                            )
+                          ]
+                        )
+                      })
+                ],
+                2
+              )
+            : _vm._e()
+        ],
+        {
+          errors: _vm.activeErrors,
+          errorMessages: _vm.activeErrorMessages,
+          hasErrors: _vm.hasErrors,
+          firstErrorMessage: _vm.firstErrorMessage
+        }
+      )
+    ],
+    2
+  )
+};
+var __vue_staticRenderFns__ = [];
+__vue_render__._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__ = undefined;
+  /* scoped */
+  var __vue_scope_id__ = undefined;
+  /* module identifier */
+  var __vue_module_identifier__ = undefined;
+  /* functional template */
+  var __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var foundation6 = normalizeComponent_1(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+//
+
+var script$1 = {
+  mixins: [singleErrorExtractorMixin],
+  computed: {
+    attributes: function attributes () {
+      return {
+        class: { 'form-control': true },
+        name: this.name || undefined
+      }
+    }
+  }
+};
+
+/* script */
+var __vue_script__$1 = script$1;
+
+/* template */
+var __vue_render__$1 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    {
+      staticClass: "form-group",
+      class: { "has-error": _vm.hasErrors, "has-success": _vm.isValid }
+    },
+    [
+      _vm._t("label", [
+        _vm.label
+          ? _c("label", { staticClass: "control-label" }, [
+              _vm._v(
+                "\n      " +
+                  _vm._s(_vm.label) +
+                  " " +
+                  _vm._s(_vm.errors ? "*" : "") +
+                  "\n    "
+              )
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm._t("default", null, {
+        attributes: _vm.attributes,
+        errors: _vm.activeErrors,
+        events: _vm.events,
+        firstErrorMessage: _vm.firstErrorMessage,
+        hasErrors: _vm.hasErrors,
+        validator: _vm.preferredValidator
+      }),
+      _vm._v(" "),
+      _vm._t(
+        "errors",
+        [
+          _vm.hasErrors
+            ? _c(
+                "div",
+                { staticClass: "help-block" },
+                [
+                  _vm.showSingleError
+                    ? _c(
+                        "span",
+                        {
+                          attrs: {
+                            "data-validation-attr": _vm.firstError.validationKey
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n        " +
+                              _vm._s(_vm.firstErrorMessage) +
+                              "\n      "
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.showSingleError
+                    ? _vm._l(_vm.activeErrors, function(error) {
+                        return _c(
+                          "span",
+                          {
+                            key: error.validationKey,
+                            attrs: {
+                              "data-validation-attr": error.validationKey
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n          " +
+                                _vm._s(
+                                  _vm.getErrorMessage(
+                                    error.validationKey,
+                                    error.params
+                                  )
+                                ) +
+                                "\n        "
+                            )
+                          ]
+                        )
+                      })
+                    : _vm._e()
+                ],
+                2
+              )
+            : _vm._e()
+        ],
+        {
+          errors: _vm.activeErrors,
+          errorMessages: _vm.activeErrorMessages,
+          hasErrors: _vm.hasErrors,
+          firstErrorMessage: _vm.firstErrorMessage
+        }
+      )
+    ],
+    2
+  )
+};
+var __vue_staticRenderFns__$1 = [];
+__vue_render__$1._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$1 = undefined;
+  /* scoped */
+  var __vue_scope_id__$1 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$1 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$1 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var bootstrap3 = normalizeComponent_1(
+    { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+    __vue_inject_styles__$1,
+    __vue_script__$1,
+    __vue_scope_id__$1,
+    __vue_is_functional_template__$1,
+    __vue_module_identifier__$1,
+    undefined,
+    undefined
+  );
+
+//
+
+var script$2 = {
+  name: 'Bootstrap4',
+  mixins: [singleErrorExtractorMixin],
+  computed: {
+    attributes: function attributes () {
+      return {
+        class: { 'form-control': true, 'is-invalid': this.hasErrors, 'is-valid': this.isValid },
+        name: this.name || undefined
+      }
+    }
+  }
+};
+
+/* script */
+var __vue_script__$2 = script$2;
+
+/* template */
+var __vue_render__$2 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    [
+      _vm._t("label", [_c("label", [_vm._v(_vm._s(_vm.label))])]),
+      _vm._v(" "),
+      _vm._t("default", null, {
+        attributes: _vm.attributes,
+        errors: _vm.activeErrors,
+        events: _vm.events,
+        firstErrorMessage: _vm.firstErrorMessage,
+        hasErrors: _vm.hasErrors,
+        validator: _vm.preferredValidator
+      }),
+      _vm._v(" "),
+      _vm._t(
+        "errors",
+        [
+          _vm.hasErrors
+            ? _c(
+                "div",
+                {
+                  class: {
+                    "invalid-feedback": _vm.hasErrors,
+                    "valid-feedback": !_vm.hasErrors
+                  }
+                },
+                [
+                  _vm.showSingleError
+                    ? [_vm._v(_vm._s(_vm.firstErrorMessage))]
+                    : _vm._l(_vm.activeErrorMessages, function(errorMessage) {
+                        return _c("div", { key: errorMessage }, [
+                          _vm._v(
+                            "\n          " + _vm._s(errorMessage) + "\n        "
+                          )
+                        ])
+                      })
+                ],
+                2
+              )
+            : _vm._e()
+        ],
+        {
+          errors: _vm.activeErrors,
+          errorMessages: _vm.activeErrorMessages,
+          hasErrors: _vm.hasErrors,
+          firstErrorMessage: _vm.firstErrorMessage
+        }
+      )
+    ],
+    2
+  )
+};
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$2 = undefined;
+  /* scoped */
+  var __vue_scope_id__$2 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$2 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$2 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var bootstrap4 = normalizeComponent_1(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
+    undefined,
+    undefined
+  );
+
+var singleErrorExtractor = {
+  foundation6: foundation6,
+  bootstrap3: bootstrap3,
+  bootstrap4: bootstrap4
+};
+
+var multiErrorExtractorMixin = {
+  props: {
+    attributes: {
+      type: Object,
+      default: function () { return ({}); }
+    }
+  },
+  extends: baseErrorsMixin,
+  computed: {
+    /**
+     * Returns the preferred validator based on the provided validator props, the injected validator and so on.
+     * @return {object}
+     */
+    preferredValidator: function preferredValidator () {
+      // if validator prop is passed, we use it, else we use the injected one.
+      if (this.$options.propsData.hasOwnProperty('validator')) { return this.validator }
+      return this.formValidator
+    },
+
+    /**
+     * Merge the global attributes and the locally provided ones
+     * @return {Object.<string,string>}
+     */
+    mergedAttributes: function mergedAttributes () {
+      if (this.$_VEE_hasI18n && this.$_VEE_hasI18nAttributes) {
+        return Object.assign({}, this.$vuelidateErrorExtractor.i18nAttributes, this.attributes)
+      }
+      return Object.assign({}, this.$vuelidateErrorExtractor.attributes, this.attributes)
+    },
+
+    /**
+     * Shallow array of all the errors for the provided validator
+     * @return {VeeFlatMultiErrorBag}
+     */
+    errors: function errors () {
+      var this$1 = this;
+
+      return flattenValidatorObjects(this.preferredValidator).map(function (error) {
+        return Object.assign({}, error, {
+          params: Object.assign({}, error.params, {
+            attribute: this$1.getResolvedAttribute(error.fieldName)
+          })
+        })
+      })
+    },
+
+    /**
+     * Returns if the form has any errors
+     * @return {boolean}
+     */
+    hasErrors: function hasErrors () {
+      return !!this.activeErrors.length
+    }
+  },
+  methods: {
+    /**
+     * Returns the attribute's value, checking for i18n mode.
+     * @param {string} fieldName - Validation field name.
+     * @return {string}
+     */
+    getResolvedAttribute: function getResolvedAttribute (fieldName) {
+      return resolveAttribute.call(this, this.mergedAttributes, this.mergedAttributes, fieldName)
+    }
+  }
+};
+
+//
+
+var script$3 = {
+  name: 'baseMultiErrorExtractor',
+  extends: multiErrorExtractorMixin
+};
+
+/* script */
+var __vue_script__$3 = script$3;
+
+/* template */
+var __vue_render__$3 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    _vm._l(_vm.activeErrorMessages, function(error, index) {
+      return _c(
+        "div",
+        { key: index },
+        [
+          _vm._t("default", [_c("div", [_vm._v(_vm._s(error))])], {
+            errorMessage: error,
+            error: _vm.activeErrors[index]
+          })
+        ],
+        2
+      )
+    }),
+    0
+  )
+};
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$3 = undefined;
+  /* scoped */
+  var __vue_scope_id__$3 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$3 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var baseMultiErrorExtractor = normalizeComponent_1(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    undefined,
+    undefined
+  );
+
+//
+
+var script$4 = {
+  inheritAttrs: false,
+  components: {
+    baseMultiErrorExtractor: baseMultiErrorExtractor
+  }
+};
+
+/* script */
+var __vue_script__$4 = script$4;
+
+/* template */
+var __vue_render__$4 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "base-multi-error-extractor",
+    _vm._b(
+      {
+        staticClass: "has-error",
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var errorMessage = ref.errorMessage;
+              return [
+                _c("label", { staticClass: "help-block" }, [
+                  _vm._v(_vm._s(errorMessage))
+                ])
+              ]
+            }
+          }
+        ])
+      },
+      "base-multi-error-extractor",
+      _vm.$attrs,
+      false
+    )
+  )
+};
+var __vue_staticRenderFns__$4 = [];
+__vue_render__$4._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$4 = undefined;
+  /* scoped */
+  var __vue_scope_id__$4 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$4 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$4 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var bootstrap3$1 = normalizeComponent_1(
+    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
+    undefined,
+    undefined
+  );
+
+//
+
+var script$5 = {
+  inheritAttrs: false,
+  components: {
+    baseMultiErrorExtractor: baseMultiErrorExtractor
+  }
+};
+
+/* script */
+var __vue_script__$5 = script$5;
+
+/* template */
+var __vue_render__$5 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "base-multi-error-extractor",
+    _vm._b(
+      {
+        staticClass: "was-validated",
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var errorMessage = ref.errorMessage;
+              return [
+                _c("label", { staticClass: "invalid-feedback d-block" }, [
+                  _vm._v(_vm._s(errorMessage))
+                ])
+              ]
+            }
+          }
+        ])
+      },
+      "base-multi-error-extractor",
+      _vm.$attrs,
+      false
+    )
+  )
+};
+var __vue_staticRenderFns__$5 = [];
+__vue_render__$5._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$5 = undefined;
+  /* scoped */
+  var __vue_scope_id__$5 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$5 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$5 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var bootstrap4$1 = normalizeComponent_1(
+    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+    __vue_inject_styles__$5,
+    __vue_script__$5,
+    __vue_scope_id__$5,
+    __vue_is_functional_template__$5,
+    __vue_module_identifier__$5,
+    undefined,
+    undefined
+  );
+
+//
+
+var script$6 = {
+  inheritAttrs: false,
+  components: {
+    baseMultiErrorExtractor: baseMultiErrorExtractor
+  }
+};
+
+/* script */
+var __vue_script__$6 = script$6;
+
+/* template */
+var __vue_render__$6 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "base-multi-error-extractor",
+    _vm._b(
+      {
+        staticStyle: { "margin-top": "1rem" },
+        scopedSlots: _vm._u([
+          {
+            key: "default",
+            fn: function(ref) {
+              var errorMessage = ref.errorMessage;
+              return [
+                _c("label", { staticClass: "form-error is-visible" }, [
+                  _vm._v(_vm._s(errorMessage))
+                ])
+              ]
+            }
+          }
+        ])
+      },
+      "base-multi-error-extractor",
+      _vm.$attrs,
+      false
+    )
+  )
+};
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
+
+  /* style */
+  var __vue_inject_styles__$6 = undefined;
+  /* scoped */
+  var __vue_scope_id__$6 = undefined;
+  /* module identifier */
+  var __vue_module_identifier__$6 = undefined;
+  /* functional template */
+  var __vue_is_functional_template__$6 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var foundation6$1 = normalizeComponent_1(
+    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
+    __vue_inject_styles__$6,
+    __vue_script__$6,
+    __vue_scope_id__$6,
+    __vue_is_functional_template__$6,
+    __vue_module_identifier__$6,
+    undefined,
+    undefined
+  );
+
+var multiErrorExtractor = {
+  baseMultiErrorExtractor: baseMultiErrorExtractor,
+  bootstrap3: bootstrap3$1,
+  bootstrap4: bootstrap4$1,
+  foundation6: foundation6$1
+};
+
+var FormWrapper = {
+  name: 'FormWrapper',
+  props: {
+    validator: {
+      type: Object,
+      required: true
+    },
+    messages: {
+      type: Object,
+      default: function () { return ({}); }
+    }
+  },
+  render: function render (h) {
+    return h('div', this.$slots.default)
+  },
+  provide: function provide () {
+    return {
+      formValidator: this.validator,
+      formMessages: this.messages
+    }
+  }
+};
+
+var index = {
+  singleErrorExtractor: singleErrorExtractor,
+  multiErrorExtractor: multiErrorExtractor,
+  FormWrapper: FormWrapper
+};
+
+var laravel = {
+  minLength: {
+    validationKey: 'min.string',
+    params: [
+      {
+        vue: 'min',
+        ext: 'min'
+      }
+    ]
+  },
+  sameAs: {
+    validationKey: 'same',
+    params: [
+      {
+        vue: 'eq',
+        ext: 'other'
+      }
+    ]
+  }
+};
+
+var index$1 = {
+  laravel: laravel
+};
+
+var inDEV = "development" === 'development';
+
+function plugin (Vue, opts) {
+  if ( opts === void 0 ) opts = {};
+
+  var options = {
+    i18n: opts.i18n || false,
+    i18nAttributes: opts.i18nAttributes,
+    messages: opts.messages || {},
+    validationKeys: opts.validationKeys || {},
+    attributes: opts.attributes || {},
+    name: opts.name || 'formGroup'
+  };
+  if (inDEV) {
+    if (typeof options.i18n !== 'string' && options.i18n !== false) {
+      throw Error(("[vuelidate-error-extractor] options.i18n should be false or a string, " + (options.i18n) + " given."))
+    }
+    if (typeof options.i18n === 'string' && Object.keys(options.attributes).length && options.i18nAttributes === undefined) {
+      console.error('[vuelidate-error-extractor] when using "i18n" mode, prefer using "i18nAttributes" option instead of "attributes"');
+    }
+  }
+  Vue.prototype.$vuelidateErrorExtractor = options;
+  if (typeof opts.template !== 'undefined') {
+    Vue.component(options.name, opts.template);
+  }
+}
+
+var version = '2.4.1';
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (plugin);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/index.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vuelidate/lib/index.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.Vuelidate = Vuelidate;
+Object.defineProperty(exports, "withParams", ({
+  enumerable: true,
+  get: function get() {
+    return _params.withParams;
+  }
+}));
+exports.default = exports.validationMixin = void 0;
+
+var _vval = __webpack_require__(/*! ./vval */ "./node_modules/vuelidate/lib/vval.js");
+
+var _params = __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var NIL = function NIL() {
+  return null;
+};
+
+var buildFromKeys = function buildFromKeys(keys, fn, keyFn) {
+  return keys.reduce(function (build, key) {
+    build[keyFn ? keyFn(key) : key] = fn(key);
+    return build;
+  }, {});
+};
+
+function isFunction(val) {
+  return typeof val === 'function';
+}
+
+function isObject(val) {
+  return val !== null && (_typeof(val) === 'object' || isFunction(val));
+}
+
+function isPromise(object) {
+  return isObject(object) && isFunction(object.then);
+}
+
+var getPath = function getPath(ctx, obj, path, fallback) {
+  if (typeof path === 'function') {
+    return path.call(ctx, obj, fallback);
+  }
+
+  path = Array.isArray(path) ? path : path.split('.');
+
+  for (var i = 0; i < path.length; i++) {
+    if (obj && _typeof(obj) === 'object') {
+      obj = obj[path[i]];
+    } else {
+      return fallback;
+    }
+  }
+
+  return typeof obj === 'undefined' ? fallback : obj;
+};
+
+var __isVuelidateAsyncVm = '__isVuelidateAsyncVm';
+
+function makePendingAsyncVm(Vue, promise) {
+  var asyncVm = new Vue({
+    data: {
+      p: true,
+      v: false
+    }
+  });
+  promise.then(function (value) {
+    asyncVm.p = false;
+    asyncVm.v = value;
+  }, function (error) {
+    asyncVm.p = false;
+    asyncVm.v = false;
+    throw error;
+  });
+  asyncVm[__isVuelidateAsyncVm] = true;
+  return asyncVm;
+}
+
+var validationGetters = {
+  $invalid: function $invalid() {
+    var _this = this;
+
+    var proxy = this.proxy;
+    return this.nestedKeys.some(function (nested) {
+      return _this.refProxy(nested).$invalid;
+    }) || this.ruleKeys.some(function (rule) {
+      return !proxy[rule];
+    });
+  },
+  $dirty: function $dirty() {
+    var _this2 = this;
+
+    if (this.dirty) {
+      return true;
+    }
+
+    if (this.nestedKeys.length === 0) {
+      return false;
+    }
+
+    return this.nestedKeys.every(function (key) {
+      return _this2.refProxy(key).$dirty;
+    });
+  },
+  $anyDirty: function $anyDirty() {
+    var _this3 = this;
+
+    if (this.dirty) {
+      return true;
+    }
+
+    if (this.nestedKeys.length === 0) {
+      return false;
+    }
+
+    return this.nestedKeys.some(function (key) {
+      return _this3.refProxy(key).$anyDirty;
+    });
+  },
+  $error: function $error() {
+    return this.$dirty && !this.$pending && this.$invalid;
+  },
+  $anyError: function $anyError() {
+    var _this4 = this;
+
+    if (this.$error) return true;
+    return this.nestedKeys.some(function (key) {
+      return _this4.refProxy(key).$anyError;
+    });
+  },
+  $pending: function $pending() {
+    var _this5 = this;
+
+    return this.ruleKeys.some(function (key) {
+      return _this5.getRef(key).$pending;
+    }) || this.nestedKeys.some(function (key) {
+      return _this5.refProxy(key).$pending;
+    });
+  },
+  $params: function $params() {
+    var _this6 = this;
+
+    var vals = this.validations;
+    return _objectSpread({}, buildFromKeys(this.nestedKeys, function (key) {
+      return vals[key] && vals[key].$params || null;
+    }), buildFromKeys(this.ruleKeys, function (key) {
+      return _this6.getRef(key).$params;
+    }));
+  }
+};
+
+function setDirtyRecursive(newState) {
+  this.dirty = newState;
+  var proxy = this.proxy;
+  var method = newState ? '$touch' : '$reset';
+  this.nestedKeys.forEach(function (key) {
+    proxy[key][method]();
+  });
+}
+
+var validationMethods = {
+  $touch: function $touch() {
+    setDirtyRecursive.call(this, true);
+  },
+  $reset: function $reset() {
+    setDirtyRecursive.call(this, false);
+  },
+  $flattenParams: function $flattenParams() {
+    var proxy = this.proxy;
+    var params = [];
+
+    for (var key in this.$params) {
+      if (this.isNested(key)) {
+        var childParams = proxy[key].$flattenParams();
+
+        for (var j = 0; j < childParams.length; j++) {
+          childParams[j].path.unshift(key);
+        }
+
+        params = params.concat(childParams);
+      } else {
+        params.push({
+          path: [],
+          name: key,
+          params: this.$params[key]
+        });
+      }
+    }
+
+    return params;
+  }
+};
+var getterNames = Object.keys(validationGetters);
+var methodNames = Object.keys(validationMethods);
+var _cachedComponent = null;
+
+var getComponent = function getComponent(Vue) {
+  if (_cachedComponent) {
+    return _cachedComponent;
+  }
+
+  var VBase = Vue.extend({
+    computed: {
+      refs: function refs() {
+        var oldVval = this._vval;
+        this._vval = this.children;
+        (0, _vval.patchChildren)(oldVval, this._vval);
+        var refs = {};
+
+        this._vval.forEach(function (c) {
+          refs[c.key] = c.vm;
+        });
+
+        return refs;
+      }
+    },
+    beforeCreate: function beforeCreate() {
+      this._vval = null;
+    },
+    beforeDestroy: function beforeDestroy() {
+      if (this._vval) {
+        (0, _vval.patchChildren)(this._vval);
+        this._vval = null;
+      }
+    },
+    methods: {
+      getModel: function getModel() {
+        return this.lazyModel ? this.lazyModel(this.prop) : this.model;
+      },
+      getModelKey: function getModelKey(key) {
+        var model = this.getModel();
+
+        if (model) {
+          return model[key];
+        }
+      },
+      hasIter: function hasIter() {
+        return false;
+      }
+    }
+  });
+  var ValidationRule = VBase.extend({
+    data: function data() {
+      return {
+        rule: null,
+        lazyModel: null,
+        model: null,
+        lazyParentModel: null,
+        rootModel: null
+      };
+    },
+    methods: {
+      runRule: function runRule(parent) {
+        var model = this.getModel();
+        (0, _params.pushParams)();
+        var rawOutput = this.rule.call(this.rootModel, model, parent);
+        var output = isPromise(rawOutput) ? makePendingAsyncVm(Vue, rawOutput) : rawOutput;
+        var rawParams = (0, _params.popParams)();
+        var params = rawParams && rawParams.$sub ? rawParams.$sub.length > 1 ? rawParams : rawParams.$sub[0] : null;
+        return {
+          output: output,
+          params: params
+        };
+      }
+    },
+    computed: {
+      run: function run() {
+        var _this7 = this;
+
+        var parent = this.lazyParentModel();
+
+        var isArrayDependant = Array.isArray(parent) && parent.__ob__;
+
+        if (isArrayDependant) {
+          var arrayDep = parent.__ob__.dep;
+          arrayDep.depend();
+          var target = arrayDep.constructor.target;
+
+          if (!this._indirectWatcher) {
+            var Watcher = target.constructor;
+            this._indirectWatcher = new Watcher(this, function () {
+              return _this7.runRule(parent);
+            }, null, {
+              lazy: true
+            });
+          }
+
+          var model = this.getModel();
+
+          if (!this._indirectWatcher.dirty && this._lastModel === model) {
+            this._indirectWatcher.depend();
+
+            return target.value;
+          }
+
+          this._lastModel = model;
+
+          this._indirectWatcher.evaluate();
+
+          this._indirectWatcher.depend();
+        } else if (this._indirectWatcher) {
+          this._indirectWatcher.teardown();
+
+          this._indirectWatcher = null;
+        }
+
+        return this._indirectWatcher ? this._indirectWatcher.value : this.runRule(parent);
+      },
+      $params: function $params() {
+        return this.run.params;
+      },
+      proxy: function proxy() {
+        var output = this.run.output;
+
+        if (output[__isVuelidateAsyncVm]) {
+          return !!output.v;
+        }
+
+        return !!output;
+      },
+      $pending: function $pending() {
+        var output = this.run.output;
+
+        if (output[__isVuelidateAsyncVm]) {
+          return output.p;
+        }
+
+        return false;
+      }
+    },
+    destroyed: function destroyed() {
+      if (this._indirectWatcher) {
+        this._indirectWatcher.teardown();
+
+        this._indirectWatcher = null;
+      }
+    }
+  });
+  var Validation = VBase.extend({
+    data: function data() {
+      return {
+        dirty: false,
+        validations: null,
+        lazyModel: null,
+        model: null,
+        prop: null,
+        lazyParentModel: null,
+        rootModel: null
+      };
+    },
+    methods: _objectSpread({}, validationMethods, {
+      refProxy: function refProxy(key) {
+        return this.getRef(key).proxy;
+      },
+      getRef: function getRef(key) {
+        return this.refs[key];
+      },
+      isNested: function isNested(key) {
+        return typeof this.validations[key] !== 'function';
+      }
+    }),
+    computed: _objectSpread({}, validationGetters, {
+      nestedKeys: function nestedKeys() {
+        return this.keys.filter(this.isNested);
+      },
+      ruleKeys: function ruleKeys() {
+        var _this8 = this;
+
+        return this.keys.filter(function (k) {
+          return !_this8.isNested(k);
+        });
+      },
+      keys: function keys() {
+        return Object.keys(this.validations).filter(function (k) {
+          return k !== '$params';
+        });
+      },
+      proxy: function proxy() {
+        var _this9 = this;
+
+        var keyDefs = buildFromKeys(this.keys, function (key) {
+          return {
+            enumerable: true,
+            configurable: true,
+            get: function get() {
+              return _this9.refProxy(key);
+            }
+          };
+        });
+        var getterDefs = buildFromKeys(getterNames, function (key) {
+          return {
+            enumerable: true,
+            configurable: true,
+            get: function get() {
+              return _this9[key];
+            }
+          };
+        });
+        var methodDefs = buildFromKeys(methodNames, function (key) {
+          return {
+            enumerable: false,
+            configurable: true,
+            get: function get() {
+              return _this9[key];
+            }
+          };
+        });
+        var iterDefs = this.hasIter() ? {
+          $iter: {
+            enumerable: true,
+            value: Object.defineProperties({}, _objectSpread({}, keyDefs))
+          }
+        } : {};
+        return Object.defineProperties({}, _objectSpread({}, keyDefs, iterDefs, {
+          $model: {
+            enumerable: true,
+            get: function get() {
+              var parent = _this9.lazyParentModel();
+
+              if (parent != null) {
+                return parent[_this9.prop];
+              } else {
+                return null;
+              }
+            },
+            set: function set(value) {
+              var parent = _this9.lazyParentModel();
+
+              if (parent != null) {
+                parent[_this9.prop] = value;
+
+                _this9.$touch();
+              }
+            }
+          }
+        }, getterDefs, methodDefs));
+      },
+      children: function children() {
+        var _this10 = this;
+
+        return _toConsumableArray(this.nestedKeys.map(function (key) {
+          return renderNested(_this10, key);
+        })).concat(_toConsumableArray(this.ruleKeys.map(function (key) {
+          return renderRule(_this10, key);
+        }))).filter(Boolean);
+      }
+    })
+  });
+  var GroupValidation = Validation.extend({
+    methods: {
+      isNested: function isNested(key) {
+        return typeof this.validations[key]() !== 'undefined';
+      },
+      getRef: function getRef(key) {
+        var vm = this;
+        return {
+          get proxy() {
+            return vm.validations[key]() || false;
+          }
+
+        };
+      }
+    }
+  });
+  var EachValidation = Validation.extend({
+    computed: {
+      keys: function keys() {
+        var model = this.getModel();
+
+        if (isObject(model)) {
+          return Object.keys(model);
+        } else {
+          return [];
+        }
+      },
+      tracker: function tracker() {
+        var _this11 = this;
+
+        var trackBy = this.validations.$trackBy;
+        return trackBy ? function (key) {
+          return "".concat(getPath(_this11.rootModel, _this11.getModelKey(key), trackBy));
+        } : function (x) {
+          return "".concat(x);
+        };
+      },
+      getModelLazy: function getModelLazy() {
+        var _this12 = this;
+
+        return function () {
+          return _this12.getModel();
+        };
+      },
+      children: function children() {
+        var _this13 = this;
+
+        var def = this.validations;
+        var model = this.getModel();
+
+        var validations = _objectSpread({}, def);
+
+        delete validations['$trackBy'];
+        var usedTracks = {};
+        return this.keys.map(function (key) {
+          var track = _this13.tracker(key);
+
+          if (usedTracks.hasOwnProperty(track)) {
+            return null;
+          }
+
+          usedTracks[track] = true;
+          return (0, _vval.h)(Validation, track, {
+            validations: validations,
+            prop: key,
+            lazyParentModel: _this13.getModelLazy,
+            model: model[key],
+            rootModel: _this13.rootModel
+          });
+        }).filter(Boolean);
+      }
+    },
+    methods: {
+      isNested: function isNested() {
+        return true;
+      },
+      getRef: function getRef(key) {
+        return this.refs[this.tracker(key)];
+      },
+      hasIter: function hasIter() {
+        return true;
+      }
+    }
+  });
+
+  var renderNested = function renderNested(vm, key) {
+    if (key === '$each') {
+      return (0, _vval.h)(EachValidation, key, {
+        validations: vm.validations[key],
+        lazyParentModel: vm.lazyParentModel,
+        prop: key,
+        lazyModel: vm.getModel,
+        rootModel: vm.rootModel
+      });
+    }
+
+    var validations = vm.validations[key];
+
+    if (Array.isArray(validations)) {
+      var root = vm.rootModel;
+      var refVals = buildFromKeys(validations, function (path) {
+        return function () {
+          return getPath(root, root.$v, path);
+        };
+      }, function (v) {
+        return Array.isArray(v) ? v.join('.') : v;
+      });
+      return (0, _vval.h)(GroupValidation, key, {
+        validations: refVals,
+        lazyParentModel: NIL,
+        prop: key,
+        lazyModel: NIL,
+        rootModel: root
+      });
+    }
+
+    return (0, _vval.h)(Validation, key, {
+      validations: validations,
+      lazyParentModel: vm.getModel,
+      prop: key,
+      lazyModel: vm.getModelKey,
+      rootModel: vm.rootModel
+    });
+  };
+
+  var renderRule = function renderRule(vm, key) {
+    return (0, _vval.h)(ValidationRule, key, {
+      rule: vm.validations[key],
+      lazyParentModel: vm.lazyParentModel,
+      lazyModel: vm.getModel,
+      rootModel: vm.rootModel
+    });
+  };
+
+  _cachedComponent = {
+    VBase: VBase,
+    Validation: Validation
+  };
+  return _cachedComponent;
+};
+
+var _cachedVue = null;
+
+function getVue(rootVm) {
+  if (_cachedVue) return _cachedVue;
+  var Vue = rootVm.constructor;
+
+  while (Vue.super) {
+    Vue = Vue.super;
+  }
+
+  _cachedVue = Vue;
+  return Vue;
+}
+
+var validateModel = function validateModel(model, validations) {
+  var Vue = getVue(model);
+
+  var _getComponent = getComponent(Vue),
+      Validation = _getComponent.Validation,
+      VBase = _getComponent.VBase;
+
+  var root = new VBase({
+    computed: {
+      children: function children() {
+        var vals = typeof validations === 'function' ? validations.call(model) : validations;
+        return [(0, _vval.h)(Validation, '$v', {
+          validations: vals,
+          lazyParentModel: NIL,
+          prop: '$v',
+          model: model,
+          rootModel: model
+        })];
+      }
+    }
+  });
+  return root;
+};
+
+var validationMixin = {
+  data: function data() {
+    var vals = this.$options.validations;
+
+    if (vals) {
+      this._vuelidate = validateModel(this, vals);
+    }
+
+    return {};
+  },
+  beforeCreate: function beforeCreate() {
+    var options = this.$options;
+    var vals = options.validations;
+    if (!vals) return;
+    if (!options.computed) options.computed = {};
+    if (options.computed.$v) return;
+
+    options.computed.$v = function () {
+      return this._vuelidate ? this._vuelidate.refs.$v.proxy : null;
+    };
+  },
+  beforeDestroy: function beforeDestroy() {
+    if (this._vuelidate) {
+      this._vuelidate.$destroy();
+
+      this._vuelidate = null;
+    }
+  }
+};
+exports.validationMixin = validationMixin;
+
+function Vuelidate(Vue) {
+  Vue.mixin(validationMixin);
+}
+
+var _default = Vuelidate;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/params.js":
+/*!**********************************************!*\
+  !*** ./node_modules/vuelidate/lib/params.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.pushParams = pushParams;
+exports.popParams = popParams;
+exports.withParams = withParams;
+exports._setTarget = exports.target = void 0;
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var stack = [];
+var target = null;
+exports.target = target;
+
+var _setTarget = function _setTarget(x) {
+  exports.target = target = x;
+};
+
+exports._setTarget = _setTarget;
+
+function pushParams() {
+  if (target !== null) {
+    stack.push(target);
+  }
+
+  exports.target = target = {};
+}
+
+function popParams() {
+  var lastTarget = target;
+  var newTarget = exports.target = target = stack.pop() || null;
+
+  if (newTarget) {
+    if (!Array.isArray(newTarget.$sub)) {
+      newTarget.$sub = [];
+    }
+
+    newTarget.$sub.push(lastTarget);
+  }
+
+  return lastTarget;
+}
+
+function addParams(params) {
+  if (_typeof(params) === 'object' && !Array.isArray(params)) {
+    exports.target = target = _objectSpread({}, target, params);
+  } else {
+    throw new Error('params must be an object');
+  }
+}
+
+function withParamsDirect(params, validator) {
+  return withParamsClosure(function (add) {
+    return function () {
+      add(params);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return validator.apply(this, args);
+    };
+  });
+}
+
+function withParamsClosure(closure) {
+  var validator = closure(addParams);
+  return function () {
+    pushParams();
+
+    try {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return validator.apply(this, args);
+    } finally {
+      popParams();
+    }
+  };
+}
+
+function withParams(paramsOrClosure, maybeValidator) {
+  if (_typeof(paramsOrClosure) === 'object' && maybeValidator !== undefined) {
+    return withParamsDirect(paramsOrClosure, maybeValidator);
+  }
+
+  return withParamsClosure(paramsOrClosure);
+}
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alpha.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alpha.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alpha', /^[a-zA-Z]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/alphaNum.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/alphaNum.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('alphaNum', /^[a-zA-Z0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/and.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/and.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'and'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid && fn.apply(_this, args);
+    }, true);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/between.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/between.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min, max) {
+  return (0, _common.withParams)({
+    type: 'between',
+    min: min,
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +min <= +value && +max >= +value;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/common.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/common.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+Object.defineProperty(exports, "withParams", ({
+  enumerable: true,
+  get: function get() {
+    return _withParams.default;
+  }
+}));
+exports.regex = exports.ref = exports.len = exports.req = void 0;
+
+var _withParams = _interopRequireDefault(__webpack_require__(/*! ../withParams */ "./node_modules/vuelidate/lib/withParams.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var req = function req(value) {
+  if (Array.isArray(value)) return !!value.length;
+
+  if (value === undefined || value === null) {
+    return false;
+  }
+
+  if (value === false) {
+    return true;
+  }
+
+  if (value instanceof Date) {
+    return !isNaN(value.getTime());
+  }
+
+  if (_typeof(value) === 'object') {
+    for (var _ in value) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return !!String(value).length;
+};
+
+exports.req = req;
+
+var len = function len(value) {
+  if (Array.isArray(value)) return value.length;
+
+  if (_typeof(value) === 'object') {
+    return Object.keys(value).length;
+  }
+
+  return String(value).length;
+};
+
+exports.len = len;
+
+var ref = function ref(reference, vm, parentVm) {
+  return typeof reference === 'function' ? reference.call(vm, parentVm) : parentVm[reference];
+};
+
+exports.ref = ref;
+
+var regex = function regex(type, expr) {
+  return (0, _withParams.default)({
+    type: type
+  }, function (value) {
+    return !req(value) || expr.test(value);
+  });
+};
+
+exports.regex = regex;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/decimal.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/decimal.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('decimal', /^[-]?\d*(\.\d+)?$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/email.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/email.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var emailRegex = /^(?:[A-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]{2,}(?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
+
+var _default = (0, _common.regex)('email', emailRegex);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/index.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+Object.defineProperty(exports, "alpha", ({
+  enumerable: true,
+  get: function get() {
+    return _alpha.default;
+  }
+}));
+Object.defineProperty(exports, "alphaNum", ({
+  enumerable: true,
+  get: function get() {
+    return _alphaNum.default;
+  }
+}));
+Object.defineProperty(exports, "numeric", ({
+  enumerable: true,
+  get: function get() {
+    return _numeric.default;
+  }
+}));
+Object.defineProperty(exports, "between", ({
+  enumerable: true,
+  get: function get() {
+    return _between.default;
+  }
+}));
+Object.defineProperty(exports, "email", ({
+  enumerable: true,
+  get: function get() {
+    return _email.default;
+  }
+}));
+Object.defineProperty(exports, "ipAddress", ({
+  enumerable: true,
+  get: function get() {
+    return _ipAddress.default;
+  }
+}));
+Object.defineProperty(exports, "macAddress", ({
+  enumerable: true,
+  get: function get() {
+    return _macAddress.default;
+  }
+}));
+Object.defineProperty(exports, "maxLength", ({
+  enumerable: true,
+  get: function get() {
+    return _maxLength.default;
+  }
+}));
+Object.defineProperty(exports, "minLength", ({
+  enumerable: true,
+  get: function get() {
+    return _minLength.default;
+  }
+}));
+Object.defineProperty(exports, "required", ({
+  enumerable: true,
+  get: function get() {
+    return _required.default;
+  }
+}));
+Object.defineProperty(exports, "requiredIf", ({
+  enumerable: true,
+  get: function get() {
+    return _requiredIf.default;
+  }
+}));
+Object.defineProperty(exports, "requiredUnless", ({
+  enumerable: true,
+  get: function get() {
+    return _requiredUnless.default;
+  }
+}));
+Object.defineProperty(exports, "sameAs", ({
+  enumerable: true,
+  get: function get() {
+    return _sameAs.default;
+  }
+}));
+Object.defineProperty(exports, "url", ({
+  enumerable: true,
+  get: function get() {
+    return _url.default;
+  }
+}));
+Object.defineProperty(exports, "or", ({
+  enumerable: true,
+  get: function get() {
+    return _or.default;
+  }
+}));
+Object.defineProperty(exports, "and", ({
+  enumerable: true,
+  get: function get() {
+    return _and.default;
+  }
+}));
+Object.defineProperty(exports, "not", ({
+  enumerable: true,
+  get: function get() {
+    return _not.default;
+  }
+}));
+Object.defineProperty(exports, "minValue", ({
+  enumerable: true,
+  get: function get() {
+    return _minValue.default;
+  }
+}));
+Object.defineProperty(exports, "maxValue", ({
+  enumerable: true,
+  get: function get() {
+    return _maxValue.default;
+  }
+}));
+Object.defineProperty(exports, "integer", ({
+  enumerable: true,
+  get: function get() {
+    return _integer.default;
+  }
+}));
+Object.defineProperty(exports, "decimal", ({
+  enumerable: true,
+  get: function get() {
+    return _decimal.default;
+  }
+}));
+exports.helpers = void 0;
+
+var _alpha = _interopRequireDefault(__webpack_require__(/*! ./alpha */ "./node_modules/vuelidate/lib/validators/alpha.js"));
+
+var _alphaNum = _interopRequireDefault(__webpack_require__(/*! ./alphaNum */ "./node_modules/vuelidate/lib/validators/alphaNum.js"));
+
+var _numeric = _interopRequireDefault(__webpack_require__(/*! ./numeric */ "./node_modules/vuelidate/lib/validators/numeric.js"));
+
+var _between = _interopRequireDefault(__webpack_require__(/*! ./between */ "./node_modules/vuelidate/lib/validators/between.js"));
+
+var _email = _interopRequireDefault(__webpack_require__(/*! ./email */ "./node_modules/vuelidate/lib/validators/email.js"));
+
+var _ipAddress = _interopRequireDefault(__webpack_require__(/*! ./ipAddress */ "./node_modules/vuelidate/lib/validators/ipAddress.js"));
+
+var _macAddress = _interopRequireDefault(__webpack_require__(/*! ./macAddress */ "./node_modules/vuelidate/lib/validators/macAddress.js"));
+
+var _maxLength = _interopRequireDefault(__webpack_require__(/*! ./maxLength */ "./node_modules/vuelidate/lib/validators/maxLength.js"));
+
+var _minLength = _interopRequireDefault(__webpack_require__(/*! ./minLength */ "./node_modules/vuelidate/lib/validators/minLength.js"));
+
+var _required = _interopRequireDefault(__webpack_require__(/*! ./required */ "./node_modules/vuelidate/lib/validators/required.js"));
+
+var _requiredIf = _interopRequireDefault(__webpack_require__(/*! ./requiredIf */ "./node_modules/vuelidate/lib/validators/requiredIf.js"));
+
+var _requiredUnless = _interopRequireDefault(__webpack_require__(/*! ./requiredUnless */ "./node_modules/vuelidate/lib/validators/requiredUnless.js"));
+
+var _sameAs = _interopRequireDefault(__webpack_require__(/*! ./sameAs */ "./node_modules/vuelidate/lib/validators/sameAs.js"));
+
+var _url = _interopRequireDefault(__webpack_require__(/*! ./url */ "./node_modules/vuelidate/lib/validators/url.js"));
+
+var _or = _interopRequireDefault(__webpack_require__(/*! ./or */ "./node_modules/vuelidate/lib/validators/or.js"));
+
+var _and = _interopRequireDefault(__webpack_require__(/*! ./and */ "./node_modules/vuelidate/lib/validators/and.js"));
+
+var _not = _interopRequireDefault(__webpack_require__(/*! ./not */ "./node_modules/vuelidate/lib/validators/not.js"));
+
+var _minValue = _interopRequireDefault(__webpack_require__(/*! ./minValue */ "./node_modules/vuelidate/lib/validators/minValue.js"));
+
+var _maxValue = _interopRequireDefault(__webpack_require__(/*! ./maxValue */ "./node_modules/vuelidate/lib/validators/maxValue.js"));
+
+var _integer = _interopRequireDefault(__webpack_require__(/*! ./integer */ "./node_modules/vuelidate/lib/validators/integer.js"));
+
+var _decimal = _interopRequireDefault(__webpack_require__(/*! ./decimal */ "./node_modules/vuelidate/lib/validators/decimal.js"));
+
+var helpers = _interopRequireWildcard(__webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js"));
+
+exports.helpers = helpers;
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/integer.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/integer.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('integer', /(^[0-9]*$)|(^-[0-9]+$)/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/ipAddress.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/ipAddress.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'ipAddress'
+}, function (value) {
+  if (!(0, _common.req)(value)) {
+    return true;
+  }
+
+  if (typeof value !== 'string') {
+    return false;
+  }
+
+  var nibbles = value.split('.');
+  return nibbles.length === 4 && nibbles.every(nibbleValid);
+});
+
+exports.default = _default;
+
+var nibbleValid = function nibbleValid(nibble) {
+  if (nibble.length > 3 || nibble.length === 0) {
+    return false;
+  }
+
+  if (nibble[0] === '0' && nibble !== '0') {
+    return false;
+  }
+
+  if (!nibble.match(/^\d+$/)) {
+    return false;
+  }
+
+  var numeric = +nibble | 0;
+  return numeric >= 0 && numeric <= 255;
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/macAddress.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/macAddress.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  var separator = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ':';
+  return (0, _common.withParams)({
+    type: 'macAddress'
+  }, function (value) {
+    if (!(0, _common.req)(value)) {
+      return true;
+    }
+
+    if (typeof value !== 'string') {
+      return false;
+    }
+
+    var parts = typeof separator === 'string' && separator !== '' ? value.split(separator) : value.length === 12 || value.length === 16 ? value.match(/.{2}/g) : null;
+    return parts !== null && (parts.length === 6 || parts.length === 8) && parts.every(hexValid);
+  });
+};
+
+exports.default = _default;
+
+var hexValid = function hexValid(hex) {
+  return hex.toLowerCase().match(/^[0-9a-f]{2}$/);
+};
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxLength.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'maxLength',
+    max: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) <= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/maxValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/maxValue.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(max) {
+  return (0, _common.withParams)({
+    type: 'maxValue',
+    max: max
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value <= +max;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minLength.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minLength.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(length) {
+  return (0, _common.withParams)({
+    type: 'minLength',
+    min: length
+  }, function (value) {
+    return !(0, _common.req)(value) || (0, _common.len)(value) >= length;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/minValue.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/minValue.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(min) {
+  return (0, _common.withParams)({
+    type: 'minValue',
+    min: min
+  }, function (value) {
+    return !(0, _common.req)(value) || (!/\s/.test(value) || value instanceof Date) && +value >= +min;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/not.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/not.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(validator) {
+  return (0, _common.withParams)({
+    type: 'not'
+  }, function (value, vm) {
+    return !(0, _common.req)(value) || !validator.call(this, value, vm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/numeric.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/numeric.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.regex)('numeric', /^[0-9]*$/);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/or.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/or.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default() {
+  for (var _len = arguments.length, validators = new Array(_len), _key = 0; _key < _len; _key++) {
+    validators[_key] = arguments[_key];
+  }
+
+  return (0, _common.withParams)({
+    type: 'or'
+  }, function () {
+    var _this = this;
+
+    for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return validators.length > 0 && validators.reduce(function (valid, fn) {
+      return valid || fn.apply(_this, args);
+    }, false);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/required.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/required.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = (0, _common.withParams)({
+  type: 'required'
+}, function (value) {
+  if (typeof value === 'string') {
+    return (0, _common.req)(value.trim());
+  }
+
+  return (0, _common.req)(value);
+});
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredIf.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredIf.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredIf',
+    prop: prop
+  }, function (value, parentVm) {
+    return (0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/requiredUnless.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/requiredUnless.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(prop) {
+  return (0, _common.withParams)({
+    type: 'requiredUnless',
+    prop: prop
+  }, function (value, parentVm) {
+    return !(0, _common.ref)(prop, this, parentVm) ? (0, _common.req)(value) : true;
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/sameAs.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/sameAs.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var _default = function _default(equalTo) {
+  return (0, _common.withParams)({
+    type: 'sameAs',
+    eq: equalTo
+  }, function (value, parentVm) {
+    return value === (0, _common.ref)(equalTo, this, parentVm);
+  });
+};
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/validators/url.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vuelidate/lib/validators/url.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+
+var _common = __webpack_require__(/*! ./common */ "./node_modules/vuelidate/lib/validators/common.js");
+
+var urlRegex = /^(?:(?:https?|ftp):\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+
+var _default = (0, _common.regex)('url', urlRegex);
+
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/vval.js":
+/*!********************************************!*\
+  !*** ./node_modules/vuelidate/lib/vval.js ***!
+  \********************************************/
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.patchChildren = patchChildren;
+exports.h = h;
+
+function isUndef(v) {
+  return v === null || v === undefined;
+}
+
+function isDef(v) {
+  return v !== null && v !== undefined;
+}
+
+function sameVval(oldVval, vval) {
+  return vval.tag === oldVval.tag && vval.key === oldVval.key;
+}
+
+function createVm(vval) {
+  var Vm = vval.tag;
+  vval.vm = new Vm({
+    data: vval.args
+  });
+}
+
+function updateVval(vval) {
+  var keys = Object.keys(vval.args);
+
+  for (var i = 0; i < keys.length; i++) {
+    keys.forEach(function (k) {
+      vval.vm[k] = vval.args[k];
+    });
+  }
+}
+
+function createKeyToOldIdx(children, beginIdx, endIdx) {
+  var i, key;
+  var map = {};
+
+  for (i = beginIdx; i <= endIdx; ++i) {
+    key = children[i].key;
+    if (isDef(key)) map[key] = i;
+  }
+
+  return map;
+}
+
+function updateChildren(oldCh, newCh) {
+  var oldStartIdx = 0;
+  var newStartIdx = 0;
+  var oldEndIdx = oldCh.length - 1;
+  var oldStartVval = oldCh[0];
+  var oldEndVval = oldCh[oldEndIdx];
+  var newEndIdx = newCh.length - 1;
+  var newStartVval = newCh[0];
+  var newEndVval = newCh[newEndIdx];
+  var oldKeyToIdx, idxInOld, elmToMove;
+
+  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+    if (isUndef(oldStartVval)) {
+      oldStartVval = oldCh[++oldStartIdx];
+    } else if (isUndef(oldEndVval)) {
+      oldEndVval = oldCh[--oldEndIdx];
+    } else if (sameVval(oldStartVval, newStartVval)) {
+      patchVval(oldStartVval, newStartVval);
+      oldStartVval = oldCh[++oldStartIdx];
+      newStartVval = newCh[++newStartIdx];
+    } else if (sameVval(oldEndVval, newEndVval)) {
+      patchVval(oldEndVval, newEndVval);
+      oldEndVval = oldCh[--oldEndIdx];
+      newEndVval = newCh[--newEndIdx];
+    } else if (sameVval(oldStartVval, newEndVval)) {
+      patchVval(oldStartVval, newEndVval);
+      oldStartVval = oldCh[++oldStartIdx];
+      newEndVval = newCh[--newEndIdx];
+    } else if (sameVval(oldEndVval, newStartVval)) {
+      patchVval(oldEndVval, newStartVval);
+      oldEndVval = oldCh[--oldEndIdx];
+      newStartVval = newCh[++newStartIdx];
+    } else {
+      if (isUndef(oldKeyToIdx)) oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
+      idxInOld = isDef(newStartVval.key) ? oldKeyToIdx[newStartVval.key] : null;
+
+      if (isUndef(idxInOld)) {
+        createVm(newStartVval);
+        newStartVval = newCh[++newStartIdx];
+      } else {
+        elmToMove = oldCh[idxInOld];
+
+        if (sameVval(elmToMove, newStartVval)) {
+          patchVval(elmToMove, newStartVval);
+          oldCh[idxInOld] = undefined;
+          newStartVval = newCh[++newStartIdx];
+        } else {
+          createVm(newStartVval);
+          newStartVval = newCh[++newStartIdx];
+        }
+      }
+    }
+  }
+
+  if (oldStartIdx > oldEndIdx) {
+    addVvals(newCh, newStartIdx, newEndIdx);
+  } else if (newStartIdx > newEndIdx) {
+    removeVvals(oldCh, oldStartIdx, oldEndIdx);
+  }
+}
+
+function addVvals(vvals, startIdx, endIdx) {
+  for (; startIdx <= endIdx; ++startIdx) {
+    createVm(vvals[startIdx]);
+  }
+}
+
+function removeVvals(vvals, startIdx, endIdx) {
+  for (; startIdx <= endIdx; ++startIdx) {
+    var ch = vvals[startIdx];
+
+    if (isDef(ch)) {
+      ch.vm.$destroy();
+      ch.vm = null;
+    }
+  }
+}
+
+function patchVval(oldVval, vval) {
+  if (oldVval === vval) {
+    return;
+  }
+
+  vval.vm = oldVval.vm;
+  updateVval(vval);
+}
+
+function patchChildren(oldCh, ch) {
+  if (isDef(oldCh) && isDef(ch)) {
+    if (oldCh !== ch) updateChildren(oldCh, ch);
+  } else if (isDef(ch)) {
+    addVvals(ch, 0, ch.length - 1);
+  } else if (isDef(oldCh)) {
+    removeVvals(oldCh, 0, oldCh.length - 1);
+  }
+}
+
+function h(tag, key, args) {
+  return {
+    tag: tag,
+    key: key,
+    args: args
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParams.js":
+/*!**************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParams.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+/* provided dependency */ var process = __webpack_require__(/*! process/browser */ "./node_modules/process/browser.js");
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.default = void 0;
+var withParams = process.env.BUILD === 'web' ? __webpack_require__(/*! ./withParamsBrowser */ "./node_modules/vuelidate/lib/withParamsBrowser.js").withParams : __webpack_require__(/*! ./params */ "./node_modules/vuelidate/lib/params.js").withParams;
+var _default = withParams;
+exports.default = _default;
+
+/***/ }),
+
+/***/ "./node_modules/vuelidate/lib/withParamsBrowser.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/vuelidate/lib/withParamsBrowser.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.withParams = void 0;
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var root = typeof window !== 'undefined' ? window : typeof __webpack_require__.g !== 'undefined' ? __webpack_require__.g : {};
+
+var fakeWithParams = function fakeWithParams(paramsOrClosure, maybeValidator) {
+  if (_typeof(paramsOrClosure) === 'object' && maybeValidator !== undefined) {
+    return maybeValidator;
+  }
+
+  return paramsOrClosure(function () {});
+};
+
+var withParams = root.vuelidate ? root.vuelidate.withParams : fakeWithParams;
+exports.withParams = withParams;
 
 /***/ })
 

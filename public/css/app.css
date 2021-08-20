@@ -188,6 +188,12 @@ label {
     font-size: var( --text-tiny);
     font-weight: 600;
     letter-spacing: 0.2em;
+}
+
+.input-label{
+    font-size: var( --text-tiny);
+    font-weight: 600;
+    letter-spacing: 0.2em;
     margin-bottom: 6px;
 }
 
@@ -586,8 +592,14 @@ select:disabled{
     cursor: pointer;
 }
 
-.login{
+/**** Backgrounds ******/
+.access{
     background: url("/assets/images/backgrounds/Spaceship_1.svg") no-repeat var(--tutti-black);
+    background-size: cover;
+}
+
+.reg2{
+    background: url("/assets/images/backgrounds/background2.svg") no-repeat var(--tutti-black);
     background-size: cover;
 }
 
@@ -618,5 +630,39 @@ footer{
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(138, 137, 140, 0.3);
+}
+
+.Vue-Toastification__toast.tutti-toast {
+    font-family: "tutti-rota", sans-serif;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.Vue-Toastification__toast--default.tutti-toast {
+    background-color: var(--info);
+    color: var(--tutti-white);
+    border-radius: var(--margin-big);
+}
+
+.Vue-Toastification__toast--info.tutti-toast {
+    background-color: var(--info);
+    color: var(--tutti-white);
+    border-radius: var(--margin-big);
+}
+
+.Vue-Toastification__toast--success.tutti-toast {
+    background-color: var(--success);
+    color: var(--tutti-white);
+    border-radius: var(--margin-big);
+}
+.Vue-Toastification__toast--error.tutti-toast {
+    background-color: var(--error);
+    color: var(--tutti-white);
+    border-radius: var(--margin-big);
+}
+.Vue-Toastification__toast--warning.tutti-toast {
+    background-color: var(--warning);
+    color: var(--tutti-white);
+    border-radius: var(--margin-big);
 }
 

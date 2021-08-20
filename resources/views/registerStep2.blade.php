@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body class="access">
+<body class="reg2">
 <div id="app">
-    <logo-only></logo-only>
-    <access-card mode="login"></access-card>
+    <register-step2></register-step2>
 </div>
 <footer></footer>
 </body>
