@@ -2123,8 +2123,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2326,6 +2324,7 @@ var isSelected = function isSelected(value) {
     },
     loginSubmit: function loginSubmit(e) {
       this.submitted = true;
+      this.$v.login.$touch();
 
       if (this.$v.login.$invalid) {
         this.$toast(this.extractErrors(), {
@@ -2377,12 +2376,136 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var hooper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! hooper */ "./node_modules/hooper/dist/hooper.esm.js");
+/* harmony import */ var hooper_dist_hooper_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! hooper/dist/hooper.css */ "./node_modules/hooper/dist/hooper.css");
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+var ENTREPRENEUR = 'entrepreneur';
+var INVESTOR = 'investor';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "registerStep2"
+  name: "registerStep2",
+  data: function data() {
+    return {
+      decision: INVESTOR,
+      slide: 0,
+      isElite: false
+    };
+  },
+  components: {
+    Hooper: hooper__WEBPACK_IMPORTED_MODULE_0__.Hooper,
+    Slide: hooper__WEBPACK_IMPORTED_MODULE_0__.Slide
+  },
+  methods: {
+    slidePrev: function slidePrev() {
+      this.slide--;
+      this.decision = INVESTOR;
+      this.$refs.carousel.slidePrev();
+    },
+    slideNext: function slideNext() {
+      this.slide++;
+      this.decision = ENTREPRENEUR;
+      this.$refs.carousel.slideNext();
+    },
+    eliteSubmit: function eliteSubmit(e) {
+      this.isElite = e.currentTarget.getAttribute('data-id');
+      this.submitDecisions();
+    },
+    submitDecisions: function submitDecisions() {
+      this.$refs["extra-form"].submit();
+    }
+  }
 });
 
 /***/ }),
@@ -2781,7 +2904,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.access-container{\n    position: relative;\n    grid-column-start: 2;\n    grid-row: 2;\n}\n.card-container{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 642px;\n    width: 462px;\n    padding: var(--margin-big) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: var(--margin-big);\n\n    grid-column-start: 2;\n    grid-row: 2;\n}\n.header{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-left: var(--margin-regular);\n}\n.mode-input{\n    display: none;\n}\n.accessController{\n    margin-right: 18%;\n}\n.input{\n    margin-bottom: var(--margin-regular);\n}\n.error-container{\n    position: absolute;\n    padding: var(--margin-medium);\n    background: var(--error);\n    border-radius: 48px;\n    grid-column-start: 3;\n    grid-row: 2;\n    top:0;\n    left: 462px;\n    margin-top: var(--margin-regular);\n    margin-left: var(--margin-regular);\n}\n.input.error > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.date-container > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.errorMsg{\n    color: var(--error);\n    font-weight: 600;\n    font-size: var(--text-small);\n    letter-spacing: 0.02em;\n    margin-top: var(--margin-small);\n}\n.error-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.passwords{\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: var(--margin-small);\n}\n.form-containter{\n    margin-top: var(--margin-medium);\n    margin-right: 18%;\n    margin-left: var(--margin-regular);\n}\n.date-container{\n    position: relative;\n    width: 100%;\n    height: 32px;\n}\n.date-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.password-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    opacity: 0.3;\n    cursor: not-allowed;\n}\n.password-input-icon.active{\n    opacity: 1;\n    cursor: pointer;\n}\n.password-input-icon.error{\n    margin-right: var(--margin-medium);\n}\n.checkbox-container{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n}\n.terms{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-medium);\n}\n.loginHelpers{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.submitButton{\n    display: flex;\n    margin-top: var(--margin-medium);\n    margin-bottom: var(--margin-big);\n    justify-content: center;\n}\n.separator{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.separator > hr{\n    width: 32%;\n    border: 1px solid var(--tutti-white);\n}\n.separator > p {\n    font-weight: 700;\n    margin: 0 var(--margin-regular);\n}\n.alternatives{\n    margin: var(--margin-medium) 0 var(--margin-big);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.alternative{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 96px;\n    height: 74px;\n    border-radius: 100px 0 0 100px;\n    background: var(--tutti-white);\n}\n.alternative.left{\n    border-radius: 0 100px 100px 0;\n}\n.alternative:hover{\n    background: rgba(248, 247, 255, 0.8);\n    cursor: pointer;\n}\n.card-footer{\n    display: flex;\n    justify-content: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.card-container{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 642px;\n    width: 462px;\n    padding: var(--margin-big) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: var(--margin-big);\n\n    grid-column-start: 2;\n    grid-column-end: 6;\n    grid-row: 2;\n}\n.header{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-left: var(--margin-regular);\n}\n.mode-input{\n    display: none;\n}\n.accessController{\n    margin-right: 18%;\n}\n.input{\n    margin-bottom: var(--margin-regular);\n}\n.error-container{\n    position: absolute;\n    padding: var(--margin-medium);\n    background: var(--error);\n    border-radius: 48px;\n    grid-column-start: 3;\n    grid-row: 2;\n    top:0;\n    left: 462px;\n    margin-top: var(--margin-regular);\n    margin-left: var(--margin-regular);\n}\n.input.error > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.date-container > input{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.error > div.errorMsg{\n    color: var(--error);\n    font-weight: 600;\n    font-size: var(--text-small);\n    letter-spacing: 0.02em;\n    margin-top: var(--margin-small);\n}\n.error-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.passwords{\n    display: grid;\n    grid-template-columns: 1fr 1fr;\n    grid-column-gap: var(--margin-small);\n}\n.form-containter{\n    margin-top: var(--margin-medium);\n    margin-right: 18%;\n    margin-left: var(--margin-regular);\n}\n.date-container{\n    position: relative;\n    width: 100%;\n    height: 32px;\n}\n.date-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n}\n.password-input-icon{\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    opacity: 0.3;\n    cursor: not-allowed;\n}\n.password-input-icon.active{\n    opacity: 1;\n    cursor: pointer;\n}\n.password-input-icon.error{\n    margin-right: var(--margin-medium);\n}\n.checkbox-container{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n}\n.terms{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-medium);\n}\n.loginHelpers{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.submitButton{\n    display: flex;\n    margin-top: var(--margin-medium);\n    margin-bottom: var(--margin-big);\n    justify-content: center;\n}\n.separator{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n}\n.separator > hr{\n    width: 32%;\n    border: 1px solid var(--tutti-white);\n}\n.separator > p {\n    font-weight: 700;\n    margin: 0 var(--margin-regular);\n}\n.alternatives{\n    margin: var(--margin-medium) 0 var(--margin-big);\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n.alternative{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    width: 96px;\n    height: 74px;\n    border-radius: 100px 0 0 100px;\n    background: var(--tutti-white);\n}\n.alternative.left{\n    border-radius: 0 100px 100px 0;\n}\n.alternative:hover{\n    background: rgba(248, 247, 255, 0.8);\n    cursor: pointer;\n}\n.card-footer{\n    display: flex;\n    justify-content: center;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-containter[data-v-4f871d63]{\n    grid-column-start: 2;\n    grid-column-end: 10;\n    grid-row: 2;\n}\n.decision-input[data-v-4f871d63]{\n    display: none;\n}\n.select-container[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 487px;\n    width: 944px;\n    padding: var(--margin-big) var(--margin-big) var(--margin-medium) var(--margin-big);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: var(--margin-big);\n}\n.header[data-v-4f871d63]{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: var(--margin-big);\n    margin-left: 0;\n}\n.header > h5[data-v-4f871d63]{\n    color: rgba(138, 137, 140, 0.5);\n}\n.accessController[data-v-4f871d63]{\n    margin-right: 10.3%;\n}\n.option-container[data-v-4f871d63]{\n    display: grid;\n    height: 192px;\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 100%;\n    grid-column-gap: 20px;\n}\n.option[data-v-4f871d63]{\n    width: 100%;\n    height: 100%;\n    border: 2px solid rgba(138, 137, 140, 0.5);\n    box-sizing: border-box;\n    border-radius: var(--margin-regular);\n    padding: var(--margin-regular) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n    cursor: pointer;\n\n    display: flex;\n    align-items: center;\n}\n.option[data-v-4f871d63]:hover{\n    background: rgba(84, 84, 88, 0.3);\n    border: 2px solid var(--tutti-grey-4);\n}\n.option > div > span[data-v-4f871d63]{\n    font-weight: 400;\n    font-size: var(--text-small);\n    letter-spacing: 0.05em;\n    color: var(--tutti-grey-4);\n}\n.option > img[data-v-4f871d63]{\n    width: 60px;\n    margin-left: auto;\n    margin-right: var(--margin-regular);\n    margin-top: auto;\n}\n.option > img.idea[data-v-4f871d63]{\n    width: 80px;\n}\n.bullets[data-v-4f871d63]{\n    margin-top: var(--margin-half);\n}\n.extra[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n}\n.selector-footer[data-v-4f871d63]{\n    display: block;\n    text-align: center;\n    justify-content: center;\n    color: rgba(138, 137, 140, 0.5);\n    margin-top: calc(var(--margin-large) + 21px);\n}\n.selector-footer > h5[data-v-4f871d63]{\n    color: rgba(138, 137, 140, 0.5);\n}\n.elite-container[data-v-4f871d63]{\n    height: 339px;\n    background: url(\"/assets/images/SquareGradient.svg\") no-repeat center;\n    background-size: cover;\n    border-radius: var(--margin-medium);\n}\n.elitePanelHeader[data-v-4f871d63]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: var(--margin-medium);\n}\n.header.elite[data-v-4f871d63]{\n    margin-bottom: var(--margin-medium);\n}\n.eliteInfo[data-v-4f871d63]{\n    height: 243px;\n    width: 100%;\n    padding: var(--margin-medium);\n    border-radius: var(--margin-medium);\n    background: rgba(29, 29, 29, 0.8);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n}\n.infoHeadings[data-v-4f871d63]{\n    align-self: flex-start;\n    display: flex;\n    justify-content: space-between;\n}\n.infoHeadings > div[data-v-4f871d63]{\n    max-width: 25%;\n}\n.infoHeadings > div > p[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n}\n.infoHeadings > div > h4[data-v-4f871d63]{\n    font-weight: 700;\n}\n.eliteFooter[data-v-4f871d63]{\n    align-self: flex-end;\n    display: flex;\n    justify-content: space-between;\n    margin-top: 56px;\n}\n.eliteFooter > .price > h3[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-medium);\n}\n.margins[data-v-4f871d63]{\n    margin-right: var(--margin-regular);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21673,6 +21820,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_style_index_0_id_4f871d63_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_style_index_0_id_4f871d63_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_style_index_0_id_4f871d63_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/app.vue?vue&type=style&index=0&lang=css&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/app.vue?vue&type=style&index=0&lang=css& ***!
@@ -22156,15 +22333,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./registerStep2.vue?vue&type=template&id=4f871d63&scoped=true& */ "./resources/js/components/access/registerStep2.vue?vue&type=template&id=4f871d63&scoped=true&");
 /* harmony import */ var _registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./registerStep2.vue?vue&type=script&lang=js& */ "./resources/js/components/access/registerStep2.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _registerStep2_vue_vue_type_style_index_0_id_4f871d63_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& */ "./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__.default)(
   _registerStep2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
   _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _registerStep2_vue_vue_type_template_id_4f871d63_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -22512,6 +22691,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_registerStep2_vue_vue_type_style_index_0_id_4f871d63_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/access/registerStep2.vue?vue&type=style&index=0&id=4f871d63&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/app.vue?vue&type=style&index=0&lang=css&":
 /*!**************************************************************************!*\
   !*** ./resources/js/components/app.vue?vue&type=style&index=0&lang=css& ***!
@@ -22713,804 +22905,749 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "access-container" },
+    "hooper",
+    {
+      ref: "carousel",
+      staticClass: "card-container",
+      attrs: {
+        "initial-slide": _vm.determineMode(),
+        "mouse-drag": false,
+        wheelControl: false,
+        keysControl: false
+      }
+    },
     [
-      _c(
-        "hooper",
-        {
-          ref: "carousel",
-          staticClass: "card-container",
-          attrs: {
-            "initial-slide": _vm.determineMode(),
-            "mouse-drag": false,
-            wheelControl: false,
-            keysControl: false
-          }
-        },
-        [
-          _c("slide", [
-            _c("div", { staticClass: "header" }, [
-              _c("h2", [_vm._v("Register")]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "lowPriority accessController",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.slideNext.apply(null, arguments)
-                    }
-                  }
-                },
-                [_vm._v("Login")]
-              )
-            ]),
+      _c("slide", [
+        _c("div", { staticClass: "header" }, [
+          _c("h2", [_vm._v("Register")]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "lowPriority accessController",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.slideNext.apply(null, arguments)
+                }
+              }
+            },
+            [_vm._v("Login")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            ref: "reg-form",
+            staticClass: "form-containter",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.registerSubmit.apply(null, arguments)
+              }
+            }
+          },
+          [
+            _c("input", {
+              staticClass: "mode-input",
+              attrs: { name: "mode" },
+              domProps: { value: _vm.modeSelector }
+            }),
             _vm._v(" "),
             _c(
-              "form",
-              {
-                ref: "reg-form",
-                staticClass: "form-containter",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.registerSubmit.apply(null, arguments)
-                  }
-                }
-              },
+              "div",
+              { class: "input " + [_vm.registerNameError() ? "error" : ""] },
               [
-                _c("input", {
-                  staticClass: "mode-input",
-                  attrs: { name: "mode" },
-                  domProps: { value: _vm.modeSelector }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    class: "input " + [_vm.registerNameError() ? "error" : ""]
-                  },
-                  [
-                    _c("div", { staticClass: "input-label" }, [
-                      _vm._v("Full name *")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "date-container" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.trim",
-                            value: _vm.register.name,
-                            expression: "register.name",
-                            modifiers: { trim: true }
-                          }
-                        ],
-                        attrs: {
-                          type: "text",
-                          placeholder: "Your name",
-                          name: "reg_name"
-                        },
-                        domProps: { value: _vm.register.name },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.register,
-                              "name",
-                              $event.target.value.trim()
-                            )
-                          },
-                          blur: function($event) {
-                            return _vm.$forceUpdate()
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.registerNameError()
-                        ? _c("img", {
-                            staticClass: "error-input-icon",
-                            attrs: {
-                              src:
-                                "/storage/assets/icons/error_exclamation.svg",
-                              alt: "error_exclamation"
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    class: "input " + [_vm.registerMailError() ? "error" : ""]
-                  },
-                  [
-                    _c("div", { staticClass: "input-label" }, [
-                      _vm._v("Email *")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "date-container" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model.trim",
-                            value: _vm.register.mail,
-                            expression: "register.mail",
-                            modifiers: { trim: true }
-                          }
-                        ],
-                        attrs: {
-                          type: "email",
-                          placeholder: "Your e-mail",
-                          name: "reg_mail"
-                        },
-                        domProps: { value: _vm.register.mail },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.register,
-                              "mail",
-                              $event.target.value.trim()
-                            )
-                          },
-                          blur: function($event) {
-                            return _vm.$forceUpdate()
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.registerMailError()
-                        ? _c("img", {
-                            staticClass: "error-input-icon",
-                            attrs: {
-                              src:
-                                "/storage/assets/icons/error_exclamation.svg",
-                              alt: "error_exclamation"
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "passwords" }, [
-                  _c(
-                    "div",
-                    {
-                      class:
-                        "input " + [_vm.registerPassword1Error() ? "error" : ""]
-                    },
-                    [
-                      _c("div", { staticClass: "input-label" }, [
-                        _vm._v("Password *")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "date-container" }, [
-                        [
-                          _vm.register.password.first.visible
-                            ? "text"
-                            : "password"
-                        ] === "checkbox"
-                          ? 0
-                          : [
-                              _vm.register.password.first.visible
-                                ? "text"
-                                : "password"
-                            ] === "radio"
-                          ? 0
-                          : _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.register.password.first.text,
-                                  expression: "register.password.first.text"
-                                }
-                              ],
-                              attrs: {
-                                placeholder: "Password",
-                                name: "reg_pass1",
-                                type: [
-                                  _vm.register.password.first.visible
-                                    ? "text"
-                                    : "password"
-                                ]
-                              },
-                              domProps: {
-                                value: _vm.register.password.first.text
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.register.password.first,
-                                    "text",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                        _vm._v(" "),
-                        _c("img", {
-                          class:
-                            "password-input-icon " +
-                            [
-                              _vm.register.password.first.text
-                                ? "active "
-                                : null
-                            ] +
-                            [_vm.registerPassword1Error() ? "error " : null],
-                          attrs: {
-                            src:
-                              "/storage/assets/icons/" +
-                              [
-                                _vm.register.password.first.visible
-                                  ? "eye-off.svg"
-                                  : "eye.svg"
-                              ],
-                            alt: "see_password"
-                          },
-                          on: {
-                            click: function() {
-                              if (_vm.register.password.first.text) {
-                                _vm.register.password.first.visible = !_vm
-                                  .register.password.first.visible
-                              }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.registerPassword1Error()
-                          ? _c("img", {
-                              staticClass: "error-input-icon",
-                              attrs: {
-                                src:
-                                  "/storage/assets/icons/error_exclamation.svg",
-                                alt: "error_exclamation"
-                              }
-                            })
-                          : _vm._e()
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      class:
-                        "input " + [_vm.registerPassword2Error() ? "error" : ""]
-                    },
-                    [
-                      _c("div", { staticClass: "input-label" }, [
-                        _vm._v("Repeat password *")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "date-container" }, [
-                        [
-                          _vm.register.password.second.visible
-                            ? "text"
-                            : "password"
-                        ] === "checkbox"
-                          ? 0
-                          : [
-                              _vm.register.password.second.visible
-                                ? "text"
-                                : "password"
-                            ] === "radio"
-                          ? 0
-                          : _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.register.password.second.text,
-                                  expression: "register.password.second.text"
-                                }
-                              ],
-                              attrs: {
-                                placeholder: "Type it again",
-                                name: "reg_pass2",
-                                type: [
-                                  _vm.register.password.second.visible
-                                    ? "text"
-                                    : "password"
-                                ]
-                              },
-                              domProps: {
-                                value: _vm.register.password.second.text
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.register.password.second,
-                                    "text",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                        _vm._v(" "),
-                        _c("img", {
-                          class:
-                            "password-input-icon " +
-                            [
-                              _vm.register.password.second.text
-                                ? "active "
-                                : null
-                            ] +
-                            [_vm.registerPassword2Error() ? "error " : null],
-                          attrs: {
-                            src:
-                              "/storage/assets/icons/" +
-                              [
-                                _vm.register.password.second.visible
-                                  ? "eye-off.svg"
-                                  : "eye.svg"
-                              ],
-                            alt: "see_password"
-                          },
-                          on: {
-                            click: function() {
-                              if (_vm.register.password.second.text) {
-                                _vm.register.password.second.visible = !_vm
-                                  .register.password.second.visible
-                              }
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.registerPassword2Error()
-                          ? _c("img", {
-                              staticClass: "error-input-icon",
-                              attrs: {
-                                src:
-                                  "/storage/assets/icons/error_exclamation.svg",
-                                alt: "error_exclamation"
-                              }
-                            })
-                          : _vm._e()
-                      ])
-                    ]
-                  )
+                _c("div", { staticClass: "input-label" }, [
+                  _vm._v("Full name *")
                 ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    class: "input " + [_vm.registerDateError() ? "error" : ""]
-                  },
-                  [
-                    _c("div", { staticClass: "input-label" }, [
-                      _vm._v("Birthday *")
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "date-container" },
-                      [
-                        _c("datepicker", {
-                          attrs: { placeholder: "Choose a date" },
-                          model: {
-                            value: _vm.register.date,
-                            callback: function($$v) {
-                              _vm.$set(_vm.register, "date", $$v)
-                            },
-                            expression: "register.date"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("img", {
-                          class: [
-                            _vm.registerDateError()
-                              ? "error-input-icon"
-                              : "date-input-icon"
-                          ],
-                          attrs: {
-                            src:
-                              "/storage/assets/icons/" +
-                              [
-                                _vm.registerDateError()
-                                  ? "error_exclamation.svg"
-                                  : "calendar.svg"
-                              ],
-                            alt: "calendar"
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "terms" }, [
+                _c("div", { staticClass: "date-container" }, [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
-                        rawName: "v-model",
-                        value: _vm.register.terms,
-                        expression: "register.terms"
+                        rawName: "v-model.trim",
+                        value: _vm.register.name,
+                        expression: "register.name",
+                        modifiers: { trim: true }
                       }
                     ],
-                    attrs: { type: "checkbox", name: "reg_terms" },
-                    domProps: {
-                      checked: Array.isArray(_vm.register.terms)
-                        ? _vm._i(_vm.register.terms, null) > -1
-                        : _vm.register.terms
+                    attrs: {
+                      type: "text",
+                      placeholder: "Your name",
+                      name: "reg_name"
                     },
+                    domProps: { value: _vm.register.name },
                     on: {
-                      change: function($event) {
-                        var $$a = _vm.register.terms,
-                          $$el = $event.target,
-                          $$c = $$el.checked ? true : false
-                        if (Array.isArray($$a)) {
-                          var $$v = null,
-                            $$i = _vm._i($$a, $$v)
-                          if ($$el.checked) {
-                            $$i < 0 &&
-                              _vm.$set(_vm.register, "terms", $$a.concat([$$v]))
-                          } else {
-                            $$i > -1 &&
-                              _vm.$set(
-                                _vm.register,
-                                "terms",
-                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                              )
-                          }
-                        } else {
-                          _vm.$set(_vm.register, "terms", $$c)
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
                         }
+                        _vm.$set(
+                          _vm.register,
+                          "name",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("p", [
-                    _vm._v("I agree to all the statements in "),
-                    _c("a", { attrs: { href: "" } }, [
-                      _vm._v("Terms of service")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "submitButton" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "standardPriority",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Register")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-footer" }, [
-                  _c("p", [
-                    _vm._v("Already a member? "),
-                    _c(
-                      "a",
-                      {
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.slideNext.apply(null, arguments)
-                          }
+                  _vm.registerNameError()
+                    ? _c("img", {
+                        staticClass: "error-input-icon",
+                        attrs: {
+                          src: "/storage/assets/icons/error_exclamation.svg",
+                          alt: "error_exclamation"
                         }
-                      },
-                      [_vm._v("Login")]
-                    )
-                  ])
+                      })
+                    : _vm._e()
                 ])
               ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("slide", [
-            _c("div", { staticClass: "header" }, [
-              _c("h2", [_vm._v("Login")]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "lowPriority accessController",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.slidePrev.apply(null, arguments)
-                    }
-                  }
-                },
-                [_vm._v("Register")]
-              )
-            ]),
+            ),
             _vm._v(" "),
             _c(
-              "form",
-              {
-                ref: "login-form",
-                staticClass: "form-containter",
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.loginSubmit.apply(null, arguments)
-                  }
-                }
-              },
+              "div",
+              { class: "input " + [_vm.registerMailError() ? "error" : ""] },
               [
-                _c("input", {
-                  staticClass: "mode-input",
-                  attrs: { name: "mode" },
-                  domProps: { value: _vm.modeSelector }
-                }),
+                _c("div", { staticClass: "input-label" }, [_vm._v("Email *")]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { class: "input " + [_vm.loginMailError() ? "error" : ""] },
-                  [
-                    _c("div", { staticClass: "input-label" }, [
-                      _vm._v("Email *")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "date-container" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.login.mail,
-                            expression: "login.mail"
-                          }
-                        ],
+                _c("div", { staticClass: "date-container" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.trim",
+                        value: _vm.register.mail,
+                        expression: "register.mail",
+                        modifiers: { trim: true }
+                      }
+                    ],
+                    attrs: {
+                      type: "email",
+                      placeholder: "Your e-mail",
+                      name: "reg_mail"
+                    },
+                    domProps: { value: _vm.register.mail },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.register,
+                          "mail",
+                          $event.target.value.trim()
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.registerMailError()
+                    ? _c("img", {
+                        staticClass: "error-input-icon",
                         attrs: {
-                          type: "email",
-                          placeholder: "Your e-mail",
-                          name: "log_mail"
-                        },
-                        domProps: { value: _vm.login.mail },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(_vm.login, "mail", $event.target.value)
-                          }
+                          src: "/storage/assets/icons/error_exclamation.svg",
+                          alt: "error_exclamation"
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.loginMailError()
-                        ? _c("img", {
-                            staticClass: "error-input-icon",
-                            attrs: {
-                              src:
-                                "/storage/assets/icons/error_exclamation.svg",
-                              alt: "error_exclamation"
+                      })
+                    : _vm._e()
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "passwords" }, [
+              _c(
+                "div",
+                {
+                  class:
+                    "input " + [_vm.registerPassword1Error() ? "error" : ""]
+                },
+                [
+                  _c("div", { staticClass: "input-label" }, [
+                    _vm._v("Password *")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "date-container" }, [
+                    [
+                      _vm.register.password.first.visible ? "text" : "password"
+                    ] === "checkbox"
+                      ? 0
+                      : [
+                          _vm.register.password.first.visible
+                            ? "text"
+                            : "password"
+                        ] === "radio"
+                      ? 0
+                      : _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.register.password.first.text,
+                              expression: "register.password.first.text"
                             }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    class: "input " + [_vm.loginPasswordError() ? "error" : ""]
-                  },
-                  [
-                    _c("div", { staticClass: "input-label" }, [
-                      _vm._v("Password *")
-                    ]),
+                          ],
+                          attrs: {
+                            placeholder: "Password",
+                            name: "reg_pass1",
+                            type: [
+                              _vm.register.password.first.visible
+                                ? "text"
+                                : "password"
+                            ]
+                          },
+                          domProps: { value: _vm.register.password.first.text },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.register.password.first,
+                                "text",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
                     _vm._v(" "),
-                    _c("div", { staticClass: "date-container" }, [
-                      [_vm.login.password.visible ? "text" : "password"] ===
-                      "checkbox"
-                        ? 0
-                        : [_vm.login.password.visible ? "text" : "password"] ===
-                          "radio"
-                        ? 0
-                        : _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.login.password.text,
-                                expression: "login.password.text"
-                              }
-                            ],
-                            attrs: {
-                              placeholder: "Password",
-                              name: "log_pass",
-                              type: [
-                                _vm.login.password.visible ? "text" : "password"
-                              ]
-                            },
-                            domProps: { value: _vm.login.password.text },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.login.password,
-                                  "text",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                      _vm._v(" "),
-                      _c("img", {
-                        class:
-                          "password-input-icon " +
-                          [_vm.login.password.text ? "active " : null] +
-                          [_vm.loginPasswordError() ? "error " : null],
-                        attrs: {
-                          src:
-                            "/storage/assets/icons/" +
-                            [
-                              _vm.login.password.visible
-                                ? "eye-off.svg"
-                                : "eye.svg"
-                            ],
-                          alt: "see_password"
-                        },
-                        on: {
-                          click: function() {
-                            if (_vm.login.password.text) {
-                              _vm.login.password.visible = !_vm.login.password
-                                .visible
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.loginPasswordError()
-                        ? _c("img", {
-                            staticClass: "error-input-icon",
-                            attrs: {
-                              src:
-                                "/storage/assets/icons/error_exclamation.svg",
-                              alt: "error_exclamation"
-                            }
-                          })
-                        : _vm._e()
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "loginHelpers" }, [
-                  _c("div", { staticClass: "checkbox-container" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.login.remember,
-                          expression: "login.remember"
-                        }
-                      ],
-                      attrs: { type: "checkbox", name: "log_remember" },
-                      domProps: {
-                        checked: Array.isArray(_vm.login.remember)
-                          ? _vm._i(_vm.login.remember, null) > -1
-                          : _vm.login.remember
+                    _c("img", {
+                      class:
+                        "password-input-icon " +
+                        [_vm.register.password.first.text ? "active " : null] +
+                        [_vm.registerPassword1Error() ? "error " : null],
+                      attrs: {
+                        src:
+                          "/storage/assets/icons/" +
+                          [
+                            _vm.register.password.first.visible
+                              ? "eye-off.svg"
+                              : "eye.svg"
+                          ],
+                        alt: "see_password"
                       },
                       on: {
-                        change: function($event) {
-                          var $$a = _vm.login.remember,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(
-                                  _vm.login,
-                                  "remember",
-                                  $$a.concat([$$v])
-                                )
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  _vm.login,
-                                  "remember",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(_vm.login, "remember", $$c)
+                        click: function() {
+                          if (_vm.register.password.first.text) {
+                            _vm.register.password.first.visible = !_vm.register
+                              .password.first.visible
                           }
                         }
                       }
                     }),
                     _vm._v(" "),
-                    _c("p", [_vm._v("Remember me?")])
+                    _vm.registerPassword1Error()
+                      ? _c("img", {
+                          staticClass: "error-input-icon",
+                          attrs: {
+                            src: "/storage/assets/icons/error_exclamation.svg",
+                            alt: "error_exclamation"
+                          }
+                        })
+                      : _vm._e()
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  class:
+                    "input " + [_vm.registerPassword2Error() ? "error" : ""]
+                },
+                [
+                  _c("div", { staticClass: "input-label" }, [
+                    _vm._v("Repeat password *")
                   ]),
                   _vm._v(" "),
-                  _c("a", { attrs: { href: "" } }, [
-                    _vm._v("Forgot my password?")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "submitButton" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "standardPriority",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Login")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "separator" }, [
-                  _c("hr"),
-                  _vm._v(" "),
-                  _c("p", [_vm._v("Or log in with")]),
-                  _vm._v(" "),
-                  _c("hr")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "alternatives" }, [
-                  _c("div", { staticClass: "alternative" }, [
+                  _c("div", { staticClass: "date-container" }, [
+                    [
+                      _vm.register.password.second.visible ? "text" : "password"
+                    ] === "checkbox"
+                      ? 0
+                      : [
+                          _vm.register.password.second.visible
+                            ? "text"
+                            : "password"
+                        ] === "radio"
+                      ? 0
+                      : _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.register.password.second.text,
+                              expression: "register.password.second.text"
+                            }
+                          ],
+                          attrs: {
+                            placeholder: "Type it again",
+                            name: "reg_pass2",
+                            type: [
+                              _vm.register.password.second.visible
+                                ? "text"
+                                : "password"
+                            ]
+                          },
+                          domProps: {
+                            value: _vm.register.password.second.text
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.register.password.second,
+                                "text",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                    _vm._v(" "),
                     _c("img", {
+                      class:
+                        "password-input-icon " +
+                        [_vm.register.password.second.text ? "active " : null] +
+                        [_vm.registerPassword2Error() ? "error " : null],
                       attrs: {
-                        src: "/storage/assets/images/logos/google.png",
-                        alt: "google_logo",
-                        width: "50%"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "alternative left" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "/storage/assets/images/logos/linkedin.png",
-                        alt: "google_logo",
-                        width: "50%"
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-footer" }, [
-                  _c("p", [
-                    _vm._v("Not a member yet? "),
-                    _c(
-                      "a",
-                      {
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.slidePrev.apply(null, arguments)
+                        src:
+                          "/storage/assets/icons/" +
+                          [
+                            _vm.register.password.second.visible
+                              ? "eye-off.svg"
+                              : "eye.svg"
+                          ],
+                        alt: "see_password"
+                      },
+                      on: {
+                        click: function() {
+                          if (_vm.register.password.second.text) {
+                            _vm.register.password.second.visible = !_vm.register
+                              .password.second.visible
                           }
                         }
-                      },
-                      [_vm._v("Register")]
-                    )
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.registerPassword2Error()
+                      ? _c("img", {
+                          staticClass: "error-input-icon",
+                          attrs: {
+                            src: "/storage/assets/icons/error_exclamation.svg",
+                            alt: "error_exclamation"
+                          }
+                        })
+                      : _vm._e()
                   ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { class: "input " + [_vm.registerDateError() ? "error" : ""] },
+              [
+                _c("div", { staticClass: "input-label" }, [
+                  _vm._v("Birthday *")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "date-container" },
+                  [
+                    _c("datepicker", {
+                      attrs: { placeholder: "Choose a date" },
+                      model: {
+                        value: _vm.register.date,
+                        callback: function($$v) {
+                          _vm.$set(_vm.register, "date", $$v)
+                        },
+                        expression: "register.date"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("img", {
+                      class: [
+                        _vm.registerDateError()
+                          ? "error-input-icon"
+                          : "date-input-icon"
+                      ],
+                      attrs: {
+                        src:
+                          "/storage/assets/icons/" +
+                          [
+                            _vm.registerDateError()
+                              ? "error_exclamation.svg"
+                              : "calendar.svg"
+                          ],
+                        alt: "calendar"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "terms" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.register.terms,
+                    expression: "register.terms"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "reg_terms" },
+                domProps: {
+                  checked: Array.isArray(_vm.register.terms)
+                    ? _vm._i(_vm.register.terms, null) > -1
+                    : _vm.register.terms
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.register.terms,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.register, "terms", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.register,
+                            "terms",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.register, "terms", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("p", [
+                _vm._v("I agree to all the statements in "),
+                _c("a", { attrs: { href: "" } }, [_vm._v("Terms of service")])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "submitButton" }, [
+              _c(
+                "button",
+                { staticClass: "standardPriority", attrs: { type: "submit" } },
+                [_vm._v("Register")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _c("p", [
+                _vm._v("Already a member? "),
+                _c(
+                  "a",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.slideNext.apply(null, arguments)
+                      }
+                    }
+                  },
+                  [_vm._v("Login")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("slide", [
+        _c("div", { staticClass: "header" }, [
+          _c("h2", [_vm._v("Login")]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "lowPriority accessController",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.slidePrev.apply(null, arguments)
+                }
+              }
+            },
+            [_vm._v("Register")]
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            ref: "login-form",
+            staticClass: "form-containter",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.loginSubmit.apply(null, arguments)
+              }
+            }
+          },
+          [
+            _c("input", {
+              staticClass: "mode-input",
+              attrs: { name: "mode" },
+              domProps: { value: _vm.modeSelector }
+            }),
+            _vm._v(" "),
+            _c(
+              "div",
+              { class: "input " + [_vm.loginMailError() ? "error" : ""] },
+              [
+                _c("div", { staticClass: "input-label" }, [_vm._v("Email *")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "date-container" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.login.mail,
+                        expression: "login.mail"
+                      }
+                    ],
+                    attrs: {
+                      type: "email",
+                      placeholder: "Your e-mail",
+                      name: "log_mail"
+                    },
+                    domProps: { value: _vm.login.mail },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.login, "mail", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.loginMailError()
+                    ? _c("img", {
+                        staticClass: "error-input-icon",
+                        attrs: {
+                          src: "/storage/assets/icons/error_exclamation.svg",
+                          alt: "error_exclamation"
+                        }
+                      })
+                    : _vm._e()
                 ])
               ]
-            )
-          ])
-        ],
-        1
-      )
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { class: "input " + [_vm.loginPasswordError() ? "error" : ""] },
+              [
+                _c("div", { staticClass: "input-label" }, [
+                  _vm._v("Password *")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "date-container" }, [
+                  [_vm.login.password.visible ? "text" : "password"] ===
+                  "checkbox"
+                    ? 0
+                    : [_vm.login.password.visible ? "text" : "password"] ===
+                      "radio"
+                    ? 0
+                    : _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.login.password.text,
+                            expression: "login.password.text"
+                          }
+                        ],
+                        attrs: {
+                          placeholder: "Password",
+                          name: "log_pass",
+                          type: [
+                            _vm.login.password.visible ? "text" : "password"
+                          ]
+                        },
+                        domProps: { value: _vm.login.password.text },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.login.password,
+                              "text",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                  _vm._v(" "),
+                  _c("img", {
+                    class:
+                      "password-input-icon " +
+                      [_vm.login.password.text ? "active " : null] +
+                      [_vm.loginPasswordError() ? "error " : null],
+                    attrs: {
+                      src:
+                        "/storage/assets/icons/" +
+                        [
+                          _vm.login.password.visible ? "eye-off.svg" : "eye.svg"
+                        ],
+                      alt: "see_password"
+                    },
+                    on: {
+                      click: function() {
+                        if (_vm.login.password.text) {
+                          _vm.login.password.visible = !_vm.login.password
+                            .visible
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.loginPasswordError()
+                    ? _c("img", {
+                        staticClass: "error-input-icon",
+                        attrs: {
+                          src: "/storage/assets/icons/error_exclamation.svg",
+                          alt: "error_exclamation"
+                        }
+                      })
+                    : _vm._e()
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "loginHelpers" }, [
+              _c("div", { staticClass: "checkbox-container" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.login.remember,
+                      expression: "login.remember"
+                    }
+                  ],
+                  attrs: { type: "checkbox", name: "log_remember" },
+                  domProps: {
+                    checked: Array.isArray(_vm.login.remember)
+                      ? _vm._i(_vm.login.remember, null) > -1
+                      : _vm.login.remember
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.login.remember,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(_vm.login, "remember", $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.login,
+                              "remember",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.login, "remember", $$c)
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", [_vm._v("Remember me?")])
+              ]),
+              _vm._v(" "),
+              _c("a", { attrs: { href: "" } }, [_vm._v("Forgot my password?")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "submitButton" }, [
+              _c(
+                "button",
+                { staticClass: "standardPriority", attrs: { type: "submit" } },
+                [_vm._v("Login")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "separator" }, [
+              _c("hr"),
+              _vm._v(" "),
+              _c("p", [_vm._v("Or log in with")]),
+              _vm._v(" "),
+              _c("hr")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "alternatives" }, [
+              _c("div", { staticClass: "alternative" }, [
+                _c("img", {
+                  attrs: {
+                    src: "/storage/assets/images/logos/google.png",
+                    alt: "google_logo",
+                    width: "50%"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "alternative left" }, [
+                _c("img", {
+                  attrs: {
+                    src: "/storage/assets/images/logos/linkedin.png",
+                    alt: "google_logo",
+                    width: "50%"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _c("p", [
+                _vm._v("Not a member yet? "),
+                _c(
+                  "a",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.slidePrev.apply(null, arguments)
+                      }
+                    }
+                  },
+                  [_vm._v("Register")]
+                )
+              ])
+            ])
+          ]
+        )
+      ])
     ],
     1
   )
@@ -23538,7 +23675,233 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "form",
+    { ref: "extra-form", staticClass: "form-containter" },
+    [
+      _c("input", {
+        staticClass: "decision-input",
+        attrs: { name: "userType" },
+        domProps: { value: this.decision }
+      }),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "decision-input",
+        attrs: { name: "isElite" },
+        domProps: { value: this.isElite }
+      }),
+      _vm._v(" "),
+      _c(
+        "hooper",
+        {
+          ref: "carousel",
+          staticClass: "select-container",
+          attrs: {
+            "initial-slide": this.slide,
+            "mouse-drag": false,
+            wheelControl: false,
+            keysControl: false
+          }
+        },
+        [
+          _c("slide", [
+            _c("div", { staticClass: "header" }, [
+              _c("h2", [_vm._v("What do you want to be?")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "option-container accessController" }, [
+              _c("div", [
+                _c(
+                  "div",
+                  {
+                    staticClass: "option",
+                    attrs: { "data-id": "investor" },
+                    on: { click: _vm.submitDecisions }
+                  },
+                  [
+                    _c("div", [
+                      _c("span", [_vm._v("123456 investors online")]),
+                      _vm._v(" "),
+                      _c("h3", [_vm._v("INVESTOR")]),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "bullets" }, [
+                        _c("li", [_vm._v("Invest in promising projects")]),
+                        _vm._v(" "),
+                        _c("li", [_vm._v("Contact entrepreneurs")]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "final" }, [
+                          _vm._v("Chat with other investors")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("img", {
+                      attrs: {
+                        src: "/storage/assets/images/elements/Dollar.svg",
+                        alt: "dollar"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("button", { staticClass: "minPriority extra" }, [
+                  _vm._v("+ More info about investors")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c(
+                  "div",
+                  {
+                    staticClass: "option",
+                    attrs: { "data-id": "entrepreneur" },
+                    on: { click: _vm.slideNext }
+                  },
+                  [
+                    _c("div", [
+                      _c("span", [_vm._v("9834754 entrepreneurs on-line")]),
+                      _vm._v(" "),
+                      _c("h3", [_vm._v("ENTREPRENEUR")]),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "bullets" }, [
+                        _c("li", [_vm._v("Create your own projects")]),
+                        _vm._v(" "),
+                        _c("li", [_vm._v("Join other’s projects")]),
+                        _vm._v(" "),
+                        _c("li", { staticClass: "final" }, [
+                          _vm._v("Find partners")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("img", {
+                      staticClass: "idea",
+                      attrs: {
+                        src: "/storage/assets/images/elements/Idea.svg",
+                        alt: "idea"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("button", { staticClass: "minPriority extra" }, [
+                  _vm._v("+ More info about entrepreneurs")
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "selector-footer accessController" }, [
+              _c("h5", [_vm._v("Choose one")]),
+              _vm._v(" "),
+              _c("p", [_vm._v("This can be changed in the future")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("slide", [
+            _c("div", { staticClass: "header elite" }, [
+              _c("h5", [_vm._v("We're almost done")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "lowPriority accessController",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.slidePrev.apply(null, arguments)
+                    }
+                  }
+                },
+                [_vm._v("Back")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "elite-container accessController" }, [
+              _c("div", { staticClass: "elitePanelHeader" }, [
+                _c("h2", [_vm._v("Join Tutti Elite today!")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "eliteInfo" }, [
+                _c("div", { staticClass: "infoHeadings" }, [
+                  _c("div", [
+                    _c("h4", [_vm._v("Unlimited projects")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("No longer limited to 5")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h4", [_vm._v("No commissions")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("0% commission on budget completion")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h4", [_vm._v("Unlimited budget")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("No longer limited to 100k")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h4", [_vm._v("Better exposure")]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("Get found quicker")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "eliteFooter" }, [
+                  _c("div", { staticClass: "price" }, [
+                    _c("p", [
+                      _vm._v("Start your Tutti journey the best way for only")
+                    ]),
+                    _vm._v(" "),
+                    _c("h3", [_vm._v("12.99€ / month")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "buttons" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "lowPriority margins",
+                        attrs: { type: "submit", "data-id": "false" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.eliteSubmit.apply(null, arguments)
+                          }
+                        }
+                      },
+                      [_vm._v("No thanks")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "standardPriority",
+                        attrs: { type: "submit", "data-id": "true" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.eliteSubmit.apply(null, arguments)
+                          }
+                        }
+                      },
+                      [_vm._v("Start with Elite")]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "minPriority" }, [
+              _vm._v("+ More info about Tutti Elite")
+            ])
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

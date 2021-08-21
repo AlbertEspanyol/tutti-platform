@@ -6,7 +6,7 @@
     --tutti-grey-1: #1d1d1d;
     --tutti-grey-2: #232323;
     --tutti-grey-3: #393939;
-    --tutti-grey-4: #8a898c;
+    --tutti-grey-4: #8A898C;
 
     --tutti-red-bright: #FF0368;
     --tutti-red-dark: #AA044F;
@@ -158,14 +158,14 @@ h2 {
     font-size: var( --text-huge);
     font-weight: 900;
     letter-spacing: 0.02em;
-    margin: 0;
+    margin: var(--margin-regular) 0 0;
 }
 
 h3 {
     font-size: var( --text-larger);
     font-weight: 900;
     letter-spacing: 0.1em;
-    margin: 0;
+    margin-top: var(--margin-small)
 }
 
 h4 {
@@ -198,14 +198,14 @@ label {
 
 p {
     font-size: var( --text-base);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: 0.05em;
-    margin: 0;
+    margin: var(--margin-small) 0;
 }
 
 p.little{
     font-size: var( --text-small);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: 0.05em;
 }
 
@@ -561,17 +561,25 @@ select:disabled{
     cursor: not-allowed;
 }
 
-.vdp-datepicker__calendar{
-    position: absolute;
-    z-index: 100;
-    border-radius: 8px;
-    width: 300px;
-    font-family: Rota,sans-serif;
-    font-weight: 500;
-    color: var(--tutti-black);
-    cursor: pointer;
+/**** Lists ****/
+ul{
+    list-style-image: url("/assets/icons/Bullet.svg");
+    align-items: center;
+    padding-left: 11px;
 }
 
+li{
+    font-weight: 200;
+    font-size: var(--text-small);
+    line-height: 128.5%;
+    letter-spacing: 0.05em;
+    padding-left: var(--margin-medium);
+    margin-bottom: var(--margin-regular);
+}
+
+li.final{
+    margin-bottom: 0;
+}
 /**** Backgrounds ******/
 .access{
     background: url("/assets/images/backgrounds/Spaceship_1.svg") no-repeat var(--tutti-black);
@@ -644,4 +652,15 @@ footer{
     background-color: var(--warning);
     color: var(--tutti-white);
     border-radius: var(--margin-big);
+}
+
+.vdp-datepicker__calendar{
+    position: absolute;
+    z-index: 999;
+    border-radius: 8px;
+    width: 300px;
+    font-family: Rota,sans-serif;
+    font-weight: 500;
+    color: var(--tutti-black);
+    cursor: pointer;
 }

@@ -14,7 +14,6 @@
     <logo-only></logo-only>
     <access-card mode="login"></access-card>
 </div>
-<footer></footer>
 </body>
 <script src="{{ mix('js/app.js') }}"></script>
 </html>

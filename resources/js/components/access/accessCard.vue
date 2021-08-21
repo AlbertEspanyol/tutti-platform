@@ -1,116 +1,114 @@
 <template>
-    <div class="access-container">
-        <hooper class="card-container" ref="carousel" :initial-slide="determineMode()" :mouse-drag="false" :wheelControl="false" :keysControl="false">
-            <slide>
-                <div class="header">
-                    <h2>Register</h2>
-                    <button class="lowPriority accessController" v-on:click.prevent="slideNext">Login</button>
+    <hooper class="card-container" ref="carousel" :initial-slide="determineMode()" :mouse-drag="false" :wheelControl="false" :keysControl="false">
+        <slide>
+            <div class="header">
+                <h2>Register</h2>
+                <button class="lowPriority accessController" v-on:click.prevent="slideNext">Login</button>
+            </div>
+            <form ref="reg-form" class="form-containter" v-on:submit.prevent="registerSubmit">
+                <input class="mode-input" name="mode" :value="modeSelector">
+                <div :class="'input ' + [registerNameError() ? 'error' : '']">
+                    <div class="input-label">Full name *</div>
+                    <div class="date-container">
+                        <input type="text" placeholder="Your name" name="reg_name" v-model.trim="register.name"/>
+                        <img v-if="registerNameError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
+                    </div>
                 </div>
-                <form ref="reg-form" class="form-containter" v-on:submit.prevent="registerSubmit">
-                    <input class="mode-input" name="mode" :value="modeSelector">
-                    <div :class="'input ' + [registerNameError() ? 'error' : '']">
-                        <div class="input-label">Full name *</div>
-                        <div class="date-container">
-                            <input type="text" placeholder="Your name" name="reg_name" v-model.trim="register.name"/>
-                            <img v-if="registerNameError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
-                        </div>
+                <div :class="'input ' + [registerMailError() ? 'error' : '']">
+                    <div class="input-label">Email *</div>
+                    <div class="date-container">
+                        <input type="email" placeholder="Your e-mail" name="reg_mail" v-model.trim="register.mail"/>
+                        <img v-if="registerMailError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
                     </div>
-                    <div :class="'input ' + [registerMailError() ? 'error' : '']">
-                        <div class="input-label">Email *</div>
-                        <div class="date-container">
-                            <input type="email" placeholder="Your e-mail" name="reg_mail" v-model.trim="register.mail"/>
-                            <img v-if="registerMailError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
-                        </div>
-                    </div>
-                    <div class="passwords">
-                        <div :class="'input ' + [registerPassword1Error() ? 'error' : '']">
-                            <div class="input-label">Password *</div>
-                            <div class="date-container">
-                                <input :type="[register.password.first.visible ? 'text' : 'password']" placeholder="Password" name="reg_pass1" v-model="register.password.first.text"/>
-                                <img :class="'password-input-icon ' + [register.password.first.text ? 'active ' : null] + [registerPassword1Error() ? 'error ' : null]" v-on:click="()=> {if(register.password.first.text) register.password.first.visible=!register.password.first.visible }" :src="'/storage/assets/icons/' + [register.password.first.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
-                                <img v-if="registerPassword1Error()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
-                            </div>
-                        </div>
-                        <div :class="'input ' + [registerPassword2Error() ? 'error' : '']">
-                            <div class="input-label">Repeat password *</div>
-                            <div class="date-container">
-                                <input :type="[register.password.second.visible ? 'text' : 'password']" placeholder="Type it again" name="reg_pass2" v-model="register.password.second.text"/>
-                                <img :class="'password-input-icon ' + [register.password.second.text ? 'active ' : null] + [registerPassword2Error() ? 'error ' : null]" v-on:click="()=> {if(register.password.second.text) register.password.second.visible=!register.password.second.visible }" :src="'/storage/assets/icons/' + [register.password.second.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
-                                <img v-if="registerPassword2Error()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
-                            </div>
-                        </div>
-                    </div>
-                    <div :class="'input ' + [registerDateError() ? 'error' : '']">
-                        <div class="input-label">Birthday *</div>
-                        <div class="date-container">
-                            <datepicker placeholder="Choose a date" v-model="register.date"></datepicker>
-                            <img :class="[registerDateError() ? 'error-input-icon' : 'date-input-icon']" :src="'/storage/assets/icons/' + [registerDateError() ? 'error_exclamation.svg' : 'calendar.svg']" alt="calendar">
-                        </div>
-                    </div>
-                    <div class="terms">
-                        <input type="checkbox" name="reg_terms" v-model="register.terms">
-                        <p>I agree to all the statements in <a href="">Terms of service</a></p>
-                    </div>
-                    <div class="submitButton">
-                        <button class="standardPriority" type="submit">Register</button>
-                    </div>
-                    <div class="card-footer">
-                        <p>Already a member? <a v-on:click.prevent="slideNext">Login</a></p>
-                    </div>
-                </form>
-            </slide>
-            <slide>
-                <div class="header">
-                    <h2>Login</h2>
-                    <button class="lowPriority accessController" v-on:click.prevent="slidePrev">Register</button>
                 </div>
-                <form ref="login-form" class="form-containter" v-on:submit.prevent="loginSubmit">
-                    <input class="mode-input" name="mode" :value="modeSelector">
-                    <div :class="'input ' + [ loginMailError() ? 'error' : '']">
-                        <div class="input-label">Email *</div>
-                        <div class="date-container">
-                            <input type="email" placeholder="Your e-mail" name="log_mail" v-model="login.mail"/>
-                            <img v-if="loginMailError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
-                        </div>
-                    </div>
-                    <div :class="'input ' + [loginPasswordError() ? 'error' : '']">
+                <div class="passwords">
+                    <div :class="'input ' + [registerPassword1Error() ? 'error' : '']">
                         <div class="input-label">Password *</div>
                         <div class="date-container">
-                            <input :type="[login.password.visible ? 'text' : 'password']" placeholder="Password" name="log_pass" v-model="login.password.text"/>
-                            <img :class="'password-input-icon ' + [login.password.text ? 'active ' : null] + [loginPasswordError() ? 'error ' : null]" v-on:click="()=> {if(login.password.text) login.password.visible=!login.password.visible }" :src="'/storage/assets/icons/' + [login.password.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
-                            <img v-if="loginPasswordError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
+                            <input :type="[register.password.first.visible ? 'text' : 'password']" placeholder="Password" name="reg_pass1" v-model="register.password.first.text"/>
+                            <img :class="'password-input-icon ' + [register.password.first.text ? 'active ' : null] + [registerPassword1Error() ? 'error ' : null]" v-on:click="()=> {if(register.password.first.text) register.password.first.visible=!register.password.first.visible }" :src="'/storage/assets/icons/' + [register.password.first.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
+                            <img v-if="registerPassword1Error()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
                         </div>
                     </div>
-                    <div class="loginHelpers">
-                        <div class="checkbox-container">
-                            <input type="checkbox" name="log_remember" v-model="login.remember">
-                            <p>Remember me?</p>
-                        </div>
-                        <a href="">Forgot my password?</a>
-                    </div>
-                    <div class="submitButton">
-                        <button class="standardPriority" type="submit">Login</button>
-                    </div>
-                    <div class="separator">
-                        <hr>
-                        <p>Or log in with</p>
-                        <hr>
-                    </div>
-                    <div class="alternatives">
-                        <div class="alternative">
-                            <img src="/storage/assets/images/logos/google.png" alt="google_logo" width="50%">
-                        </div>
-                        <div class="alternative left">
-                            <img src="/storage/assets/images/logos/linkedin.png" alt="google_logo" width="50%">
+                    <div :class="'input ' + [registerPassword2Error() ? 'error' : '']">
+                        <div class="input-label">Repeat password *</div>
+                        <div class="date-container">
+                            <input :type="[register.password.second.visible ? 'text' : 'password']" placeholder="Type it again" name="reg_pass2" v-model="register.password.second.text"/>
+                            <img :class="'password-input-icon ' + [register.password.second.text ? 'active ' : null] + [registerPassword2Error() ? 'error ' : null]" v-on:click="()=> {if(register.password.second.text) register.password.second.visible=!register.password.second.visible }" :src="'/storage/assets/icons/' + [register.password.second.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
+                            <img v-if="registerPassword2Error()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <p>Not a member yet? <a v-on:click.prevent="slidePrev">Register</a></p>
+                </div>
+                <div :class="'input ' + [registerDateError() ? 'error' : '']">
+                    <div class="input-label">Birthday *</div>
+                    <div class="date-container">
+                        <datepicker placeholder="Choose a date" v-model="register.date"></datepicker>
+                        <img :class="[registerDateError() ? 'error-input-icon' : 'date-input-icon']" :src="'/storage/assets/icons/' + [registerDateError() ? 'error_exclamation.svg' : 'calendar.svg']" alt="calendar">
                     </div>
-                </form>
-            </slide>
-        </hooper>
-    </div>
+                </div>
+                <div class="terms">
+                    <input type="checkbox" name="reg_terms" v-model="register.terms">
+                    <p>I agree to all the statements in <a href="">Terms of service</a></p>
+                </div>
+                <div class="submitButton">
+                    <button class="standardPriority" type="submit">Register</button>
+                </div>
+                <div class="card-footer">
+                    <p>Already a member? <a v-on:click.prevent="slideNext">Login</a></p>
+                </div>
+            </form>
+        </slide>
+        <slide>
+            <div class="header">
+                <h2>Login</h2>
+                <button class="lowPriority accessController" v-on:click.prevent="slidePrev">Register</button>
+            </div>
+            <form ref="login-form" class="form-containter" v-on:submit.prevent="loginSubmit">
+                <input class="mode-input" name="mode" :value="modeSelector">
+                <div :class="'input ' + [ loginMailError() ? 'error' : '']">
+                    <div class="input-label">Email *</div>
+                    <div class="date-container">
+                        <input type="email" placeholder="Your e-mail" name="log_mail" v-model="login.mail"/>
+                        <img v-if="loginMailError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
+                    </div>
+                </div>
+                <div :class="'input ' + [loginPasswordError() ? 'error' : '']">
+                    <div class="input-label">Password *</div>
+                    <div class="date-container">
+                        <input :type="[login.password.visible ? 'text' : 'password']" placeholder="Password" name="log_pass" v-model="login.password.text"/>
+                        <img :class="'password-input-icon ' + [login.password.text ? 'active ' : null] + [loginPasswordError() ? 'error ' : null]" v-on:click="()=> {if(login.password.text) login.password.visible=!login.password.visible }" :src="'/storage/assets/icons/' + [login.password.visible ? 'eye-off.svg' : 'eye.svg' ]" alt="see_password">
+                        <img v-if="loginPasswordError()" class="error-input-icon" src="/storage/assets/icons/error_exclamation.svg" alt="error_exclamation">
+                    </div>
+                </div>
+                <div class="loginHelpers">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="log_remember" v-model="login.remember">
+                        <p>Remember me?</p>
+                    </div>
+                    <a href="">Forgot my password?</a>
+                </div>
+                <div class="submitButton">
+                    <button class="standardPriority" type="submit">Login</button>
+                </div>
+                <div class="separator">
+                    <hr>
+                    <p>Or log in with</p>
+                    <hr>
+                </div>
+                <div class="alternatives">
+                    <div class="alternative">
+                        <img src="/storage/assets/images/logos/google.png" alt="google_logo" width="50%">
+                    </div>
+                    <div class="alternative left">
+                        <img src="/storage/assets/images/logos/linkedin.png" alt="google_logo" width="50%">
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <p>Not a member yet? <a v-on:click.prevent="slidePrev">Register</a></p>
+                </div>
+            </form>
+        </slide>
+    </hooper>
 </template>
 
 <script>
@@ -286,9 +284,10 @@ export default {
             });
             return errorString;
         },
-        loginSubmit(e) {
+        loginSubmit() {
             this.submitted = true;
 
+            this.$v.login.$touch();
             if(this.$v.login.$invalid){
                 this.$toast(this.extractErrors(),
                     {
@@ -331,12 +330,6 @@ export default {
 
 
 <style>
-.access-container{
-    position: relative;
-    grid-column-start: 2;
-    grid-row: 2;
-}
-
 .card-container{
     margin-top: var(--margin-regular);
     margin-bottom: var(--margin-huge);
@@ -350,6 +343,7 @@ export default {
     border-radius: var(--margin-big);
 
     grid-column-start: 2;
+    grid-column-end: 6;
     grid-row: 2;
 }
 

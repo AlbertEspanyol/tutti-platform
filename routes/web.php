@@ -29,7 +29,9 @@ Route::get('/register', function () {
 
 Route::get('/access', [AccessController::class, 'index']);
 
-Route::get('/access/', [AccessController::class, 'index']);
+Route::get('/access/register', function () {
+    return view('registerStep2');
+});
 
 Route::get('/login', [LoginController::class, 'showLogin']);
 
