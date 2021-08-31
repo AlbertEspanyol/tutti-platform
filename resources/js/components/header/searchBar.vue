@@ -1,17 +1,13 @@
 <template>
-    <div id="search-bar">
-        <form class="search-container">
-            <div class="text-container">
-                <img class="search-icon" src="storage/assets/icons/search.svg" alt="search_icon"/>
-                <input type="text" class="search-block" placeholder="Search projects, people..."/>
-            </div>
-            <select>
-                <option>Projects</option>
-                <option>Entrepreneurs</option>
-                <option>Investors</option>
-            </select>
-        </form>
-    </div>
+    <form class="search-container">
+        <input class="search-input" type="search" name="searchContent" placeholder="Search projects, people..."/>
+        <img class="search-icon" src="storage/assets/icons/search.svg" alt="search_icon"/>
+        <select class="search-type" name="searchType">
+            <option value="projects">Projects</option>
+            <option value="users">Investors</option>
+            <option value="entrepreneurs">Entrep.</option>
+        </select>
+    </form>
 </template>
 
 <script>
@@ -23,28 +19,33 @@ export default {
 <style scoped>
 .search-container{
     position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     width: 352px;
-    max-height: 34px;
-    background: var( --tutti-white);
-    border-radius: 7px;
 }
 
-.text-container{
-    align-items: center;
-}
-
-.search-block{
-    padding-left: 48px;
-    width: 100%;
-    -webkit-appearance: none;
+.search-input{
+    padding-left: var(--margin-big);
 }
 
 .search-icon{
     position: absolute;
-    margin-left: 16px;
+    margin-left: var(--margin-regular);
+    left: 0;
+    top: var(--margin-small);
     width: var(--icon-regular);
+}
+
+.search-type{
+    position: absolute;
+    right: 0;
+    border: none;
+    margin: 0;
+    width: 96px;
+}
+
+.search-type:focus{
+    border: none;
+    margin: 0;
+    border-radius: 7px;
+    height: var(--icon-big);
 }
 </style>

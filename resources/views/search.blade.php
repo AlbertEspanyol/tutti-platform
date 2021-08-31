@@ -6,14 +6,14 @@
 
     <title>Tutti</title>
 
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 </head>
-<body class="reg2">
+<body>
 <div id="app">
+    <main-header logged="{{false}}"></main-header>
     <div class="app-body">
-        <logo-only></logo-only>
-        <register-step2></register-step2>
+        <search-page search-type="investor"></search-page>
     </div>
 </div>
 </body>

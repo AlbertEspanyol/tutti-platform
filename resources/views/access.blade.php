@@ -11,8 +11,10 @@
 </head>
 <body class="access">
 <div id="app">
-    <logo-only></logo-only>
-    <access-card mode="login"></access-card>
+    <div class="app-body">
+        <logo-only></logo-only>
+        <access-card mode="login"></access-card>
+    </div>
 </div>
 </body>
 <script src="{{ mix('js/app.js') }}"></script>

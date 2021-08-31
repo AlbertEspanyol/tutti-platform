@@ -50,6 +50,9 @@
 
     font-family: "Tutti-Rota", sans-serif;
     color: var( --tutti-white);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 @font-face {
@@ -134,10 +137,11 @@
 }
 
 #app{
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: auto;
-    column-gap: 1.39%;
+}
+
+#app > .app-body{
     margin: 0 8.9%;
 }
 
@@ -299,12 +303,14 @@ button.standardPriority{
     padding: 0.75em 1.7em 0.55em 1.7em;
     color: var(--tutti-black);
     text-align: center;
+    height: 52px;
 }
 
 button.standardPriority:hover{
     border: 6px solid rgba(1,1,1,0.5);
     margin: -6px;
     opacity: 85%;
+    height: calc(52px + 12px);
 }
 
 button.standardPriority:active{
@@ -362,6 +368,7 @@ button.minPriority{
     cursor: pointer;
     border: none;
     color: var(--tutti-white);
+    letter-spacing: 0.03em;
 }
 
 button.minPriority:hover{
@@ -536,7 +543,7 @@ select{
     width: 100%;
     font-family: Rota, sans-serif;
     font-size: var( --text-base);
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.02em;
     color: var( --tutti-black);
     padding: 0 var(--icon-small);
@@ -560,6 +567,38 @@ select:disabled{
     opacity: 0.3;
     cursor: not-allowed;
 }
+
+/**** Range *****/
+input[type="range" i]{
+    padding: 0;
+    border: 0;
+    height: 10px;
+    width: 100%;
+    background-color: var(--tutti-grey-3);
+    margin: var(--margin-regular) 0;
+    cursor: pointer;
+}
+
+input[type="range" i]:focus{
+    border: 0;
+}
+
+input[type="range" i]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--tutti-white);
+    cursor: pointer;
+}
+
+input[type="range" i]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--tutti-white);
+    cursor: pointer;
+}
+
 
 /**** Lists ****/
 ul{
@@ -618,6 +657,10 @@ footer{
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(138, 137, 140, 0.3);
+}
+
+::-webkit-scrollbar-corner{
+    background: none;
 }
 
 .Vue-Toastification__toast.tutti-toast {

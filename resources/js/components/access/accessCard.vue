@@ -342,9 +342,7 @@ export default {
     backdrop-filter: blur(64px);
     border-radius: var(--margin-big);
 
-    grid-column-start: 2;
-    grid-column-end: 6;
-    grid-row: 2;
+    margin-left: 96px;
 }
 
 .header{
