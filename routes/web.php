@@ -39,3 +39,6 @@ Route::get('/register', [RegisterController::class, 'showRegister']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
+Route::get('/search', function () {
+    return view('search');
+});

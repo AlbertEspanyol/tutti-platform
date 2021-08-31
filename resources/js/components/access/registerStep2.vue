@@ -134,9 +134,9 @@ export default {
 
 <style scoped>
 .form-containter{
-    grid-column-start: 2;
-    grid-column-end: 10;
-    grid-row: 2;
+    display: flex;
+    justify-content: center;
+    margin-left: 96px;
 }
 
 .decision-input{

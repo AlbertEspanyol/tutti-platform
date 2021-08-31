@@ -11,8 +11,10 @@
 </head>
 <body class="reg2">
 <div id="app">
-    <logo-only></logo-only>
-    <register-step2></register-step2>
+    <div class="app-body">
+        <logo-only></logo-only>
+        <register-step2></register-step2>
+    </div>
 </div>
 </body>
 <script src="{{ mix('js/app.js') }}"></script>

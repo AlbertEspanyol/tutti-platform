@@ -7,10 +7,14 @@
         <title>Tutti</title>
 
         <link rel="stylesheet" href="css/app.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     </head>
     <body>
     <div id="app">
-        <app></app>
+        <main-header logged="{{false}}"></main-header>
+        <div class="app-body">
+            <home></home>
+        </div>
     </div>
     </body>
     <script src="{{ mix('js/app.js') }}"></script>
