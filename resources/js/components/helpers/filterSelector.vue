@@ -62,10 +62,10 @@
                 <h4>{{filterData.n_of_investments === 0 ? 'Any' : filterData.n_of_investments === 10 ? '10+' : filterData.n_of_investments }}</h4>
             </div>
             <div v-else-if="name === 'Work status'" class="lisitng">
-                <h5>Project themes</h5>
-                <div v-for="item in this.filterData.themes" class="checkbox-container">
-                    <input type="checkbox" name="themes" v-model="item.selected">
-                    <p>{{ item.option }}</p>
+                <h5>User status</h5>
+                <div v-for="item in this.filterData.work_status.options" class="checkbox-container">
+                    <input type="radio" name="work_status" :value="item" v-model="filterData.work_status.selected">
+                    <p>{{ item }}</p>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@ export default {
                 n_of_investments: 0,
                 looking_for_a_proj: false,
                 looking_to_invest: false,
-                work_status: [{option: 'Not working', selected: false}, {option: '1 project', selected: false}, {option: '2+ projects', selected: false}],
+                work_status: {selected: null, options: ['Any status','Not working', '1 project', '2+ projects']},
                 verified: false,
                 following: false
             },
@@ -134,22 +134,29 @@ export default {
         markAsUsed(){
             let processedName = this.processName();
             switch (this.name){
+
                 case FILTERS.PROGRESS:
                     return this.filterData.progress[0] !== 0 || this.filterData.progress[1] !== 100;
+
                 case FILTERS.FINANCEMENT:
                     return this.filterData.financement[0] !== 0 || this.filterData.financement[1] !== 100;
+
                 case FILTERS.MEMBERS:
                 case FILTERS.FINISHED_PR:
                 case FILTERS.INVESTMENTS:
                 case FILTERS.RATING:
                     return this.filterData[processedName] > 0;
+
                 case FILTERS.THEMES:
                 case FILTERS.NEEDS:
-                case FILTERS.WORK:
                     for(let i = 0; i < this.filterData[processedName].length; i++){
                         if(this.filterData[processedName][i].selected) return true;
                     }
                     return false;
+
+                case FILTERS.WORK:
+                    return !(this.filterData.work_status.selected === 'Any status' || this.filterData.work_status.selected === null);
+
                 default:
                     return this.filterData[processedName] !== '' && this.filterData[processedName] !== null && this.filterData[processedName] !== false ;
             }
@@ -158,23 +165,28 @@ export default {
         filterMessage(){
             let processedName = this.processName();
             switch (this.name){
+
                 case FILTERS.PROGRESS:
                     return (this.filterData[processedName][0] + '% - ' +  this.filterData[processedName][1] + '%');
+
                 case FILTERS.FINANCEMENT:
                     return (this.filterData[processedName][0] + '% - ' +  this.filterData[processedName][1] + '%');
+
                 case FILTERS.STRART_DATE:
                     const date = this.filterData[processedName];
                     const month = date.getMonth() + 1;
                     return date.getDate() + '/' + month + '/' + date.getFullYear();
+
                 case FILTERS.MEMBERS:
                 case FILTERS.FINISHED_PR:
                 case FILTERS.INVESTMENTS:
                     return this.filterData[processedName] === 10 ? '10+' : this.filterData[processedName];
+
                 case FILTERS.RATING:
                     return this.filterData[processedName] + ' Stars';
+
                 case FILTERS.THEMES:
                 case FILTERS.NEEDS:
-                case FILTERS.WORK:
                     this.filterData[processedName].forEach(value => {
                         const index = this.listMsgs.indexOf(value.option);
                         if(index !== -1 && !value.selected) {
@@ -184,6 +196,10 @@ export default {
                         }
                     });
                     return this.listMsgs.join(", ");
+
+                case FILTERS.WORK:
+                    return this.filterData.work_status.selected;
+
                 default:
                     return this.filterData[processedName];
             }

@@ -3039,16 +3039,10 @@ var FILTERS = {
         n_of_investments: 0,
         looking_for_a_proj: false,
         looking_to_invest: false,
-        work_status: [{
-          option: 'Not working',
-          selected: false
-        }, {
-          option: '1 project',
-          selected: false
-        }, {
-          option: '2+ projects',
-          selected: false
-        }],
+        work_status: {
+          selected: null,
+          options: ['Any status', 'Not working', '1 project', '2+ projects']
+        },
         verified: false,
         following: false
       },
@@ -3075,12 +3069,14 @@ var FILTERS = {
 
         case FILTERS.THEMES:
         case FILTERS.NEEDS:
-        case FILTERS.WORK:
           for (var i = 0; i < this.filterData[processedName].length; i++) {
             if (this.filterData[processedName][i].selected) return true;
           }
 
           return false;
+
+        case FILTERS.WORK:
+          return !(this.filterData.work_status.selected === 'Any status' || this.filterData.work_status.selected === null);
 
         default:
           return this.filterData[processedName] !== '' && this.filterData[processedName] !== null && this.filterData[processedName] !== false;
@@ -3113,7 +3109,6 @@ var FILTERS = {
 
         case FILTERS.THEMES:
         case FILTERS.NEEDS:
-        case FILTERS.WORK:
           this.filterData[processedName].forEach(function (value) {
             var index = _this.listMsgs.indexOf(value.option);
 
@@ -3124,6 +3119,9 @@ var FILTERS = {
             }
           });
           return this.listMsgs.join(", ");
+
+        case FILTERS.WORK:
+          return this.filterData.work_status.selected;
 
         default:
           return this.filterData[processedName];
@@ -28023,9 +28021,11 @@ var render = function() {
                     "div",
                     { staticClass: "lisitng" },
                     [
-                      _c("h5", [_vm._v("Project themes")]),
+                      _c("h5", [_vm._v("User status")]),
                       _vm._v(" "),
-                      _vm._l(this.filterData.themes, function(item) {
+                      _vm._l(this.filterData.work_status.options, function(
+                        item
+                      ) {
                         return _c(
                           "div",
                           { staticClass: "checkbox-container" },
@@ -28035,49 +28035,30 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: item.selected,
-                                  expression: "item.selected"
+                                  value: _vm.filterData.work_status.selected,
+                                  expression: "filterData.work_status.selected"
                                 }
                               ],
-                              attrs: { type: "checkbox", name: "themes" },
+                              attrs: { type: "radio", name: "work_status" },
                               domProps: {
-                                checked: Array.isArray(item.selected)
-                                  ? _vm._i(item.selected, null) > -1
-                                  : item.selected
+                                value: item,
+                                checked: _vm._q(
+                                  _vm.filterData.work_status.selected,
+                                  item
+                                )
                               },
                               on: {
                                 change: function($event) {
-                                  var $$a = item.selected,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          item,
-                                          "selected",
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          item,
-                                          "selected",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(item, "selected", $$c)
-                                  }
+                                  return _vm.$set(
+                                    _vm.filterData.work_status,
+                                    "selected",
+                                    item
+                                  )
                                 }
                               }
                             }),
                             _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(item.option))])
+                            _c("p", [_vm._v(_vm._s(item))])
                           ]
                         )
                       })
