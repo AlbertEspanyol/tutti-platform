@@ -11,10 +11,12 @@
 </head>
 <body>
 <div id="app">
-    <main-header logged="{{false}}"></main-header>
+    <img class="header-pre-background" src="storage/assets/images/backgrounds/HeaderPreBackground.svg" alt="pre_background">
+    <main-header logged="{{false}}" current-page="Entrepreneurs"></main-header>
     <div class="app-body">
-        <search-page search-type="investor"></search-page>
+        <search-page search-type="entrepreneur"></search-page>
     </div>
+    <tutti-footer></tutti-footer>
 </div>
 </body>
 <script src="{{ mix('js/app.js') }}"></script>

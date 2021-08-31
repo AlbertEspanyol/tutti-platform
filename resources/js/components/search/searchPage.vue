@@ -10,14 +10,31 @@
                     <a v-for="(item, i) in this.types" v-if="item !== searchType" :class="[i === 0 ? 'first' : '']">{{ capitalizeFirstLetter(item) + 's' }}</a>
                 </div>
             </div>
-            <div class="filters">
+            <div v-if="searchType==='project'" class="filters">
                 <filter-selector name="Progress"></filter-selector>
                 <filter-selector name="Financement"></filter-selector>
                 <filter-selector name="Start date"></filter-selector>
                 <filter-selector name="Themes"></filter-selector>
                 <filter-selector name="Location"></filter-selector>
                 <filter-selector name="Members"></filter-selector>
-                <filter-selector name="Open to..."></filter-selector>
+                <filter-selector name="Needs"></filter-selector>
+            </div>
+            <div v-else-if="searchType==='entrepreneur'" class="filters">
+                <filter-selector name="Location"></filter-selector>
+                <filter-selector name="Rating"></filter-selector>
+                <filter-selector name="Finished projects"></filter-selector>
+                <filter-selector name="Work status"></filter-selector>
+                <filter-selector name="Looking for a proj." :toggle="true"></filter-selector>
+                <filter-selector name="Verified" :toggle="true"></filter-selector>
+                <filter-selector name="Following" :toggle="true"></filter-selector>
+            </div>
+            <div v-else class="filters">
+                <filter-selector name="Location"></filter-selector>
+                <filter-selector name="Rating"></filter-selector>
+                <filter-selector name="Nº of investments"></filter-selector>
+                <filter-selector name="Looking to invest" :toggle="true"></filter-selector>
+                <filter-selector name="Verified" :toggle="true"></filter-selector>
+                <filter-selector name="Following" :toggle="true"></filter-selector>
             </div>
         </div>
         <div class="header-extras">
@@ -49,7 +66,7 @@
                     </div>
                 </li>
             </ul>
-            <project-card :need-recruitment="false" :need-investment="true" project-state="40" financed-state="60" :members="[1,2,3,4,5,6,7]" subtitle="Automobile development" title="AR STRADALE 33" :online="true"></project-card>
+            <project-card :need-recruitment="false" :need-investment="true" project-state="40" financed-state="60" :members="[1,2,3,4,5]" subtitle="Automobile development" title="AR STRADALE 33" :online="true"></project-card>
         </div>
         <div v-else ref="usersScroller" class="userScroller">
             <div class="userSearchContent child">

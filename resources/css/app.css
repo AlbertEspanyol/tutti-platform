@@ -707,3 +707,9 @@ footer{
     color: var(--tutti-black);
     cursor: pointer;
 }
+
+.header-pre-background{
+    height: 66px;
+    position: absolute;
+    opacity: 0.8;
+}

@@ -1,6 +1,6 @@
 <template>
     <label class="switch">
-        <input type="checkbox" class="toggle" :disabled=isDisabled>
+        <input type="checkbox" class="toggle" v-model="inputVal">
         <span class="slider round"></span>
     </label>
 </template>
@@ -8,8 +8,16 @@
 <script>
 export default {
     name: "toggle",
-    props: {
-        isDisabled: Boolean
+    props: ['value'],
+    computed: {
+        inputVal: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit('input', val);
+            }
+        }
     }
 }
 </script>

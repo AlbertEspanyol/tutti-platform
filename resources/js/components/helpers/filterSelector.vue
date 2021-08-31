@@ -1,8 +1,8 @@
 <template>
-    <div :class="'filter-container ' + [isActive || markAsUsed() ? 'active' : '']" v-on:mouseleave="filterOpen=false ">
-        <div class="informer" v-if="markAsUsed()">{{ filterMessage() }}</div>
+    <div :class="'filter-container ' + [isActive || markAsUsed() ? 'active' : '']" v-on:click="updateToggle" v-on:mouseleave="filterOpen=false ">
+        <div class="informer" v-if="markAsUsed() && !toggle">{{ filterMessage() }}</div>
         <label v-on:click="filterOpen=!filterOpen" >{{ name }}</label>
-        <toggle v-if="toggle" style="margin-left: var(--margin-small)"></toggle>
+        <toggle v-if="toggle" style="margin-left: var(--margin-small)" v-on:click="updateToggle" v-model="filterData[processName()]"></toggle>
         <span v-on:click="filterOpen=!filterOpen" v-if="!toggle" class="material-icons-round">{{ filterOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</span>
         <div v-if="filterOpen && !toggle" class="arrow"/>
         <div v-if="filterOpen && !toggle" class="filterDialog">
@@ -27,13 +27,46 @@
                 <h5>Project themes</h5>
                 <div v-for="item in this.filterData.themes" class="checkbox-container">
                     <input type="checkbox" name="themes" v-model="item.selected">
-                    <div>{{ item.theme }}</div>
+                    <p>{{ item.option }}</p>
                 </div>
             </div>
+            <div v-else-if="name === 'Location'" class="location-container">
+                <input type="text" name="location" placeholder="Type any location..." v-model="filterData.location">
+                <span class="material-icons-round">place</span>
+            </div>
             <div v-else-if="name === 'Members'" class="percentBar">
-                <h5>Number of members</h5>
-                <vue-slider style="width: 90%; margin: var(--margin-regular) 0;" v-model="filterData.members" adsorb :min="1" :max="10" :interval="1" :tooltip="'none'"></vue-slider>
-                <h4>{{ filterData.members }}</h4>
+                <h5>Max. members</h5>
+                <vue-slider style="width: 90%; margin: var(--margin-regular) 0;" v-model="filterData.members" adsorb :min="0" :max="10" :interval="1" :tooltip="'none'"></vue-slider>
+                <h4>{{filterData.members === 0 ? 'Any' : filterData.members === 10 ? '10+' : filterData.members }}</h4>
+            </div>
+            <div v-else-if="name === 'Needs'" class="lisitng">
+                <h5>Project needs</h5>
+                <div v-for="item in this.filterData.needs" class="checkbox-container">
+                    <input type="checkbox" name="needs" v-model="item.selected">
+                    <p>{{ item.option }}</p>
+                </div>
+            </div>
+            <div v-else-if="name === 'Rating'" class="percentBar">
+                <h5>Nº of stars</h5>
+                <vue-slider style="width: 90%; margin: var(--margin-regular) 0;" v-model="filterData.rating" adsorb :min="0" :max="3" :interval="1" :tooltip="'none'"></vue-slider>
+                <h4>{{filterData.rating === 0 ? 'Any' : filterData.rating }}</h4>
+            </div>
+            <div v-else-if="name === 'Finished projects'" class="percentBar">
+                <h5>Completed ones</h5>
+                <vue-slider style="width: 90%; margin: var(--margin-regular) 0;" v-model="filterData.finished_projects" adsorb :min="0" :max="10" :interval="1" :tooltip="'none'"></vue-slider>
+                <h4>{{filterData.finished_projects === 0 ? 'Any' : filterData.finished_projects === 10 ? '10+' : filterData.finished_projects }}</h4>
+            </div>
+            <div v-else-if="name === 'Nº of investments'" class="percentBar">
+                <h5>Completed ones</h5>
+                <vue-slider style="width: 90%; margin: var(--margin-regular) 0;" v-model="filterData.n_of_investments" adsorb :min="0" :max="10" :interval="1" :tooltip="'none'"></vue-slider>
+                <h4>{{filterData.n_of_investments === 0 ? 'Any' : filterData.n_of_investments === 10 ? '10+' : filterData.n_of_investments }}</h4>
+            </div>
+            <div v-else-if="name === 'Work status'" class="lisitng">
+                <h5>Project themes</h5>
+                <div v-for="item in this.filterData.themes" class="checkbox-container">
+                    <input type="checkbox" name="themes" v-model="item.selected">
+                    <p>{{ item.option }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -50,8 +83,18 @@ const FILTERS = {
     PROGRESS: 'Progress',
     FINANCEMENT: 'Financement',
     STRART_DATE: 'Start date',
+    THEMES: 'Themes',
     MEMBERS: 'Members',
-    THEMES: 'Themes'
+    LOCATION: 'Location',
+    NEEDS: 'Needs',
+    RATING: 'Rating',
+    FINISHED_PR: 'Finished projects',
+    INVESTMENTS: 'Nº of investments',
+    NEED_PR: 'Looking for a proj.',
+    WANT_IN: 'Looking to invest',
+    WORK: 'Work status',
+    VERIFIED: 'Verified',
+    FOLLOWING: 'Following'
 };
 
 export default {
@@ -70,40 +113,50 @@ export default {
                 progress: [0 ,100],
                 financement: [0, 100],
                 start_date: null,
-                themes: [{theme:'Theme1', selected: false}, {theme:'Theme2', selected: false},  {theme:'Theme3', selected: false}],
-                location: null,
-                members: 1,
-                open_to: null
+                themes: [{option:'Theme1', selected: false}, {option:'Theme2', selected: false},  {option:'Theme3', selected: false}],
+                location: '',
+                members: 0,
+                needs: [{option: 'Investments', selected: false}, {option: 'New members', selected: false}],
+                rating: 0,
+                finished_projects: 0,
+                n_of_investments: 0,
+                looking_for_a_proj: false,
+                looking_to_invest: false,
+                work_status: [{option: 'Not working', selected: false}, {option: '1 project', selected: false}, {option: '2+ projects', selected: false}],
+                verified: false,
+                following: false
             },
-            temp: [{tooltip: 'none'}, {tooltip: 'none'}]
+            listMsgs: [],
+            temp: false
         }
     },
     methods: {
         markAsUsed(){
-            let processedName = this.$options.filters.lowercase(this.name);
-            processedName = processedName.replace(/\s/g, "_");
-            processedName = processedName.replace(/[^\w\s]/gi, '');
+            let processedName = this.processName();
             switch (this.name){
                 case FILTERS.PROGRESS:
                     return this.filterData.progress[0] !== 0 || this.filterData.progress[1] !== 100;
                 case FILTERS.FINANCEMENT:
                     return this.filterData.financement[0] !== 0 || this.filterData.financement[1] !== 100;
                 case FILTERS.MEMBERS:
-                    return this.filterData.members > 1;
+                case FILTERS.FINISHED_PR:
+                case FILTERS.INVESTMENTS:
+                case FILTERS.RATING:
+                    return this.filterData[processedName] > 0;
                 case FILTERS.THEMES:
-                    for(let i = 0; i < this.filterData.themes.length; i++){
-                        if(this.filterData.themes[i].selected) return true;
+                case FILTERS.NEEDS:
+                case FILTERS.WORK:
+                    for(let i = 0; i < this.filterData[processedName].length; i++){
+                        if(this.filterData[processedName][i].selected) return true;
                     }
                     return false;
                 default:
-                    return this.filterData[processedName] !== null;
+                    return this.filterData[processedName] !== '' && this.filterData[processedName] !== null && this.filterData[processedName] !== false ;
             }
         },
 
         filterMessage(){
-            let processedName = this.$options.filters.lowercase(this.name);
-            processedName = processedName.replace(/\s/g, "_");
-            processedName = processedName.replace(/[^\w\s]/gi, '');
+            let processedName = this.processName();
             switch (this.name){
                 case FILTERS.PROGRESS:
                     return (this.filterData[processedName][0] + '% - ' +  this.filterData[processedName][1] + '%');
@@ -111,25 +164,40 @@ export default {
                     return (this.filterData[processedName][0] + '% - ' +  this.filterData[processedName][1] + '%');
                 case FILTERS.STRART_DATE:
                     const date = this.filterData[processedName];
-                    const month = date.getMonth + 1;
+                    const month = date.getMonth() + 1;
                     return date.getDate() + '/' + month + '/' + date.getFullYear();
+                case FILTERS.MEMBERS:
+                case FILTERS.FINISHED_PR:
+                case FILTERS.INVESTMENTS:
+                    return this.filterData[processedName] === 10 ? '10+' : this.filterData[processedName];
+                case FILTERS.RATING:
+                    return this.filterData[processedName] + ' Stars';
                 case FILTERS.THEMES:
-                    let themeString = '';
-                    this.filterData.themes.forEach((value, key) => {
-                        console.log(value.theme)
-                        if(value.selected) themeString = themeString.concat((key === 0  ? '' : ', ') + value.theme);
+                case FILTERS.NEEDS:
+                case FILTERS.WORK:
+                    this.filterData[processedName].forEach(value => {
+                        const index = this.listMsgs.indexOf(value.option);
+                        if(index !== -1 && !value.selected) {
+                            this.listMsgs.splice(index, 1);
+                        } else if(index === -1 && value.selected){
+                            this.listMsgs.push(value.option);
+                        }
                     });
-                    return themeString;
+                    return this.listMsgs.join(", ");
                 default:
                     return this.filterData[processedName];
             }
         },
-        addToFilters(e){
+        processName(){
             let processedName = this.$options.filters.lowercase(this.name);
             processedName = processedName.replace(/\s/g, "_");
             processedName = processedName.replace(/[^\w\s]/gi, '');
-
-                this.filterData[processedName] = e.target.value;
+            return processedName;
+        },
+        updateToggle(){
+            if(this.toggle){
+                this.filterData[this.processName()] = !this.filterData[this.processName()];
+            }
         }
     }
 }
@@ -222,7 +290,7 @@ export default {
     font-size: var(--text-small);
     font-weight: 700;
     letter-spacing: 0.05em;
-    max-width: 120px;
+    max-width: 115px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -236,6 +304,11 @@ export default {
 .checkbox-container{
     display: flex;
     align-items: center;
+    margin-top: var(--margin-small);
+}
+
+.checkbox-container > p{
+    margin: 0;
 }
 
 .checkbox-container > input{
@@ -245,5 +318,22 @@ export default {
 .listing{
     display: flex;
     flex-direction: column;
+}
+
+.listing > h5{
+    margin-bottom: var(--margin-regular);
+}
+
+.location-container{
+    position: relative;
+    width: 200px;
+}
+
+.location-container > span{
+    position: absolute;
+    color: var(--tutti-black);
+    font-size: var(--margin-regular);
+    right: 12px;
+    top: 25%;
 }
 </style>

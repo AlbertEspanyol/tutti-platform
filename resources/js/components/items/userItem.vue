@@ -1,7 +1,7 @@
 <template>
     <div class="item-container">
         <div class="clicable">
-            <img class="pfp" src="storage/assets/temp/user.jpg" alt="pfp">
+            <img class="pfp" :src="this.image === '' ? 'storage/assets/temp/UserPlaceholder.svg' : this.image" alt="pfp">
             <button class="minPriority name">{{this.name}}</button>
             <h5 class="type">{{this.type | capitalize}}</h5>
         </div>
@@ -53,7 +53,8 @@ export default {
         state: {required: true, default:false},
         currentWorkplace: {required: false, default: [], type: Array},
         following: {required: true},
-        score: {required: false, default: 1, type: Number}
+        score: {required: false, default: 1, type: Number},
+        image: {default: ''}
     },
     mixins: [Vue2Filters.mixin],
     components: {

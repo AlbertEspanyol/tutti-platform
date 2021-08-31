@@ -1,6 +1,6 @@
 <template>
     <li :class="'project-container small ' + [clicked ? 'clicked' : '']" v-on:click="clicked=!clicked">
-        <img src="storage/assets/temp/user.jpg" alt="close">
+        <img :src="this.mainPicture === '' ? 'storage/assets/temp/ProjectPlaceholder.svg' : this.mainPicture" alt="pfp">
         <div class="info">
             <div class="topInfo">
                 <div class="title">

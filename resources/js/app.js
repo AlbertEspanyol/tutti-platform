@@ -15,6 +15,7 @@ import projectItem from "./components/items/projectItem";
 import projectCard from "./components/items/projectCard";
 import userItem from "./components/items/userItem";
 import breadcrumbs from "./components/helpers/breadcrumbs";
+import tuttiFooter from "./components/footer/tuttiFooter"
 
 /*** Validation Library ****************************/
 import Vuelidate from "vuelidate";
@@ -70,6 +71,7 @@ new Vue({
         VuelidateErrorExtractor,
         Vue2Filters,
         VueSlideBar,
-        VCalendar
+        VCalendar,
+        tuttiFooter
     }
 });

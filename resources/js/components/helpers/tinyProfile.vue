@@ -1,6 +1,6 @@
 <template>
     <div class="pfp-container">
-        <img class="pfp" v-on:mouseover="displayHelper" v-on:mouseleave="removeHelper" src="storage/assets/temp/user.jpg" alt="project_img">
+        <img class="pfp" v-on:mouseover="displayHelper" v-on:mouseleave="removeHelper" :src="this.pfp === '' ? 'storage/assets/temp/UserPlaceholder.svg' : this.pfp" alt="pfp">
         <span v-if="isDisplayable" :class="'helper ' + position">{{userName}}</span>
         <div v-if="isDisplayable" :class="'arrow ' + position"/>
     </div>
@@ -12,6 +12,7 @@ export default {
     props: {
         userId: {required: true},
         userName: {required: true},
+        pfp: {default: ''},
         position: {oneOf: ['top', 'bottom'],default: 'bottom'}
     },
     data(){

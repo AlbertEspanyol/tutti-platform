@@ -1,7 +1,7 @@
 <template>
     <div class="projectCard-container">
         <div class="card-top">
-            <img src="storage/assets/temp/user.jpg" alt="project_img">
+            <img :src="this.mainPicture === '' ? 'storage/assets/temp/ProjectPlaceholder.svg' : this.mainPicture" alt="project_img">
             <div class="card-header">
                 <div class="title">
                     <h3>{{ title }}</h3>
@@ -24,8 +24,7 @@
                         <tiny-profile v-for="n in this.members.slice(0,3)" :key="n" user-id="2" user-name="mamawebo" position="top"></tiny-profile>
                     </div>
                     <div class="bottom-row">
-                        <div v-if="this.members.length > 5">...</div>
-                        <tiny-profile v-for="n in this.members.slice(3,5)" :key="n" user-id="2" user-name="mamawebo" position="bottom"></tiny-profile>
+                        <tiny-profile v-for="n in this.members.slice(3,6)" :key="n" user-id="2" user-name="mamawebo" position="bottom"></tiny-profile>
                     </div>
                 </div>
             </div>
@@ -66,7 +65,8 @@ export default {
         projectState: {required: true},
         needInvestment: {required: true},
         needRecruitment: {required: true},
-        stake: {default: ''}
+        stake: {default: ''},
+        mainPicture: {default: ''}
     },
     components: {
         StateTag,
