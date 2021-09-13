@@ -31,8 +31,8 @@
             <div v-else class="right-elements accessSide">
                 <button class="maxPriority headerCTA notLogged" v-on:click.prevent="changeLocation('/create')">Start a project</button>
                 <div class="separator"/>
-                <button class="standardPriority headerCTA login" v-on:click.prevent="changeLocation('/access')">Login</button>
-                <button class="minPriority signUp" v-on:click.prevent="changeLocation('/access')">Sign up</button>
+                <button class="standardPriority headerCTA login" v-on:click.prevent="changeLocation('/access/login')">Login</button>
+                <button class="minPriority signUp" v-on:click.prevent="changeLocation('/access/register')">Sign up</button>
             </div>
         </div>
     </div>

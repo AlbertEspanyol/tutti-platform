@@ -195,6 +195,8 @@ p{
 .projImages > *{
     border-radius: var(--margin-small);
     object-fit: cover;
+    height: 211px;
+    margin-right: var(--margin-regular);
 }
 
 .im{
