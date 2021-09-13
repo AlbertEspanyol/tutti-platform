@@ -5,7 +5,7 @@
             <button class="standardPriority" v-on:click.prevent="goToEdit">Edit project</button>
         </div>
         <div class="projImages">
-            <img v-for="(item, index) in getImages()" :class="index === 0 ? 'first' : ''" :src="getPath(item)" alt="">
+            <img v-for="(item, index) in displayPaths" :class="index === 0 ? 'first' : ''" :src="item" alt="">
         </div>
         <div class="content-container">
             <div class="information">
@@ -43,7 +43,7 @@
                     {{info.introduction}}
                 </p>
                 <div v-if="getTags().length > 0" class="tags">
-                    <tag v-for="(item, index) in getTags()" v-if="item!=='none'" :key="index" :text="item"></tag>
+                    <tag v-for="(item, index) in getTags()" v-if="item!=='none'" :key="index" :text="item" :index="index"></tag>
                 </div>
                 <div class="field small">
                     <h3>Goals</h3>
@@ -110,7 +110,19 @@ export default {
     data(){
         return{
             termsAccepted: false,
-            info: JSON.parse(this.infoRaw)
+            info: '',
+            displayPaths: []
+        }
+    },
+    created: function(){
+        this.info = JSON.parse(this.infoRaw);
+        if(this.info.images !== 'none'){
+            const t = this;
+            this.info.images.split(',').forEach(value => {
+                axios.get('/api/file/' + value).then((res) =>{
+                    t.displayPaths.push(res.data.path);
+                })
+            })
         }
     },
     validations:{
@@ -144,8 +156,12 @@ export default {
         goToEdit(){
             window.location = '/project/' + this.info.id + '/edit';
         },
-        getPath(item){
-            return item.split(':')[1];
+        getPath(id){
+            let path;
+            axios.get('/api/file/' + id).then((res) =>{
+                path = res.data[0].path;
+            })
+            return path;
         },
         getImages(){
             return this.info.images === 'none' ? [] : this.info.images.split(',');

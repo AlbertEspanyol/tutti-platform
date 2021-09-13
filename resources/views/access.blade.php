@@ -13,7 +13,7 @@
 <div id="app">
     <div class="app-body">
         <logo-only></logo-only>
-        <access-card mode="login" users="{{ $users }}"></access-card>
+        <access-card mode="{{$mode}}" users="{{ $users }}"></access-card>
     </div>
 </div>
 </body>

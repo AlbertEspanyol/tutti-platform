@@ -336,7 +336,7 @@ export default {
                 return;
             }
 
-            axios.post('api/user/store',
+            axios.post('/api/user/store',
                 {
                     user: {
                         fullName: this.register.name,
@@ -346,7 +346,7 @@ export default {
                         userType: "undefined",
                         isPremium: false
                     }
-                }).then(function(){window.location = '/'}).catch(function(error){console.log(error)});
+                }).then(function(res){window.location = '/access/register/' + res.data.id}).catch(function(error){console.log(error)});
         },
         checkDB(){
             if(this.dbErrors[0] === '' && this.dbErrors[1] === ''){

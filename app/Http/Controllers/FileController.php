@@ -42,4 +42,8 @@ class FileController extends Controller
 
         return "Item not found";
     }
+
+    public function find($id){
+        return FileUpload::find($id);
+    }
 }

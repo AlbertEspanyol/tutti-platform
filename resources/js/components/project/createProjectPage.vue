@@ -9,7 +9,7 @@
             <label>Photos</label>
             <div class="photos">
                 <div v-for="(item, index) in images" class="editImage">
-                    <img :src="item.path" alt="">
+                    <img :src="displayPaths[index]" alt="">
                     <span v-on:click="removePhoto(index)" :data-id="item" class="material-icons-round">close</span>
                 </div>
                 <strong>{{images.length + ' photo' + [images.length !== 1 ? 's':'']}}</strong>
@@ -183,7 +183,8 @@ export default {
             membersTemp:'',
             editableMembers: [],
             submitted: false,
-            id: 0
+            id: 0,
+            displayPaths: []
         }
     },
     validations:{
@@ -201,6 +202,7 @@ export default {
         removePhoto(index) {
             axios.delete('/api/file/' + this.images[index].id);
             this.$delete(this.images, index);
+            this.$delete(this.displayPaths, index);
         },
         titleError(){
             return this.submitted && this.$v.title.$anyError;
@@ -292,15 +294,20 @@ export default {
             ).then(() =>{
                 window.location = '/';
             }).catch((error)=>{
-                console.log(error);
+                this.$toast("Something wnt wrong",
+                    {
+                        type: TYPE.ERROR,
+                        position: 'top-center',
+                        icon: {
+                            iconClass: 'material-icons-round',
+                            iconChildren: 'error',
+                            iconTag: 'span'
+                        }
+                    });
             })
         },
         formatImage(){
-            const imgs = [];
-            this.images.forEach((value, index) => {
-               imgs[index] = value.id + ':' + value.path;
-            });
-            return imgs.length > 0 ? imgs.join(',') : 'none';
+            return this.images.join(',');
         },
         formatMembers(){
             const mems = ['You'];
@@ -326,23 +333,20 @@ export default {
 
             let data = new FormData();
             data.append('file', e.target.files[0]);
-
+            const t = this;
             axios.get('/api/projects/big').then((resp)=>{
                 if(resp.data.length > 0) this.id = resp.data[0].id + 1;
+                axios.post('/api/file/upload/' + (this.id+1) +'/' + this.images.length, data, config)
+                    .then((res) =>{
+                        console.log(res.data.id);
+                        t.images.push(res.data.id);
+                        t.displayPaths.push(res.data.path);
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
             })
 
-            const t = this;
-            axios.post('/api/file/upload/' + (this.id+1) +'/' + this.images.length, data, config)
-                .then((res) =>{
-                    console.log('xd');
-                    t.images.push({id: res.data.id, path: res.data.path});
-                })
-                .catch(function (err) {
-                    console.log(err);
-                });
-        },
-        pushPath(path){
-            this.images.push(path);
         }
     }
 }

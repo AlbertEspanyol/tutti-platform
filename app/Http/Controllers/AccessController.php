@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TuttiUser;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -52,13 +53,19 @@ class AccessController extends Controller
 
     /**
      * Display the specified resource.
-     *
+     * @param String $mode
      * @return Application|Factory|View|Response
      */
-    public function show()
+    public function show($mode)
     {
         $users = app('App\Http\Controllers\UserController')->index();
-        return view("access")->with('users', $users);
+        return view("access")->with('users', $users)->with('mode', $mode);
+    }
+
+    public function showStep2($id)
+    {
+        $user = TuttiUser::find($id);
+        return view("registerStep2")->with('user', $user);
     }
 
     /**

@@ -20,18 +20,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/access', [AccessController::class, 'show']);
-
-Route::get('/access/register', function () {
-    return view('registerStep2');
+Route::get('/access', function (){
+    return redirect('/access/login');
 });
 
-Route::get('/login', [LoginController::class, 'showLogin']);
-
-Route::get('/register', [RegisterController::class, 'showRegister']);
+Route::get('/access/{mode}', [AccessController::class, 'show']);
+Route::get('/access/register/{id}', [AccessController::class, 'showStep2']);
 
 Route::get('/home', [HomeController::class, 'show']);
-Route::get('/', [HomeController::class, 'show']);
+Route::get('/', function(){
+    return redirect('/home');
+});
+
 
 Route::get('search/{type}/{search?}', [SearchController::class, 'show']);
 

@@ -1,7 +1,7 @@
 <template>
     <div class="projectCard-container">
         <div class="card-top">
-            <img :src="getImgPath()" alt="project_img">
+            <img :src="displayPath" alt="project_img">
             <div class="card-header">
                 <div class="title">
                     <h3>{{ selectedProject.title }}</h3>
@@ -57,18 +57,28 @@ export default {
     name: "projectCard",
     props:{
         selectedProject: {required: true},
-        mainPicture: {default: ''}
+        mainPicture: {default: ''},
     },
     components: {
         StateTag,
         tinyProfile
     },
+    data(){
+        return {
+            displayPath: '/storage/assets/temp/UserPlaceHolder.svg'
+        }
+    },
+    created: function(){
+        if(this.selectedProject.images !== 'none'){
+            const t = this;
+            axios.get('/api/file/' + this.selectedProject.images.split(',')[0]).then((res) =>{
+                t.displayPath = res.data.path;
+            })
+        }
+    },
     methods:{
         goToProject(){
             window.location = '/project/' + this.selectedProject.id;
-        },
-        getImgPath(){
-            return this.selectedProject.images === 'none' ? '/storage/assets/temp/UserPlaceHolder.svg' : this.selectedProject.images.split(',')[0].split(':')[1];
         }
     }
 }

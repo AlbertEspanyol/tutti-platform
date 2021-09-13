@@ -78,8 +78,8 @@
                                 <h3>12.99€ / month</h3>
                             </div>
                             <div class="buttons">
-                                <button class="lowPriority margins" type="submit" v-on:click.prevent="eliteSubmit" data-id="false">No thanks</button>
-                                <button class="standardPriority" type="submit" v-on:click.prevent="eliteSubmit" data-id="true">Start with Elite</button>
+                                <button class="lowPriority margins" type="submit" v-on:click.prevent="eliteSubmit" :data-id="0">No thanks</button>
+                                <button class="standardPriority" type="submit" v-on:click.prevent="eliteSubmit" :data-id="1">Start with Elite</button>
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,7 @@ const INVESTOR = 'investor';
 
 export default {
     name: "registerStep2",
+    props: {regUser: {required: true}},
     data() {
         return {
             decision: INVESTOR,
@@ -126,7 +127,18 @@ export default {
             this.submitDecisions();
         },
         submitDecisions(){
-            this.$refs["extra-form"].submit();
+            let parsedUser = JSON.parse(this.regUser)
+            axios.put('/api/user/' + parsedUser.id,
+                {
+                    user:{
+                        fullName: parsedUser.fullName,
+                        email: parsedUser.email,
+                        password: parsedUser.password,
+                        birthday: parsedUser.birthday,
+                        userType: this.decision,
+                        isPremium: this.isElite
+                    }
+                }).then(()=>{window.location = '/'});
         }
     }
 }

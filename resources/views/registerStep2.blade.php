@@ -13,7 +13,7 @@
 <div id="app">
     <div class="app-body">
         <logo-only></logo-only>
-        <register-step2></register-step2>
+        <register-step2 reg-user="{{$user}}"></register-step2>
     </div>
 </div>
 </body>

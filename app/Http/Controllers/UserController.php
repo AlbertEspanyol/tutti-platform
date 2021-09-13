@@ -82,11 +82,20 @@ class UserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function update(Request $request, $id)
     {
-        //
+        TuttiUser::find($id)->update([
+            'fullName' => $request->user['fullName'],
+            'email' => $request->user["email"],
+            'password' => $request->user['password'],
+            'birthday' => $request->user['birthday'],
+            'userType' => $request->user['userType'],
+            'isPremium' => $request->user['isPremium']
+        ]);
+
+        return 'updated';
     }
 
     /**

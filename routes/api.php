@@ -40,5 +40,6 @@ Route::get('/files', [FileController::class, 'get']);
 Route::prefix('/file')->group( function() {
     Route::post('/upload/{id}/{name}', [FileController::class, 'upload']);
     Route::delete('/{path}', [FileController::class, 'destroy']);
+    Route::get('/{id}', [FileController::class, 'find']);
 });
 

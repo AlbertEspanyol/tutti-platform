@@ -2379,7 +2379,7 @@ var isSelected = function isSelected(value) {
         return;
       }
 
-      axios.post('api/user/store', {
+      axios.post('/api/user/store', {
         user: {
           fullName: this.register.name,
           email: this.register.mail,
@@ -2388,8 +2388,8 @@ var isSelected = function isSelected(value) {
           userType: "undefined",
           isPremium: false
         }
-      }).then(function () {
-        window.location = '/';
+      }).then(function (res) {
+        window.location = '/access/register/' + res.data.id;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2526,6 +2526,11 @@ var ENTREPRENEUR = 'entrepreneur';
 var INVESTOR = 'investor';
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "registerStep2",
+  props: {
+    regUser: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       decision: INVESTOR,
@@ -2553,7 +2558,19 @@ var INVESTOR = 'investor';
       this.submitDecisions();
     },
     submitDecisions: function submitDecisions() {
-      this.$refs["extra-form"].submit();
+      var parsedUser = JSON.parse(this.regUser);
+      axios.put('/api/user/' + parsedUser.id, {
+        user: {
+          fullName: parsedUser.fullName,
+          email: parsedUser.email,
+          password: parsedUser.password,
+          birthday: parsedUser.birthday,
+          userType: this.decision,
+          isPremium: this.isElite
+        }
+      }).then(function () {
+        window.location = '/';
+      });
     }
   }
 });
@@ -3790,12 +3807,22 @@ __webpack_require__.r(__webpack_exports__);
     StateTag: _helpers_stateTag__WEBPACK_IMPORTED_MODULE_1__.default,
     tinyProfile: _helpers_tinyProfile__WEBPACK_IMPORTED_MODULE_0__.default
   },
+  data: function data() {
+    return {
+      displayPath: '/storage/assets/temp/UserPlaceHolder.svg'
+    };
+  },
+  created: function created() {
+    if (this.selectedProject.images !== 'none') {
+      var t = this;
+      axios.get('/api/file/' + this.selectedProject.images.split(',')[0]).then(function (res) {
+        t.displayPath = res.data.path;
+      });
+    }
+  },
   methods: {
     goToProject: function goToProject() {
       window.location = '/project/' + this.selectedProject.id;
-    },
-    getImgPath: function getImgPath() {
-      return this.selectedProject.images === 'none' ? '/storage/assets/temp/UserPlaceHolder.svg' : this.selectedProject.images.split(',')[0].split(':')[1];
     }
   }
 });
@@ -3876,17 +3903,23 @@ __webpack_require__.r(__webpack_exports__);
     stateTag: _helpers_stateTag__WEBPACK_IMPORTED_MODULE_0__.default,
     tag: _helpers_tag__WEBPACK_IMPORTED_MODULE_1__.default
   },
+  created: function created() {
+    if (this.project.images !== 'none') {
+      var t = this;
+      axios.get('/api/file/' + this.project.images.split(',')[0]).then(function (res) {
+        t.displayPath = res.data.path;
+      });
+    }
+  },
   data: function data() {
     return {
-      clicked: false
+      clicked: false,
+      displayPath: '/storage/assets/temp/UserPlaceHolder.svg'
     };
   },
   methods: {
     divideTags: function divideTags() {
       return this.project.tags.replace(/\s/g, '').split(',');
-    },
-    getImgPath: function getImgPath() {
-      return this.project.images === 'none' ? '/storage/assets/temp/UserPlaceHolder.svg' : this.project.images.split(',')[0].split(':')[1];
     }
   }
 });
@@ -4195,7 +4228,8 @@ __webpack_require__.r(__webpack_exports__);
       membersTemp: '',
       editableMembers: [],
       submitted: false,
-      id: 0
+      id: 0,
+      displayPaths: []
     };
   },
   validations: {
@@ -4231,6 +4265,7 @@ __webpack_require__.r(__webpack_exports__);
     removePhoto: function removePhoto(index) {
       axios["delete"]('/api/file/' + this.images[index].id);
       this.$delete(this.images, index);
+      this.$delete(this.displayPaths, index);
     },
     titleError: function titleError() {
       return this.submitted && this.$v.title.$anyError;
@@ -4279,6 +4314,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$delete(this.tags, index);
     },
     createProject: function createProject() {
+      var _this = this;
+
       this.submitted = true;
       this.$v.$touch();
 
@@ -4319,15 +4356,19 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         window.location = '/';
       })["catch"](function (error) {
-        console.log(error);
+        _this.$toast("Something wnt wrong", {
+          type: vue_toastification__WEBPACK_IMPORTED_MODULE_4__.TYPE.ERROR,
+          position: 'top-center',
+          icon: {
+            iconClass: 'material-icons-round',
+            iconChildren: 'error',
+            iconTag: 'span'
+          }
+        });
       });
     },
     formatImage: function formatImage() {
-      var imgs = [];
-      this.images.forEach(function (value, index) {
-        imgs[index] = value.id + ':' + value.path;
-      });
-      return imgs.length > 0 ? imgs.join(',') : 'none';
+      return this.images.join(',');
     },
     formatMembers: function formatMembers() {
       var mems = ['You'];
@@ -4343,7 +4384,7 @@ __webpack_require__.r(__webpack_exports__);
       window.history.go(-1);
     },
     loadPhoto: function loadPhoto(e) {
-      var _this = this;
+      var _this2 = this;
 
       e.preventDefault();
       var config = {
@@ -4353,22 +4394,17 @@ __webpack_require__.r(__webpack_exports__);
       };
       var data = new FormData();
       data.append('file', e.target.files[0]);
-      axios.get('/api/projects/big').then(function (resp) {
-        if (resp.data.length > 0) _this.id = resp.data[0].id + 1;
-      });
       var t = this;
-      axios.post('/api/file/upload/' + (this.id + 1) + '/' + this.images.length, data, config).then(function (res) {
-        console.log('xd');
-        t.images.push({
-          id: res.data.id,
-          path: res.data.path
+      axios.get('/api/projects/big').then(function (resp) {
+        if (resp.data.length > 0) _this2.id = resp.data[0].id + 1;
+        axios.post('/api/file/upload/' + (_this2.id + 1) + '/' + _this2.images.length, data, config).then(function (res) {
+          console.log(res.data.id);
+          t.images.push(res.data.id);
+          t.displayPaths.push(res.data.path);
+        })["catch"](function (err) {
+          console.log(err);
         });
-      })["catch"](function (err) {
-        console.log(err);
       });
-    },
-    pushPath: function pushPath(path) {
-      this.images.push(path);
     }
   }
 });
@@ -4392,6 +4428,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inputs_toggle__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inputs/toggle */ "./resources/js/components/inputs/toggle.vue");
 /* harmony import */ var _helpers_tag__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../helpers/tag */ "./resources/js/components/helpers/tag.vue");
 /* harmony import */ var vue_toastification__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-toastification */ "./node_modules/vue-toastification/dist/esm/index.js");
+//
+//
+//
 //
 //
 //
@@ -4567,6 +4606,12 @@ __webpack_require__.r(__webpack_exports__);
     this.images = this.project.images === 'none' ? [] : this.project.images.split(',');
     this.members = this.project.members.split(',');
     this.tags = this.project.tags === 'none' ? [] : this.project.tags.split(',');
+    var t = this;
+    this.images.forEach(function (value) {
+      axios.get('/api/file/' + value).then(function (res) {
+        t.displayPaths.push(res.data.path);
+      });
+    });
   },
   data: function data() {
     return {
@@ -4577,7 +4622,8 @@ __webpack_require__.r(__webpack_exports__);
       tempTag: '',
       membersTemp: '',
       editableMembers: [],
-      submitted: false
+      submitted: false,
+      displayPaths: []
     };
   },
   validations: {
@@ -4613,8 +4659,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     removePhoto: function removePhoto(index) {
-      axios["delete"]('/api/file/' + this.images[index].split(':')[0]);
+      axios["delete"]('/api/file/' + this.images[index]);
       this.$delete(this.images, index);
+      this.$delete(this.displayPaths, index);
     },
     titleError: function titleError() {
       return this.submitted && this.$v.project.title.$anyError;
@@ -4654,8 +4701,8 @@ __webpack_require__.r(__webpack_exports__);
       data.append('file', e.target.files[0]);
       var t = this;
       axios.post('/api/file/upload/' + this.project.id + '/' + this.images.length, data, config).then(function (res) {
-        console.log('xd');
-        t.images.push(res.data.id + ':' + res.data.path);
+        t.images.push(res.data.id);
+        t.displayPaths.push(res.data.path);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -4677,14 +4724,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$delete(this.tags, index);
     },
     formatImage: function formatImage() {
-      var imgs = [];
-      this.images.forEach(function (value, index) {
-        imgs[index] = value.id + ':' + value.path;
-      });
-      return imgs.length > 0 ? imgs.join(',') : 'none';
+      return this.images.join(',');
     },
     formatMembers: function formatMembers() {
-      var mems = ['You'];
+      var mems = [];
       this.members.forEach(function (value) {
         mems.push(value);
       });
@@ -4742,9 +4785,8 @@ __webpack_require__.r(__webpack_exports__);
             iconChildren: 'success',
             iconTag: 'span'
           }
-        });
+        }); //window.location = '/project/' + this.project.id + "/edit";
 
-        window.location = '/project/' + _this.project.id + "/edit";
       })["catch"](function (error) {
         _this.$toast("Something wnt wrong", {
           type: vue_toastification__WEBPACK_IMPORTED_MODULE_4__.TYPE.ERROR,
@@ -4758,7 +4800,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     goBack: function goBack() {
-      window.history.go(-1);
+      window.location = '/project/' + this.project.id;
+    },
+    deleteProject: function deleteProject() {
+      axios["delete"]('/api/project/' + this.project.id).then(function () {
+        window.location = '/';
+      });
+    },
+    getPath: function getPath(id) {
+      var path;
+      axios.get('/api/file/' + id).then(function (res) {
+        path = res.data[0].path;
+      });
+      return path;
     }
   }
 });
@@ -4903,8 +4957,21 @@ var isSelected = function isSelected(value) {
   data: function data() {
     return {
       termsAccepted: false,
-      info: JSON.parse(this.infoRaw)
+      info: '',
+      displayPaths: []
     };
+  },
+  created: function created() {
+    this.info = JSON.parse(this.infoRaw);
+
+    if (this.info.images !== 'none') {
+      var t = this;
+      this.info.images.split(',').forEach(function (value) {
+        axios.get('/api/file/' + value).then(function (res) {
+          t.displayPaths.push(res.data.path);
+        });
+      });
+    }
   },
   validations: {
     termsAccepted: {
@@ -4939,8 +5006,12 @@ var isSelected = function isSelected(value) {
     goToEdit: function goToEdit() {
       window.location = '/project/' + this.info.id + '/edit';
     },
-    getPath: function getPath(item) {
-      return item.split(':')[1];
+    getPath: function getPath(id) {
+      var path;
+      axios.get('/api/file/' + id).then(function (res) {
+        path = res.data[0].path;
+      });
+      return path;
     },
     getImages: function getImages() {
       return this.info.images === 'none' ? [] : this.info.images.split(',');
@@ -9838,7 +9909,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-containter[data-v-4f871d63]{\r\n    display: flex;\r\n    justify-content: center;\r\n    margin-left: 96px;\n}\n.decision-input[data-v-4f871d63]{\r\n    display: none;\n}\n.select-container[data-v-4f871d63]{\r\n    margin-top: var(--margin-regular);\r\n    margin-bottom: var(--margin-huge);\r\n\r\n    height: 487px;\r\n    width: 944px;\r\n    padding: var(--margin-big) var(--margin-big) var(--margin-medium) var(--margin-big);\r\n\r\n    background: rgba(29, 29, 29, 0.5);\r\n    -webkit-backdrop-filter: blur(64px);\r\n            backdrop-filter: blur(64px);\r\n    border-radius: var(--margin-big);\n}\n.header[data-v-4f871d63]{\r\n    display: flex;\r\n    justify-content: space-between;\r\n    align-items: center;\r\n    margin-bottom: var(--margin-big);\r\n    margin-left: 0;\n}\n.header > h5[data-v-4f871d63]{\r\n    color: rgba(138, 137, 140, 0.5);\n}\n.accessController[data-v-4f871d63]{\r\n    margin-right: 10.3%;\n}\n.option-container[data-v-4f871d63]{\r\n    display: grid;\r\n    height: 192px;\r\n    grid-template-columns: 1fr 1fr;\r\n    grid-template-rows: 100%;\r\n    grid-column-gap: 20px;\n}\n.option[data-v-4f871d63]{\r\n    width: 100%;\r\n    height: 100%;\r\n    border: 2px solid rgba(138, 137, 140, 0.5);\r\n    box-sizing: border-box;\r\n    border-radius: var(--margin-regular);\r\n    padding: var(--margin-regular) var(--margin-medium) var(--margin-medium) var(--margin-medium);\r\n    cursor: pointer;\r\n\r\n    display: flex;\r\n    align-items: center;\n}\n.option[data-v-4f871d63]:hover{\r\n    background: rgba(84, 84, 88, 0.3);\r\n    border: 2px solid var(--tutti-grey-4);\n}\n.option > div > span[data-v-4f871d63]{\r\n    font-weight: 400;\r\n    font-size: var(--text-small);\r\n    letter-spacing: 0.05em;\r\n    color: var(--tutti-grey-4);\n}\n.option > img[data-v-4f871d63]{\r\n    width: 60px;\r\n    margin-left: auto;\r\n    margin-right: var(--margin-regular);\r\n    margin-top: auto;\n}\n.option > img.idea[data-v-4f871d63]{\r\n    width: 80px;\n}\n.bullets[data-v-4f871d63]{\r\n    margin-top: var(--margin-half);\n}\n.extra[data-v-4f871d63]{\r\n    margin-top: var(--margin-regular);\n}\n.selector-footer[data-v-4f871d63]{\r\n    display: block;\r\n    text-align: center;\r\n    justify-content: center;\r\n    color: rgba(138, 137, 140, 0.5);\r\n    margin-top: calc(var(--margin-large) + 21px);\n}\n.selector-footer > h5[data-v-4f871d63]{\r\n    color: rgba(138, 137, 140, 0.5);\n}\n.elite-container[data-v-4f871d63]{\r\n    height: 339px;\r\n    background: url(\"/assets/images/SquareGradient.svg\") no-repeat center;\r\n    background-size: cover;\r\n    border-radius: var(--margin-medium);\n}\n.elitePanelHeader[data-v-4f871d63]{\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    padding: var(--margin-medium);\n}\n.header.elite[data-v-4f871d63]{\r\n    margin-bottom: var(--margin-medium);\n}\n.eliteInfo[data-v-4f871d63]{\r\n    height: 243px;\r\n    width: 100%;\r\n    padding: var(--margin-medium);\r\n    border-radius: var(--margin-medium);\r\n    background: rgba(29, 29, 29, 0.8);\r\n    -webkit-backdrop-filter: blur(64px);\r\n            backdrop-filter: blur(64px);\n}\n.infoHeadings[data-v-4f871d63]{\r\n    align-self: flex-start;\r\n    display: flex;\r\n    justify-content: space-between;\n}\n.infoHeadings > div[data-v-4f871d63]{\r\n    max-width: 25%;\n}\n.infoHeadings > div > p[data-v-4f871d63]{\r\n    margin-top: var(--margin-regular);\n}\n.infoHeadings > div > h4[data-v-4f871d63]{\r\n    font-weight: 700;\n}\n.eliteFooter[data-v-4f871d63]{\r\n    align-self: flex-end;\r\n    display: flex;\r\n    justify-content: space-between;\r\n    margin-top: 56px;\n}\n.eliteFooter > .price > h3[data-v-4f871d63]{\r\n    margin-top: var(--margin-regular);\r\n    margin-bottom: var(--margin-medium);\n}\n.margins[data-v-4f871d63]{\r\n    margin-right: var(--margin-regular);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-containter[data-v-4f871d63]{\n    display: flex;\n    justify-content: center;\n    margin-left: 96px;\n}\n.decision-input[data-v-4f871d63]{\n    display: none;\n}\n.select-container[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-huge);\n\n    height: 487px;\n    width: 944px;\n    padding: var(--margin-big) var(--margin-big) var(--margin-medium) var(--margin-big);\n\n    background: rgba(29, 29, 29, 0.5);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n    border-radius: var(--margin-big);\n}\n.header[data-v-4f871d63]{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: var(--margin-big);\n    margin-left: 0;\n}\n.header > h5[data-v-4f871d63]{\n    color: rgba(138, 137, 140, 0.5);\n}\n.accessController[data-v-4f871d63]{\n    margin-right: 10.3%;\n}\n.option-container[data-v-4f871d63]{\n    display: grid;\n    height: 192px;\n    grid-template-columns: 1fr 1fr;\n    grid-template-rows: 100%;\n    grid-column-gap: 20px;\n}\n.option[data-v-4f871d63]{\n    width: 100%;\n    height: 100%;\n    border: 2px solid rgba(138, 137, 140, 0.5);\n    box-sizing: border-box;\n    border-radius: var(--margin-regular);\n    padding: var(--margin-regular) var(--margin-medium) var(--margin-medium) var(--margin-medium);\n    cursor: pointer;\n\n    display: flex;\n    align-items: center;\n}\n.option[data-v-4f871d63]:hover{\n    background: rgba(84, 84, 88, 0.3);\n    border: 2px solid var(--tutti-grey-4);\n}\n.option > div > span[data-v-4f871d63]{\n    font-weight: 400;\n    font-size: var(--text-small);\n    letter-spacing: 0.05em;\n    color: var(--tutti-grey-4);\n}\n.option > img[data-v-4f871d63]{\n    width: 60px;\n    margin-left: auto;\n    margin-right: var(--margin-regular);\n    margin-top: auto;\n}\n.option > img.idea[data-v-4f871d63]{\n    width: 80px;\n}\n.bullets[data-v-4f871d63]{\n    margin-top: var(--margin-half);\n}\n.extra[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n}\n.selector-footer[data-v-4f871d63]{\n    display: block;\n    text-align: center;\n    justify-content: center;\n    color: rgba(138, 137, 140, 0.5);\n    margin-top: calc(var(--margin-large) + 21px);\n}\n.selector-footer > h5[data-v-4f871d63]{\n    color: rgba(138, 137, 140, 0.5);\n}\n.elite-container[data-v-4f871d63]{\n    height: 339px;\n    background: url(\"/assets/images/SquareGradient.svg\") no-repeat center;\n    background-size: cover;\n    border-radius: var(--margin-medium);\n}\n.elitePanelHeader[data-v-4f871d63]{\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    padding: var(--margin-medium);\n}\n.header.elite[data-v-4f871d63]{\n    margin-bottom: var(--margin-medium);\n}\n.eliteInfo[data-v-4f871d63]{\n    height: 243px;\n    width: 100%;\n    padding: var(--margin-medium);\n    border-radius: var(--margin-medium);\n    background: rgba(29, 29, 29, 0.8);\n    -webkit-backdrop-filter: blur(64px);\n            backdrop-filter: blur(64px);\n}\n.infoHeadings[data-v-4f871d63]{\n    align-self: flex-start;\n    display: flex;\n    justify-content: space-between;\n}\n.infoHeadings > div[data-v-4f871d63]{\n    max-width: 25%;\n}\n.infoHeadings > div > p[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n}\n.infoHeadings > div > h4[data-v-4f871d63]{\n    font-weight: 700;\n}\n.eliteFooter[data-v-4f871d63]{\n    align-self: flex-end;\n    display: flex;\n    justify-content: space-between;\n    margin-top: 56px;\n}\n.eliteFooter > .price > h3[data-v-4f871d63]{\n    margin-top: var(--margin-regular);\n    margin-bottom: var(--margin-medium);\n}\n.margins[data-v-4f871d63]{\n    margin-right: var(--margin-regular);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10342,7 +10413,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-container[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.done[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n    margin: var(--margin-medium) 0;\n}\n.done>.lowPriority[data-v-3a82656d]{\n    margin-left: var(--margin-medium);\n}\n.done>.standardPriority[data-v-3a82656d]{\n    margin: 0;\n}\n.done>.standardPriority[data-v-3a82656d]:hover{\n    margin: -6px;\n}\n.uploadButton[data-v-3a82656d]{\n    background: transparent;\n    font-size: var( --text-medium);\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    height: 36px;\n    cursor: pointer;\n    border: 2px solid var( --tutti-grey-4);\n    border-radius: 100px;\n    padding: 0.6em 1.43em 0.5em 1.43em;\n    color: var(--tutti-grey-4);\n    text-align: center;\n    white-space: nowrap;\n    margin-left: var(--margin-regular);\n}\n.uploadButton[data-v-3a82656d]:hover{\n    background: rgba(255,255,255,0.15);\n}\ninput[type=\"file\" i][data-v-3a82656d] {\n    display: none;\n}\n.photos-field[data-v-3a82656d]{\n    margin-top: var(--margin-regular);\n    display: flex;\n    flex-direction: column;\n    margin-bottom: var(--margin-medium);\n}\n.photos[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n    height: 211px;\n}\n.editImage[data-v-3a82656d]{\n    position: relative;\n    height: 211px;\n    width: 211px;\n    margin-right: var(--margin-regular);\n    transition: ease-in-out;\n    transition-duration: 0.2s;\n}\n.editImage >img[data-v-3a82656d]{\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n    border-radius: var(--margin-small);\n    margin-right: var(--margin-regular);\n}\n.editImage > span[data-v-3a82656d]{\n    display: none;\n}\n.editImage:hover > img[data-v-3a82656d]{\n    opacity: 0.4;\n    transition: ease-in-out;\n    transition-duration: 0.2s;\n}\n.editImage:hover > span[data-v-3a82656d]{\n    display: block;\n    position: absolute;\n    top: calc(50% - var(--margin-medium));\n    left: calc(50% - var(--margin-medium));\n    color: var(--tutti-white);\n    height: 40%;\n    width: auto;\n    font-size: var(--margin-large);\n    cursor: pointer;\n}\n.photos > strong[data-v-3a82656d], button[data-v-3a82656d]{\n    margin: 0 var(--margin-regular);\n}\n.title-field[data-v-3a82656d]{\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr;\n    grid-template-rows: auto auto;\n    padding-right: var(--margin-big);\n    -moz-column-gap: var(--margin-big);\n         column-gap: var(--margin-big);\n    row-gap: var(--margin-medium);\n    margin-bottom: var(--margin-medium);\n}\n.date-container[data-v-3a82656d]{\n    position: relative;\n    width: 100%;\n    height: -webkit-fit-content;\n    height: -moz-fit-content;\n    height: fit-content;\n}\n.date-container>span[data-v-3a82656d]{\n    color: var(--tutti-black);\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    font-size: 16px;\n}\n.input[data-v-3a82656d]{\n    margin-bottom: var(--margin-large);\n}\n.input.error > div.date-container > input[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area.error > div.date-container > textarea[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(200px + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area.intro.error > div.date-container > textarea[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(125px + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area > .date-container>textarea[data-v-3a82656d]{\n    height: 200px;\n    padding-top: 6px;\n}\n.input.area.intro > .date-container>textarea[data-v-3a82656d]{\n    height: 125px;\n}\n.input.area > .date-container>textarea[data-v-3a82656d]:focus{\n    height: calc(200px + 12px);\n    padding-top: 6px;\n}\n.input.area.intro > .date-container>textarea[data-v-3a82656d]:focus{\n    height: calc(125px + 12px);\n}\n.toggles-container[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.toggle-1[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n    margin-bottom: var(--margin-medium);\n}\n.toggle-1>*[data-v-3a82656d]{\n    margin-bottom: var(--margin-small);\n}\n.toggleText-container[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n}\n.toggleText-container > p[data-v-3a82656d]{\n    margin: 0;\n}\n.budgets[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n    width: 60%;\n}\n.budgets > *[data-v-3a82656d]{\n    margin-bottom: var(--margin-medium);\n}\n.tag-field[data-v-3a82656d]{\n    display: flex;\n    align-items: flex-end;\n    margin-bottom: var(--margin-large);\n}\n.tag-field.users[data-v-3a82656d]{\n    align-items: flex-start;\n}\n.tag-field.users > .input[data-v-3a82656d]{\n    margin-top: -16px;\n}\n.tag-field > *[data-v-3a82656d]{\n    margin-right: var(--margin-regular);\n}\n.tag-field > .input[data-v-3a82656d]{\n    margin-bottom: 0;\n}\n.tags[data-v-3a82656d]{\n    display: flex;\n    align-items: flex-end;\n}\n.tags > *[data-v-3a82656d]{\n    margin-right: var(--margin-small);\n}\n.userActions[data-v-3a82656d]{\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;\n    grid-template-rows: auto;\n    -moz-column-gap: var(--margin-medium);\n         column-gap: var(--margin-medium);\n    row-gap: var(--margin-medium);\n    align-items: baseline;\n}\n.terms[data-v-3a82656d]{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-regular);\n}\n.partner > button[data-v-3a82656d]{\n    margin: 0 0  var(--margin-regular) 0;\n}\n.partner[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.partner > *[data-v-3a82656d]{\n    margin-bottom: var(--margin-regular);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.editor-container[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.options[data-v-3a82656d]{\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin: var(--margin-medium) 0;\n}\n.done[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n    width: -webkit-fit-content;\n    width: -moz-fit-content;\n    width: fit-content;\n}\n.done>.lowPriority[data-v-3a82656d]{\n    margin-left: var(--margin-medium);\n}\n.done>.standardPriority[data-v-3a82656d]{\n    margin: 0;\n}\n.done>.standardPriority[data-v-3a82656d]:hover{\n    margin: -6px;\n}\n.uploadButton[data-v-3a82656d]{\n    background: transparent;\n    font-size: var( --text-medium);\n    font-weight: 700;\n    letter-spacing: 0.07em;\n    height: 36px;\n    cursor: pointer;\n    border: 2px solid var( --tutti-grey-4);\n    border-radius: 100px;\n    padding: 0.6em 1.43em 0.5em 1.43em;\n    color: var(--tutti-grey-4);\n    text-align: center;\n    white-space: nowrap;\n    margin-left: var(--margin-regular);\n}\n.uploadButton[data-v-3a82656d]:hover{\n    background: rgba(255,255,255,0.15);\n}\ninput[type=\"file\" i][data-v-3a82656d] {\n    display: none;\n}\n.photos-field[data-v-3a82656d]{\n    margin-top: var(--margin-regular);\n    display: flex;\n    flex-direction: column;\n    margin-bottom: var(--margin-medium);\n}\n.photos[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n    height: 211px;\n}\n.editImage[data-v-3a82656d]{\n    position: relative;\n    height: 211px;\n    width: 211px;\n    margin-right: var(--margin-regular);\n    transition: ease-in-out;\n    transition-duration: 0.2s;\n}\n.editImage >img[data-v-3a82656d]{\n    width: 100%;\n    height: 100%;\n    -o-object-fit: cover;\n       object-fit: cover;\n    border-radius: var(--margin-small);\n    margin-right: var(--margin-regular);\n}\n.editImage > span[data-v-3a82656d]{\n    display: none;\n}\n.editImage:hover > img[data-v-3a82656d]{\n    opacity: 0.4;\n    transition: ease-in-out;\n    transition-duration: 0.2s;\n}\n.editImage:hover > span[data-v-3a82656d]{\n    display: block;\n    position: absolute;\n    top: calc(50% - var(--margin-medium));\n    left: calc(50% - var(--margin-medium));\n    color: var(--tutti-white);\n    height: 40%;\n    width: auto;\n    font-size: var(--margin-large);\n    cursor: pointer;\n}\n.photos > strong[data-v-3a82656d], button[data-v-3a82656d]{\n    margin: 0 var(--margin-regular);\n}\n.title-field[data-v-3a82656d]{\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr;\n    grid-template-rows: auto auto;\n    padding-right: var(--margin-big);\n    -moz-column-gap: var(--margin-big);\n         column-gap: var(--margin-big);\n    row-gap: var(--margin-medium);\n    margin-bottom: var(--margin-medium);\n}\n.date-container[data-v-3a82656d]{\n    position: relative;\n    width: 100%;\n    height: -webkit-fit-content;\n    height: -moz-fit-content;\n    height: fit-content;\n}\n.date-container>span[data-v-3a82656d]{\n    color: var(--tutti-black);\n    position: absolute;\n    height: var(--icon-regular);\n    top: 7px;\n    right: 12px;\n    font-size: 16px;\n}\n.input[data-v-3a82656d]{\n    margin-bottom: var(--margin-large);\n}\n.input.error > div.date-container > input[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(var(--icon-big) + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area.error > div.date-container > textarea[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(200px + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area.intro.error > div.date-container > textarea[data-v-3a82656d]{\n    color: var(--error);\n    border: 6px solid rgba(255,64,64,0.5);\n    margin: -6px;\n    border-radius: 13px;\n    height: calc(125px + 12px);\n    width: calc(100% + 12px);\n    background-clip: padding-box;\n    -webkit-background-clip: padding-box;\n}\n.input.area > .date-container>textarea[data-v-3a82656d]{\n    height: 200px;\n    padding-top: 6px;\n}\n.input.area.intro > .date-container>textarea[data-v-3a82656d]{\n    height: 125px;\n}\n.input.area > .date-container>textarea[data-v-3a82656d]:focus{\n    height: calc(200px + 12px);\n    padding-top: 6px;\n}\n.input.area.intro > .date-container>textarea[data-v-3a82656d]:focus{\n    height: calc(125px + 12px);\n}\n.toggles-container[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.toggle-1[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n    margin-bottom: var(--margin-medium);\n}\n.toggle-1>*[data-v-3a82656d]{\n    margin-bottom: var(--margin-small);\n}\n.toggleText-container[data-v-3a82656d]{\n    display: flex;\n    align-items: center;\n}\n.toggleText-container > p[data-v-3a82656d]{\n    margin: 0;\n}\n.budgets[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n    width: 60%;\n}\n.budgets > *[data-v-3a82656d]{\n    margin-bottom: var(--margin-medium);\n}\n.tag-field[data-v-3a82656d]{\n    display: flex;\n    align-items: flex-end;\n    margin-bottom: var(--margin-large);\n}\n.tag-field.users[data-v-3a82656d]{\n    align-items: flex-start;\n}\n.tag-field.users > .input[data-v-3a82656d]{\n    margin-top: -16px;\n}\n.tag-field > *[data-v-3a82656d]{\n    margin-right: var(--margin-regular);\n}\n.tag-field > .input[data-v-3a82656d]{\n    margin-bottom: 0;\n}\n.tags[data-v-3a82656d]{\n    display: flex;\n    align-items: flex-end;\n}\n.tags > *[data-v-3a82656d]{\n    margin-right: var(--margin-small);\n}\n.userActions[data-v-3a82656d]{\n    display: grid;\n    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;\n    grid-template-rows: auto;\n    -moz-column-gap: var(--margin-medium);\n         column-gap: var(--margin-medium);\n    row-gap: var(--margin-medium);\n    align-items: baseline;\n}\n.terms[data-v-3a82656d]{\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n    margin-top: var(--margin-regular);\n}\n.partner > button[data-v-3a82656d]{\n    margin: 0 0  var(--margin-regular) 0;\n}\n.partner[data-v-3a82656d]{\n    display: flex;\n    flex-direction: column;\n}\n.partner > *[data-v-3a82656d]{\n    margin-bottom: var(--margin-regular);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -46875,7 +46946,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "lowPriority margins",
-                        attrs: { type: "submit", "data-id": "false" },
+                        attrs: { type: "submit", "data-id": 0 },
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -46890,7 +46961,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "standardPriority",
-                        attrs: { type: "submit", "data-id": "true" },
+                        attrs: { type: "submit", "data-id": 1 },
                         on: {
                           click: function($event) {
                             $event.preventDefault()
@@ -48861,7 +48932,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "projectCard-container" }, [
     _c("div", { staticClass: "card-top" }, [
-      _c("img", { attrs: { src: _vm.getImgPath(), alt: "project_img" } }),
+      _c("img", { attrs: { src: _vm.displayPath, alt: "project_img" } }),
       _vm._v(" "),
       _c("div", { staticClass: "card-header" }, [
         _c("div", { staticClass: "title" }, [
@@ -49071,7 +49142,7 @@ var render = function() {
       }
     },
     [
-      _c("img", { attrs: { src: _vm.getImgPath(), alt: "pfp" } }),
+      _c("img", { attrs: { src: _vm.displayPath, alt: "pfp" } }),
       _vm._v(" "),
       _c("div", { staticClass: "info" }, [
         _c("div", { staticClass: "topInfo" }, [
@@ -49437,7 +49508,7 @@ var render = function() {
           [
             _vm._l(_vm.images, function(item, index) {
               return _c("div", { staticClass: "editImage" }, [
-                _c("img", { attrs: { src: item.path, alt: "" } }),
+                _c("img", { attrs: { src: _vm.displayPaths[index], alt: "" } }),
                 _vm._v(" "),
                 _c(
                   "span",
@@ -50211,12 +50282,28 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "done" }, [
-        _c(
-          "button",
-          { staticClass: "standardPriority", attrs: { type: "submit" } },
-          [_vm._v("Done")]
-        ),
+      _c("div", { staticClass: "options" }, [
+        _c("div", { staticClass: "done" }, [
+          _c(
+            "button",
+            { staticClass: "standardPriority", attrs: { type: "submit" } },
+            [_vm._v("Done")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "lowPriority",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.goBack.apply(null, arguments)
+                }
+              }
+            },
+            [_vm._v("Go back")]
+          )
+        ]),
         _vm._v(" "),
         _c(
           "button",
@@ -50225,11 +50312,11 @@ var render = function() {
             on: {
               click: function($event) {
                 $event.preventDefault()
-                return _vm.goBack.apply(null, arguments)
+                return _vm.deleteProject.apply(null, arguments)
               }
             }
           },
-          [_vm._v("Go back")]
+          [_vm._v("Delete project")]
         )
       ]),
       _vm._v(" "),
@@ -50240,9 +50327,9 @@ var render = function() {
           "div",
           { staticClass: "photos" },
           [
-            _vm._l(_vm.images, function(item, index) {
+            _vm._l(_vm.displayPaths, function(item, index) {
               return _c("div", { staticClass: "editImage" }, [
-                _c("img", { attrs: { src: item.split(":")[1], alt: "" } }),
+                _c("img", { attrs: { src: item, alt: "" } }),
                 _vm._v(" "),
                 _c(
                   "span",
@@ -51025,10 +51112,10 @@ var render = function() {
       _c(
         "div",
         { staticClass: "projImages" },
-        _vm._l(_vm.getImages(), function(item, index) {
+        _vm._l(_vm.displayPaths, function(item, index) {
           return _c("img", {
             class: index === 0 ? "first" : "",
-            attrs: { src: _vm.getPath(item), alt: "" }
+            attrs: { src: item, alt: "" }
           })
         }),
         0
@@ -51159,7 +51246,10 @@ var render = function() {
                 { staticClass: "tags" },
                 _vm._l(_vm.getTags(), function(item, index) {
                   return item !== "none"
-                    ? _c("tag", { key: index, attrs: { text: item } })
+                    ? _c("tag", {
+                        key: index,
+                        attrs: { text: item, index: index }
+                      })
                     : _vm._e()
                 }),
                 1

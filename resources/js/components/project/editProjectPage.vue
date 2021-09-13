@@ -1,15 +1,18 @@
 <template>
     <form ref="createForm" class="editor-container" v-on:submit.prevent="createProject">
         <breadcrumbs :pages="[{name: 'Projects', ref: '/search/project'},{name: project.title, ref: 'none'},{name:'Edit', ref: 'none'}]"></breadcrumbs>
-        <div class="done">
-            <button type="submit" class="standardPriority">Done</button>
-            <button class="lowPriority" v-on:click.prevent="goBack">Go back</button>
+        <div class="options">
+            <div class="done">
+                <button type="submit" class="standardPriority">Done</button>
+                <button class="lowPriority" v-on:click.prevent="goBack">Go back</button>
+            </div>
+            <button class="lowPriority" v-on:click.prevent="deleteProject">Delete project</button>
         </div>
         <div class="photos-field">
             <label>Photos</label>
             <div class="photos">
-                <div v-for="(item, index) in images" class="editImage">
-                    <img :src="item.split(':')[1]" alt="">
+                <div v-for="(item, index) in displayPaths" class="editImage">
+                    <img :src="item" alt="">
                     <span v-on:click="removePhoto(index)" :data-id="item" class="material-icons-round">close</span>
                 </div>
                 <strong>{{images.length + ' photo' + [project.images.length === 1 ? '':'s']}}</strong>
@@ -166,6 +169,12 @@ export default {
         this.images = this.project.images === 'none' ? [] : this.project.images.split(',');
         this.members = this.project.members.split(',');
         this.tags = this.project.tags === 'none' ? [] : this.project.tags.split(',');
+        const t = this;
+        this.images.forEach(value => {
+            axios.get('/api/file/' + value).then((res) =>{
+                t.displayPaths.push(res.data.path);
+            })
+        })
     },
     data() {
         return {
@@ -177,6 +186,7 @@ export default {
             membersTemp: '',
             editableMembers: [],
             submitted: false,
+            displayPaths: []
         }
     },
     validations: {
@@ -194,8 +204,9 @@ export default {
     },
     methods: {
         removePhoto(index) {
-            axios.delete('/api/file/' + this.images[index].split(':')[0]);
+            axios.delete('/api/file/' + this.images[index]);
             this.$delete(this.images, index);
+            this.$delete(this.displayPaths, index);
         },
         titleError() {
             return this.submitted && this.$v.project.title.$anyError;
@@ -239,8 +250,8 @@ export default {
             const t = this;
             axios.post('/api/file/upload/' + (this.project.id) +'/' + this.images.length, data, config)
                 .then((res) =>{
-                    console.log('xd');
-                    t.images.push(res.data.id + ':' + res.data.path);
+                    t.images.push(res.data.id);
+                    t.displayPaths.push(res.data.path);
                 })
                 .catch(function (err) {
                     console.log(err);
@@ -263,14 +274,10 @@ export default {
             this.$delete(this.tags, index);
         },
         formatImage(){
-            const imgs = [];
-            this.images.forEach((value, index) => {
-                imgs[index] = value.id + ':' + value.path;
-            });
-            return imgs.length > 0 ? imgs.join(',') : 'none';
+            return this.images.join(',');
         },
         formatMembers(){
-            const mems = ['You'];
+            const mems = [];
             this.members.forEach(value => {
                 mems.push(value);
             });
@@ -331,7 +338,7 @@ export default {
                             iconTag: 'span'
                         }
                     });
-                window.location = '/project/' + this.project.id + "/edit";
+                //window.location = '/project/' + this.project.id + "/edit";
             }).catch((error) => {
                 this.$toast("Something wnt wrong",
                     {
@@ -346,7 +353,20 @@ export default {
             })
         },
         goBack() {
-            window.history.go(-1);
+            window.location = '/project/' + this.project.id;
+        },
+        deleteProject(){
+            axios.delete('/api/project/' + this.project.id,).then(()=>{
+                    window.location= '/';
+                }
+            )
+        },
+        getPath(id){
+            let path;
+            axios.get('/api/file/' + id).then((res) =>{
+                path = res.data[0].path;
+            })
+            return path;
         }
     }
 }
@@ -359,11 +379,17 @@ export default {
     flex-direction: column;
 }
 
+.options{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: var(--margin-medium) 0;
+}
+
 .done{
     display: flex;
     align-items: center;
     width: fit-content;
-    margin: var(--margin-medium) 0;
 }
 
 .done>.lowPriority{

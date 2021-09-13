@@ -1,6 +1,6 @@
 <template>
     <li :class="'project-container small ' + [selected ? 'clicked' : '']" v-on:click="selectProject(project)">
-        <img :src="getImgPath()" alt="pfp">
+        <img :src="displayPath" alt="pfp">
         <div class="info">
             <div class="topInfo">
                 <div class="title">
@@ -53,17 +53,23 @@ export default {
         stateTag,
         tag
     },
+    created: function(){
+        if(this.project.images !== 'none'){
+            const t = this;
+            axios.get('/api/file/' + this.project.images.split(',')[0]).then((res) =>{
+                t.displayPath = res.data.path;
+            })
+        }
+    },
     data(){
         return{
-            clicked: false
+            clicked: false,
+            displayPath: '/storage/assets/temp/UserPlaceHolder.svg'
         }
     },
     methods: {
         divideTags(){
             return this.project.tags.replace(/\s/g, '').split(',');
-        },
-        getImgPath(){
-            return this.project.images === 'none' ? '/storage/assets/temp/UserPlaceHolder.svg' : this.project.images.split(',')[0].split(':')[1];
         }
     }
 }
