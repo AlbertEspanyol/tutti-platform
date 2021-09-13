@@ -1,14 +1,14 @@
 <template>
     <div class="item-container">
         <div class="clicable">
-            <img class="pfp" :src="this.image === '' ? 'storage/assets/temp/UserPlaceholder.svg' : this.image" alt="pfp">
-            <button class="minPriority name">{{this.name}}</button>
-            <h5 class="type">{{this.type | capitalize}}</h5>
+            <img class="pfp" :src="this.image === '' ? '/storage/assets/temp/UserPlaceholder.svg' : this.image" alt="pfp">
+            <button class="minPriority name">{{user.fullName}}</button>
+            <h5 class="type">{{user.userType | capitalize}}</h5>
         </div>
         <div class="userInfo">
-            <state-tag class="stateTag" type="user" :user-type="type" :user-state="state"></state-tag>
+            <state-tag class="stateTag" type="user" :user-type="user.userType" :user-state="state"></state-tag>
             <div v-if="currentWorkplace.length > 0" class="workplace">
-                <p>{{ type === 'entrepreneur' ? 'Currently working on' : 'Invested on'}}</p>
+                <p>{{ user.userType === 'entrepreneur' ? 'Currently working on' : 'Invested on'}}</p>
                 <button class="minPriority work">{{currentWorkplace.length > 1 ? (currentWorkplace.length + ' projects') : currentWorkplace[0]}}</button>
             </div>
         </div>
@@ -46,11 +46,9 @@ import stateTag from "../helpers/stateTag";
 export default {
     name: "userItem",
     props: {
-        userId: {required: true},
-        name: {required: true},
+        user: {type: Object, required: true},
         isVerified: {required: false},
-        type: {required: true},
-        state: {required: true, default:false},
+        state: {required: true},
         currentWorkplace: {required: false, default: [], type: Array},
         following: {required: true},
         score: {required: false, default: 1, type: Number},

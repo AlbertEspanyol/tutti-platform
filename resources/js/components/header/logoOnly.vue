@@ -1,12 +1,17 @@
 <template>
-    <div class="logo-container">
+    <div class="logo-container" v-on:click="changeLocation">
         <img class="logo" src="/storage/assets/logo/text/Logo_text_svg.svg" alt="logo_noText">
     </div>
 </template>
 
 <script>
 export default {
-    name: "logoOnly"
+    name: "logoOnly",
+    methods: {
+        changeLocation(){
+            window.location = '/'
+        }
+    }
 }
 </script>
 
@@ -15,6 +20,7 @@ export default {
     position: relative;
     width: 100%;
     height: 80px;
+    cursor: pointer;
 }
 
 .logo{

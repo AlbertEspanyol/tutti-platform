@@ -83,7 +83,7 @@
         <input type="search">
         <div class="date-container">
             <!-- <datepicker v-model="date"></datepicker> -->
-            <img class="date-input-icon" src="storage/assets/icons/calendar.svg" alt="calendar">
+            <img class="date-input-icon" src="/storage/assets/icons/calendar.svg" alt="calendar">
         </div>
     </div>
 </template>

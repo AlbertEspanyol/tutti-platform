@@ -2,20 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\TuttiUser;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class UserController extends Controller
 {
+    private function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('home');
+        return TuttiUser::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -32,23 +38,32 @@ class HomeController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return TuttiUser
      */
     public function store(Request $request)
     {
-        //
+        $newUser = new TuttiUser();
+        $newUser->fullName = $request->user['fullName'];
+        $newUser->email = $request->user['email'];
+        $newUser->password = $request->user['password'];
+        $newUser->birthday = $request->user['birthday'];
+        $newUser->userType = $request->user['userType'];
+        $newUser->isPremium = $request->user['isPremium'];
+
+        $newUser->save();
+
+        return $newUser;
     }
 
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        $projects = Project::orderBy('created_at', 'DESC')->get();
-        $users = TuttiUser::orderBy('created_at', 'DESC')->get();
-        return view('home')->with('projects', $projects)->with('users', $users);
+        //
     }
 
     /**
@@ -78,10 +93,16 @@ class HomeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy($id)
     {
-        //
+        $exisitingItem = TuttiUser::find($id);
+        if ($exisitingItem) {
+            $exisitingItem->delete();
+            return "Item deleted";
+        }
+
+        return "Item not found";
     }
 }

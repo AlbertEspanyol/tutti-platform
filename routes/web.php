@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProjectPageController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,17 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
 
-/*
-Route::get('/register', function () {
-    return view('register');
-});
-*/
-
-Route::get('/access', [AccessController::class, 'index']);
+Route::get('/access', [AccessController::class, 'show']);
 
 Route::get('/access/register', function () {
     return view('registerStep2');
@@ -37,8 +30,14 @@ Route::get('/login', [LoginController::class, 'showLogin']);
 
 Route::get('/register', [RegisterController::class, 'showRegister']);
 
-Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'show']);
+Route::get('/', [HomeController::class, 'show']);
 
-Route::get('/search', function () {
-    return view('search');
-});
+Route::get('search/{type}/{search?}', [SearchController::class, 'show']);
+
+Route::get('project/{id}', [ProjectPageController::class, 'show']);
+
+Route::get('project/{id}/edit', [ProjectPageController::class, 'edit']);
+
+Route::get('create', [ProjectPageController::class, 'create']);
+

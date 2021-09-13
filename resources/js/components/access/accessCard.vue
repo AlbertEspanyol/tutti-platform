@@ -5,7 +5,7 @@
                 <h2>Register</h2>
                 <button class="lowPriority accessController" v-on:click.prevent="slideNext">Login</button>
             </div>
-            <form ref="reg-form" class="form-containter" v-on:submit.prevent="registerSubmit">
+            <form ref="reg-form" class="form-containter" method="post" v-on:submit.prevent="registerSubmit">
                 <input class="mode-input" name="mode" :value="modeSelector">
                 <div :class="'input ' + [registerNameError() ? 'error' : '']">
                     <div class="input-label">Full name *</div>
@@ -131,6 +131,7 @@ export default {
     name: "acessCard",
     props: {
         mode: {required: true},
+        users: {required: true}
     },
     data() {
         return {
@@ -159,7 +160,8 @@ export default {
                 },
                 remember: false
             },
-            submitted: false
+            submitted: false,
+            dbErrors: ['','']
         }
     },
     computed: {},
@@ -223,10 +225,10 @@ export default {
             return this.submitted && this.$v.register.date.$error;
         },
         loginMailError(){
-            return this.submitted && this.$v.login.mail.$error;
+            return this.submitted && (this.$v.login.mail.$error || this.dbErrors[0] !== '');
         },
         loginPasswordError(){
-            return this.submitted && this.$v.login.password.$anyError;
+            return this.submitted && (this.$v.login.password.$anyError || this.dbErrors[1] !== '');
         },
         extractErrors(){
             const errorMsgs = [];
@@ -294,7 +296,7 @@ export default {
                         type: TYPE.ERROR,
                         position: 'top-center',
                         icon: {
-                            iconClass: 'material-icons',
+                            iconClass: 'material-icons-round',
                             iconChildren: 'error',
                             iconTag: 'span'
                         }
@@ -302,7 +304,19 @@ export default {
                 return;
             }
 
-            this.$refs["login-form"].submit();
+            const parsedUsers = JSON.parse(this.users);
+            this.dbErrors = ['Email does not exist', 'Incorrect password'];
+            for(let i = 0; i < parsedUsers.length; i++){
+                if(parsedUsers[i].email === this.login.mail){
+                    this.dbErrors[0] = '';
+                    if(parsedUsers[i].password === this.login.password.text){
+                        this.dbErrors[1] = '';
+                    }
+                    break;
+                }
+            }
+
+            if(this.checkDB()) /*this.$refs["login-form"].submit()*/ window.location = '/';
         },
         registerSubmit(e) {
             this.submitted = true;
@@ -314,7 +328,7 @@ export default {
                         type: TYPE.ERROR,
                         position: 'top-center',
                         icon: {
-                            iconClass: 'material-icons',
+                            iconClass: 'material-icons-round',
                             iconChildren: 'error',
                             iconTag: 'span'
                         }
@@ -322,7 +336,34 @@ export default {
                 return;
             }
 
-            this.$refs["reg-form"].submit();
+            axios.post('api/user/store',
+                {
+                    user: {
+                        fullName: this.register.name,
+                        email: this.register.mail,
+                        password: this.register.password.first.text,
+                        birthday: this.register.date.toString(),
+                        userType: "undefined",
+                        isPremium: false
+                    }
+                }).then(function(){window.location = '/'}).catch(function(error){console.log(error)});
+        },
+        checkDB(){
+            if(this.dbErrors[0] === '' && this.dbErrors[1] === ''){
+                return true;
+            } else {
+                this.$toast(this.dbErrors.join("\n"),
+                    {
+                        type: TYPE.ERROR,
+                        position: 'top-center',
+                        icon: {
+                            iconClass: 'material-icons',
+                            iconChildren: 'error',
+                            iconTag: 'span'
+                        }
+                    });
+                return false;
+            }
         }
     }
 }

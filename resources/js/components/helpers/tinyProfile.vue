@@ -1,6 +1,6 @@
 <template>
     <div class="pfp-container">
-        <img class="pfp" v-on:mouseover="displayHelper" v-on:mouseleave="removeHelper" :src="this.pfp === '' ? 'storage/assets/temp/UserPlaceholder.svg' : this.pfp" alt="pfp">
+        <img class="pfp" v-on:mouseover="displayHelper" v-on:mouseleave="removeHelper" :src="this.pfp === '' ? '/storage/assets/temp/UserPlaceholder.svg' : this.pfp" alt="pfp">
         <span v-if="isDisplayable" :class="'helper ' + position">{{userName}}</span>
         <div v-if="isDisplayable" :class="'arrow ' + position"/>
     </div>

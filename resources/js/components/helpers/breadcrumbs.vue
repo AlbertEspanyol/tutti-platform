@@ -1,9 +1,13 @@
 <template>
     <div class="bread-container">
-        <div class="breads" v-for="(item, index) in totalPages">
+        <div class="breads">
+            <button class="minPriority" v-on:click.prevent="changeLocation('/')">Home</button>
+            <span class="material-icons-round">keyboard_arrow_right</span>
+        </div>
+        <div class="breads" v-for="(item, index) in pages">
             <span class="material-icons-round" v-if="index > 0">keyboard_arrow_right</span>
-            <button v-if="index < totalPages.length - 1" class="minPriority">{{ item }}</button>
-            <div v-else class="lastBread">{{ item }}</div>
+            <button v-if="item.ref!=='none'" class="minPriority" v-on:click.prevent="changeLocation(item.ref)">{{ item.name }}</button>
+            <div v-else class="lastBread">{{ item.name }}</div>
         </div>
     </div>
 </template>
@@ -14,9 +18,9 @@ export default {
     props: {
         pages: {required: true, type: Array}
     },
-    data(){
-        return{
-            totalPages: ['Home'].concat(this.pages)
+    methods: {
+        changeLocation(ref){
+            window.location = ref;
         }
     }
 }

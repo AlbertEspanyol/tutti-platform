@@ -3,29 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\TuttiUser;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class ProjectPageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return view('home');
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view("editProject");
     }
 
     /**
@@ -42,24 +41,25 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        $projects = Project::orderBy('created_at', 'DESC')->get();
-        $users = TuttiUser::orderBy('created_at', 'DESC')->get();
-        return view('home')->with('projects', $projects)->with('users', $users);
+        $info = Project::find($id);
+        return view("project")->with('info', $info);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
+        $info = Project::find($id);
+        return view("editProject")->with('info', $info);
     }
 
     /**

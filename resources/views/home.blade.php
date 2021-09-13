@@ -11,10 +11,11 @@
     </head>
     <body>
     <div id="app">
-        <main-header logged="{{false}}"></main-header>
+        <main-header logged="{{false}}" current-page="Home"></main-header>
         <div class="app-body">
-            <home></home>
+            <home projects="{{$projects}}" users="{{$users}}"></home>
         </div>
+        <tutti-footer></tutti-footer>
     </div>
     </body>
     <script src="{{ mix('js/app.js') }}"></script>

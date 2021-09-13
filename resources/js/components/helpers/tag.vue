@@ -1,13 +1,13 @@
 <template>
     <div v-if="!selectable" class="tag-container">
         {{text}}
-        <img v-if="dismissable" src="storage/assets/icons/close_white.svg" alt="close" width="8" height="8">
+        <img v-on:click="closeFunction(index)" v-if="dismissable" src="/storage/assets/icons/close_white.svg" alt="close" width="8" height="8">
     </div>
 
     <div v-else v-on:mouseover="mouseover=true" v-on:mouseleave="mouseover=false" v-on:click="changeSelected" :class="'tag-container selectable ' + [this.selected ? 'selected' : '']">
         {{text}}
-        <img v-if="mouseover && !selected" src="storage/assets/icons/add.svg" alt="add" width="8" height="8">
-        <img v-if="selected" src="storage/assets/icons/close_white.svg" alt="close" width="8" height="8">
+        <img v-if="mouseover && !selected" src="/storage/assets/icons/add.svg" alt="add" width="8" height="8">
+        <img v-if="selected" src="/storage/assets/icons/close_white.svg" alt="close" width="8" height="8">
     </div>
 </template>
 
@@ -17,7 +17,9 @@ export default {
     props: {
         dismissable: {default: false},
         selectable: {default: false},
-        text: {required: true}
+        text: {required: true},
+        closeFunction: {type: Function},
+        index: {required: true}
     },
     data(){
         return{

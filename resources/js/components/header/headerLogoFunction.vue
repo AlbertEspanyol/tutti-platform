@@ -1,7 +1,7 @@
 <template>
     <div class="icon-container">
         <selectable-background wait-time="1000" :helper-text="icon | capitalize"/>
-        <img :src="'storage/assets/icons/' + icon + '.svg'" :alt="icon" :width="size" :height="size">
+        <img :src="'/storage/assets/icons/' + icon + '.svg'" :alt="icon" :width="size" :height="size">
         <div v-if="notifications" class="noti"><span>{{notifications}}</span></div>
     </div>
 </template>

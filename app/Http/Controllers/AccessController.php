@@ -8,9 +8,17 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Mockery\Matcher\Any;
 
 class AccessController extends Controller
 {
+    private function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,20 +47,18 @@ class AccessController extends Controller
      */
     public function store(Request $request)
     {
-        $results = DB::select('select * from users', array(1));
-        echo "<script>console.debug( \"hello\" );</script>";
-        return view('access');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @return Application|Factory|View|Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $users = app('App\Http\Controllers\UserController')->index();
+        return view("access")->with('users', $users);
     }
 
     /**
@@ -70,12 +76,13 @@ class AccessController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param  int  $id
+     * @param String  $mode
+     * @param Any $extras
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $mode, $extras)
     {
-        //
+        $this->debug_to_console($mode);
     }
 
     /**

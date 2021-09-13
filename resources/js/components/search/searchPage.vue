@@ -1,13 +1,13 @@
 <template>
     <div class="searchPage-container">
-        <breadcrumbs :pages="[capitalizeFirstLetter(searchType) + 's']"></breadcrumbs>
+        <breadcrumbs :pages="[{name: capitalizeFirstLetter(searchType) + 's', ref: 'none'}]"></breadcrumbs>
         <div class="searchHeader">
             <div class="searchMode-container" v-on:click="titleOpen=!titleOpen" v-on:mouseleave="titleOpen=false">
                 <h2>{{ capitalizeFirstLetter(searchType) + 's' }}</h2>
                 <span class="material-icons-round">{{ titleOpen ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</span>
                 <div v-if="titleOpen" class="fill"/>
                 <div v-if="titleOpen" class="titleDialog">
-                    <a v-for="(item, i) in this.types" v-if="item !== searchType" :class="[i === 0 ? 'first' : '']">{{ capitalizeFirstLetter(item) + 's' }}</a>
+                    <a v-for="(item, i) in this.types" v-if="item !== searchType" :href="'/search/'+item" :class="[i === 0 ? 'first' : '']">{{ capitalizeFirstLetter(item) + 's' }}</a>
                 </div>
             </div>
             <div v-if="searchType==='project'" class="filters">
@@ -42,16 +42,16 @@
             <div v-if="anySearch!==''" class="separator"/>
             <h5>100 results</h5>
             <div v-if="searchType==='project'" class="tags">
-                <tag text="Design" :selectable="true"></tag>
-                <tag text="Mechanical" :selectable="true"></tag>
-                <tag text="Car" :selectable="true"></tag>
-                <tag text="Engine" :selectable="true"></tag>
-                <tag text="Racing" :selectable="true"></tag>
+                <tag text="Design" :selectable="true" :index="1"></tag>
+                <tag text="Mechanical" :selectable="true" :index="2"></tag>
+                <tag text="Car" :selectable="true" :index="3"></tag>
+                <tag text="Engine" :selectable="true" :index="4"></tag>
+                <tag text="Racing" :selectable="true" :index="5"></tag>
             </div>
         </div>
         <div v-if="searchType==='project'" class="projectSearchContent">
             <ul ref="projectsScroller" class="project-list">
-                <project-item v-for="n in 7" class="child" :key="n" :need-recruitment="false" :need-investment="true" project-state="40" financed-state="60" members="3" title="AR STRADALE 33" project-id="3"></project-item>
+                <project-item v-for="item in JSON.parse(this.items)" :class="'child' + [selectedProject.id === item.id ? ' child--active' : '']" :key="item.id" :select-project="selectProject" :project="item" :selected="selectedProject.id === item.id"></project-item>
                 <li class="projectsEnd">
                     <div>
                         <h5>
@@ -66,11 +66,11 @@
                     </div>
                 </li>
             </ul>
-            <project-card :need-recruitment="false" :need-investment="true" project-state="40" financed-state="60" :members="[1,2,3,4,5]" subtitle="Automobile development" title="AR STRADALE 33" :online="true"></project-card>
+            <project-card v-if="selectedProject !== ''" :selected-project="selectedProject"></project-card>
         </div>
         <div v-else ref="usersScroller" class="userScroller">
             <div class="userSearchContent child">
-                <user-item v-for="n in 10" :key="n" :following="false" :state="true" :type="searchType" name="Elsa Pito" user-id="2"></user-item>
+                <user-item v-for="item in JSON.parse(this.items)" v-if="item.userType === searchType" :key="item.id" :user="item" :following="false" :state="true"></user-item>
                 <div class="usersEnd">
                     <h5>
                         There's no more {{searchType + 's'}} to show
@@ -111,13 +111,16 @@ export default {
     mixins: [Vue2Filters.mixin],
     props:{
         anySearch: {default: ''},
-        searchType: {required: true, oneOf: ['project', 'entrepreneur', 'investor']}
+        searchType: {required: true, oneOf: ['project', 'entrepreneur', 'investor']},
+        items: {required: true}
     },
     data(){
         return{
             titleOpen: false,
             types: ['project', 'entrepreneur', 'investor'],
-            value: 50
+            value: 50,
+            selectedProjectId: 0,
+            selectedProject: ''
         }
     },
     methods: {
@@ -129,6 +132,9 @@ export default {
         },
         capitalizeFirstLetter(text){
             return this.$options.filters.capitalize(text);
+        },
+        selectProject(proj){
+            this.selectedProject = proj;
         }
     }
 }
@@ -279,6 +285,12 @@ export default {
 
 .child{
     direction:ltr;
+}
+
+.child--active{
+    border: 2px solid var(--tutti-grey-4);
+    background: var(--tutti-grey-3);
+    padding: calc(var(--margin-regular) - 2px);
 }
 
 .projectsEnd{

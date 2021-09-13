@@ -2,37 +2,37 @@
     <div class="header-background-container">
         <div class="header-container">
             <div class="left-elements">
-                <img v-on:click="logged=!logged" class="logo" src="storage/assets/logo/noText/Logo_noText_Svg.svg" alt="Logo_noText" width="34" height="34"/>
-                <search-bar></search-bar>
-                <div>
+                <img v-on:click="changeLocation('/')" class="logo" src="/storage/assets/logo/noText/Logo_noText_Svg.svg" alt="Logo_noText" width="34" height="34"/>
+                <search-bar :type="type" :previous-text="search"></search-bar>
+                <div v-on:click="changeLocation('/')">
                     Home
                     <div v-if="currentPage==='Home'" class="underline"/>
                 </div>
-                <div>
+                <div v-on:click="changeLocation('/search/project')">
                     Projects
                     <div v-if="currentPage==='Projects'" class="underline"/>
                 </div>
-                <div>
+                <div v-on:click="changeLocation('/search/investor')">
                     Investors
                     <div v-if="currentPage==='Investors'" class="underline"/>
                 </div>
-                <div class="last">
+                <div class="last" v-on:click="changeLocation('/search/entrepreneur')">
                     Entrepreneurs
                     <div v-if="currentPage==='Entrepreneurs'" class="underline"/>
                 </div>
             </div>
             <div v-if="logged" class="right-elements">
-                <button class="maxPriority headerCTA">Start a project</button>
+                <button class="maxPriority headerCTA" v-on:click.prevent="changeLocation('/create')">Start a project</button>
                 <header-logo-function icon="help"></header-logo-function>
                 <header-logo-function icon="notifications"></header-logo-function>
                 <header-logo-function icon="messages" notifications="3"></header-logo-function>
-                <img src="storage/assets/icons/account.svg" class="account" alt="account">
+                <img src="/storage/assets/icons/account.svg" class="account" alt="account">
             </div>
             <div v-else class="right-elements accessSide">
-                <button class="maxPriority headerCTA notLogged">Start a project</button>
+                <button class="maxPriority headerCTA notLogged" v-on:click.prevent="changeLocation('/create')">Start a project</button>
                 <div class="separator"/>
-                <button class="standardPriority headerCTA login">Login</button>
-                <button class="minPriority signUp">Sign up</button>
+                <button class="standardPriority headerCTA login" v-on:click.prevent="changeLocation('/access')">Login</button>
+                <button class="minPriority signUp" v-on:click.prevent="changeLocation('/access')">Sign up</button>
             </div>
         </div>
     </div>
@@ -44,10 +44,20 @@ import headerLogoFunction from "./headerLogoFunction";
 
 export default {
     name: "mainHeader",
-    props: {logged: {required: true}, currentPage: {default: 'none', oneOf: ['Home', 'Projects', 'Entrepreneurs', 'Investors']}},
+    props: {
+        logged: {required: true},
+        currentPage: {default: 'none', oneOf: ['Home', 'Projects', 'Entrepreneurs', 'Investors']},
+        search: {default: ''},
+        type: {default: 'project'}
+    },
     components: {
         searchBar,
         headerLogoFunction
+    },
+    methods:{
+        changeLocation(loc){
+            window.location = loc;
+        }
     }
 }
 </script>
@@ -93,6 +103,7 @@ export default {
     display: flex;
     margin-right: var(--margin-medium);
     flex-direction: row;
+    cursor: pointer;
 }
 
 .left-elements > div{
@@ -174,6 +185,11 @@ export default {
 
 .last{
     margin: 0;
+}
+
+.xd{
+    width: fit-content;
+    height: fit-content;
 }
 
 @media (max-width: 1490px) {

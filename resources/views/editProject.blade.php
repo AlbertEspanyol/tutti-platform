@@ -12,9 +12,13 @@
 <body>
 <div id="app">
     <img class="header-pre-background" src="/storage/assets/images/backgrounds/HeaderPreBackground.svg" alt="pre_background">
-    <main-header logged="{{false}}" current-page="{{ucfirst($type) . 's'}}" type="{{$type}}" search="{{$search ?? ''}}"></main-header>
+    <main-header logged="{{false}}"></main-header>
     <div class="app-body">
-        <search-page search-type="{{ $type }}" items="{{ $items }}"></search-page>
+        @isset($info)
+            <edit-project-page raw-project="{{$info}}"></edit-project-page>
+        @else
+            <create-project-page></create-project-page>
+        @endisset
     </div>
     <tutti-footer></tutti-footer>
 </div>

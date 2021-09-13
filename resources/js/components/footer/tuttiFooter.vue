@@ -4,11 +4,11 @@
             <button v-for="item in this.options" class="minPriority">{{item}}</button>
         </div>
         <div class="footer-options logos">
-            <img class="social" src="storage/assets/images/logos/Yt_logo.svg" alt="footer_logo">
-            <img class="social" src="storage/assets/images/logos/Tw_logo.svg" alt="footer_logo">
-            <img class="logo" src="storage/assets/images/logos/FooterLogo.svg" alt="footer_logo">
-            <img class="social" src="storage/assets/images/logos/Ig_logo.svg" alt="footer_logo">
-            <img class="social" src="storage/assets/images/logos/Fb_logo.svg" alt="footer_logo">
+            <img class="social" src="/storage/assets/images/logos/Yt_logo.svg" alt="footer_logo">
+            <img class="social" src="/storage/assets/images/logos/Tw_logo.svg" alt="footer_logo">
+            <img class="logo" src="/storage/assets/images/logos/FooterLogo.svg" alt="footer_logo">
+            <img class="social" src="/storage/assets/images/logos/Ig_logo.svg" alt="footer_logo">
+            <img class="social" src="/storage/assets/images/logos/Fb_logo.svg" alt="footer_logo">
         </div>
         <h5>Tutti© 2021</h5>
   </footer>

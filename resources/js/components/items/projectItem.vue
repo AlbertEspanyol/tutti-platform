@@ -1,37 +1,37 @@
 <template>
-    <li :class="'project-container small ' + [clicked ? 'clicked' : '']" v-on:click="clicked=!clicked">
-        <img :src="this.mainPicture === '' ? 'storage/assets/temp/ProjectPlaceholder.svg' : this.mainPicture" alt="pfp">
+    <li :class="'project-container small ' + [selected ? 'clicked' : '']" v-on:click="selectProject(project)">
+        <img :src="getImgPath()" alt="pfp">
         <div class="info">
             <div class="topInfo">
                 <div class="title">
                     <div class="topPart">
-                        <h3>Title</h3>
-                        <div v-if="location!==''" class="separator"/>
-                        <div v-if="location!==''" class="icon-button">
+                        <h3>{{project.title}}</h3>
+                        <div v-if="project.location!==''" class="separator"/>
+                        <div v-if="project.location!==''" class="icon-button">
                             <span class="material-icons-round">place</span>
                             <button class="minPriority titleText">
-                                {{ location }}
+                                {{ project.location }}
                             </button>
                         </div>
                         <div class="separator"/>
                         <button class="minPriority titleText last">
-                            {{members}} members
+                            {{project.members.split(',').length}} members
                         </button>
                     </div>
-                    <h5 v-if="subtitle!==''">{{subtitle}}</h5>
+                    <h5 v-if="project.subtitle">{{project.subtitle}}</h5>
                 </div>
                 <div class="states">
-                    <state-tag type="project" project-need="investment" :need-state="needInvestment"></state-tag>
-                    <state-tag type="project" project-need="recruitment" :need-state="needRecruitment"></state-tag>
+                    <state-tag type="project" project-need="investment" :need-state="project.needInvestment"></state-tag>
+                    <state-tag type="project" project-need="recruitment" :need-state="project.needRecruitment"></state-tag>
                 </div>
             </div>
             <div class="bottomInfo">
                 <div class="percentages">
-                    <div><h4 class="num">{{financedState}}%</h4> <h5 class="percent-text">Financed</h5></div>
-                    <div><h4 class="num">{{projectState}}%</h4> <h5 class="percent-text">Done</h5></div>
+                    <div><h4 class="num">{{project.financedState}}%</h4> <h5 class="percent-text">Financed</h5></div>
+                    <div><h4 class="num">{{project.projectState}}%</h4> <h5 class="percent-text">Done</h5></div>
                 </div>
-                <div v-if="tags.length > 0" class="tags">
-                    <tag v-for="n in tags.length" :key="n" :text="'sadfg' + n"></tag>
+                <div class="tags">
+                    <tag v-for="(item, n) in divideTags()" v-if="item!=='none'" :key="n" :text="item" :index="n"></tag>
                 </div>
             </div>
         </div>
@@ -45,17 +45,9 @@ import tag from "../helpers/tag";
 export default {
     name: "projectItem",
     props: {
-        projectId: {required: true},
-        mainPicture: {default: ''},
-        title: {required: true},
-        subtitle: {default: ''},
-        location: {default: ''},
-        members: {required: true},
-        financedState: {required: true},
-        projectState: {required: true},
-        tags: {default: [], type: Array},
-        needInvestment: {required: true},
-        needRecruitment: {required: true}
+        selectProject: {type: Function, required: true},
+        project: {type: Object, required: true},
+        selected: {default: false}
     },
     components:{
         stateTag,
@@ -64,6 +56,14 @@ export default {
     data(){
         return{
             clicked: false
+        }
+    },
+    methods: {
+        divideTags(){
+            return this.project.tags.replace(/\s/g, '').split(',');
+        },
+        getImgPath(){
+            return this.project.images === 'none' ? '/storage/assets/temp/UserPlaceHolder.svg' : this.project.images.split(',')[0].split(':')[1];
         }
     }
 }
@@ -126,6 +126,7 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    text-align: initial;
 }
 
 .topPart{

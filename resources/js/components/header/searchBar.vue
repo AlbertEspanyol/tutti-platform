@@ -1,18 +1,39 @@
 <template>
-    <form class="search-container">
-        <input class="search-input" type="search" name="searchContent" placeholder="Search projects, people..."/>
-        <img class="search-icon" src="storage/assets/icons/search.svg" alt="search_icon"/>
-        <select class="search-type" name="searchType">
-            <option value="projects">Projects</option>
-            <option value="users">Investors</option>
-            <option value="entrepreneurs">Entrep.</option>
+    <form class="search-container" v-on:submit.prevent="changeLocation()">
+        <input class="search-input" type="search" name="searchContent" placeholder="Search projects, people..." v-model="text"/>
+        <img class="search-icon" src="/storage/assets/icons/search.svg" alt="search_icon"/>
+        <select class="search-type" name="searchType" v-model="option">
+            <option ref="project" value="project">Projects</option>
+            <option selected value="investor">Investors</option>
+            <option ref="entrepreneur" value="entrepreneur">Entrep.</option>
         </select>
     </form>
 </template>
 
 <script>
 export default {
-    name: "searchBar"
+    name: "searchBar",
+    props:{type: {default: 'none'}, previousText: {default: ''}},
+    data(){
+        return{
+            option: 'project',
+            text: this.previousText
+        }
+    },
+    created: function (){
+        for (let $refsKey in this.$refs) {
+            if($refsKey === this.type) {
+                this.$refs[this.type].setAttribute('selected', 'true');
+            } else {
+                this.$refs[this.type].setAttribute('selected', 'false');
+            }
+        }
+    },
+    methods:{
+        changeLocation(){
+            window.location = '/search/' + this.option + '/' + this.text;
+        }
+    }
 }
 </script>
 
