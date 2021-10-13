@@ -2414,7 +2414,7 @@ var isSelected = function isSelected(value) {
           type: vue_toastification__WEBPACK_IMPORTED_MODULE_3__.TYPE.ERROR,
           position: 'top-center',
           icon: {
-            iconClass: 'material-icons',
+            iconClass: 'material-icons-round',
             iconChildren: 'error',
             iconTag: 'span'
           }
@@ -3934,7 +3934,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     divideTags: function divideTags() {
-      return this.project.tags.replace(/\s/g, '').split(',');
+      return this.project.tags.toString().replace(/\s/g, '').split(',');
     }
   }
 });
@@ -49281,7 +49281,7 @@ var render = function() {
             "div",
             { staticClass: "tags" },
             _vm._l(_vm.divideTags(), function(item, n) {
-              return item !== "none" && n < 2
+              return item !== "none"
                 ? _c("tag", { key: n, attrs: { text: item, index: n } })
                 : _vm._e()
             }),
@@ -51664,15 +51664,17 @@ var render = function() {
               "div",
               { staticClass: "tags" },
               _vm._l(_vm.allTags, function(item, index) {
-                return _c("tag", {
-                  key: index,
-                  attrs: {
-                    text: item,
-                    selectable: true,
-                    index: index,
-                    "select-func": _vm.toggleTag
-                  }
-                })
+                return index < 10
+                  ? _c("tag", {
+                      key: index,
+                      attrs: {
+                        text: item,
+                        selectable: true,
+                        index: index,
+                        "select-func": _vm.toggleTag
+                      }
+                    })
+                  : _vm._e()
               }),
               1
             )

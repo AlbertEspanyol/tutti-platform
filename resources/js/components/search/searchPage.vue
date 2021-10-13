@@ -42,7 +42,7 @@
             <div v-if="anySearch!==''" class="separator"/>
             <h5>{{objects.length}} result{{objects.length === 1? '' : 's'}}</h5>
             <div v-if="searchType==='project'" class="tags">
-                <tag v-for="(item, index) in allTags" :key="index" :text="item" :selectable="true" :index="index" :select-func="toggleTag"></tag>
+                <tag v-for="(item, index) in allTags" v-if="index<10" :key="index" :text="item" :selectable="true" :index="index" :select-func="toggleTag"></tag>
             </div>
         </div>
         <div v-if="searchType==='project'" class="projectSearchContent">
