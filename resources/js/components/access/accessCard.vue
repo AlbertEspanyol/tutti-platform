@@ -336,17 +336,28 @@ export default {
                 return;
             }
 
-            axios.post('/api/user/store',
-                {
-                    user: {
-                        fullName: this.register.name,
-                        email: this.register.mail,
-                        password: this.register.password.first.text,
-                        birthday: this.register.date.toString(),
-                        userType: "undefined",
-                        isPremium: false
-                    }
-                }).then(function(res){window.location = '/access/register/' + res.data.id}).catch(function(error){console.log(error)});
+            const parsedUsers = JSON.parse(this.users);
+            this.dbErrors = ['',''];
+            for(let i = 0; i < parsedUsers.length; i++){
+                if(parsedUsers[i].email === this.register.mail){
+                    this.dbErrors[0] = 'Email already exists';
+                    break;
+                }
+            }
+
+            if(this.checkDB()){
+                axios.post('/api/user/store',
+                    {
+                        user: {
+                            fullName: this.register.name,
+                            email: this.register.mail,
+                            password: this.register.password.first.text,
+                            birthday: this.register.date.toString(),
+                            userType: "undefined",
+                            isPremium: false
+                        }
+                    }).then(function(res){window.location = '/access/register/' + res.data.id}).catch(function(error){console.log(error)});
+            }
         },
         checkDB(){
             if(this.dbErrors[0] === '' && this.dbErrors[1] === ''){
@@ -357,7 +368,7 @@ export default {
                         type: TYPE.ERROR,
                         position: 'top-center',
                         icon: {
-                            iconClass: 'material-icons',
+                            iconClass: 'material-icons-round',
                             iconChildren: 'error',
                             iconTag: 'span'
                         }

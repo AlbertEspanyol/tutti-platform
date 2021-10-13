@@ -2379,20 +2379,32 @@ var isSelected = function isSelected(value) {
         return;
       }
 
-      axios.post('/api/user/store', {
-        user: {
-          fullName: this.register.name,
-          email: this.register.mail,
-          password: this.register.password.first.text,
-          birthday: this.register.date.toString(),
-          userType: "undefined",
-          isPremium: false
+      var parsedUsers = JSON.parse(this.users);
+      this.dbErrors = ['', ''];
+
+      for (var i = 0; i < parsedUsers.length; i++) {
+        if (parsedUsers[i].email === this.register.mail) {
+          this.dbErrors[0] = 'Email already exists';
+          break;
         }
-      }).then(function (res) {
-        window.location = '/access/register/' + res.data.id;
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      }
+
+      if (this.checkDB()) {
+        axios.post('/api/user/store', {
+          user: {
+            fullName: this.register.name,
+            email: this.register.mail,
+            password: this.register.password.first.text,
+            birthday: this.register.date.toString(),
+            userType: "undefined",
+            isPremium: false
+          }
+        }).then(function (res) {
+          window.location = '/access/register/' + res.data.id;
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     checkDB: function checkDB() {
       if (this.dbErrors[0] === '' && this.dbErrors[1] === '') {
@@ -3477,6 +3489,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     index: {
       required: true
+    },
+    selectFunc: {
+      type: Function
     }
   },
   data: function data() {
@@ -3488,7 +3503,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changeSelected: function changeSelected() {
       this.selected = !this.selected;
-      console.log(this.selected);
+      this.selectFunc(this.text, this.selected);
     }
   }
 });
@@ -3665,10 +3680,10 @@ __webpack_require__.r(__webpack_exports__);
       console.log('xd');
     },
     cutProjects: function cutProjects() {
-      return JSON.parse(this.projects).slice(0, 4);
+      return JSON.parse(this.projects).slice(0, 10);
     },
     cutUsers: function cutUsers() {
-      return JSON.parse(this.users).slice(0, 6);
+      return JSON.parse(this.users).slice(0, 5);
     },
     changeLocation: function changeLocation(loc) {
       window.location = loc;
@@ -5126,10 +5141,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -5162,13 +5173,32 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  created: function created() {
+    var _this = this;
+
+    this.objects = JSON.parse(this.items);
+
+    for (var i = 0; i < this.objects.length; i++) {
+      this.objects[i].tags = this.objects[i].tags.split(',');
+    }
+
+    this.objects.forEach(function (value) {
+      value.tags.forEach(function (value) {
+        if (!_this.allTags.includes(value)) _this.allTags.push(value);
+      });
+    });
+  },
   data: function data() {
     return {
       titleOpen: false,
       types: ['project', 'entrepreneur', 'investor'],
       value: 50,
       selectedProjectId: 0,
-      selectedProject: ''
+      selectedProject: '',
+      selectedTags: [],
+      objects: [],
+      allTags: [],
+      filteredObjects: []
     };
   },
   methods: {
@@ -5183,6 +5213,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectProject: function selectProject(proj) {
       this.selectedProject = proj;
+    },
+    toggleTag: function toggleTag(name, selected) {
+      if (selected) {
+        this.selectedTags.push(name);
+      } else {
+        this.$delete(this.selectedTags, this.selectedTags.indexOf(name));
+      }
+
+      this.filter();
+    },
+    filter: function filter() {
+      var _this2 = this;
+
+      this.objects.forEach(function (obj) {
+        _this2.selectedTags.forEach(function (value) {
+          if (_this2.objects.tags.includes(value)) _this2.filteredObjects.push(obj);
+        });
+      });
     }
   }
 });
@@ -49233,7 +49281,7 @@ var render = function() {
             "div",
             { staticClass: "tags" },
             _vm._l(_vm.divideTags(), function(item, n) {
-              return item !== "none"
+              return item !== "none" && n < 2
                 ? _c("tag", { key: n, attrs: { text: item, index: n } })
                 : _vm._e()
             }),
@@ -49977,7 +50025,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm._l(_vm.members, function(item, n) {
-              return n > 0
+              return n >= 0
                 ? _c(
                     "div",
                     { staticClass: "partner" },
@@ -51603,33 +51651,29 @@ var render = function() {
           ? _c("div", { staticClass: "separator" })
           : _vm._e(),
         _vm._v(" "),
-        _c("h5", [_vm._v("100 results")]),
+        _c("h5", [
+          _vm._v(
+            _vm._s(_vm.objects.length) +
+              " result" +
+              _vm._s(_vm.objects.length === 1 ? "" : "s")
+          )
+        ]),
         _vm._v(" "),
         _vm.searchType === "project"
           ? _c(
               "div",
               { staticClass: "tags" },
-              [
-                _c("tag", {
-                  attrs: { text: "Design", selectable: true, index: 1 }
-                }),
-                _vm._v(" "),
-                _c("tag", {
-                  attrs: { text: "Mechanical", selectable: true, index: 2 }
-                }),
-                _vm._v(" "),
-                _c("tag", {
-                  attrs: { text: "Car", selectable: true, index: 3 }
-                }),
-                _vm._v(" "),
-                _c("tag", {
-                  attrs: { text: "Engine", selectable: true, index: 4 }
-                }),
-                _vm._v(" "),
-                _c("tag", {
-                  attrs: { text: "Racing", selectable: true, index: 5 }
+              _vm._l(_vm.allTags, function(item, index) {
+                return _c("tag", {
+                  key: index,
+                  attrs: {
+                    text: item,
+                    selectable: true,
+                    index: index,
+                    "select-func": _vm.toggleTag
+                  }
                 })
-              ],
+              }),
               1
             )
           : _vm._e()
@@ -51644,7 +51688,7 @@ var render = function() {
                 "ul",
                 { ref: "projectsScroller", staticClass: "project-list" },
                 [
-                  _vm._l(JSON.parse(this.items), function(item) {
+                  _vm._l(_vm.objects, function(item) {
                     return _c("project-item", {
                       key: item.id,
                       class:
@@ -51707,7 +51751,7 @@ var render = function() {
               "div",
               { staticClass: "userSearchContent child" },
               [
-                _vm._l(JSON.parse(this.items), function(item) {
+                _vm._l(_vm.objects, function(item) {
                   return item.userType === _vm.searchType
                     ? _c("user-item", {
                         key: item.id,

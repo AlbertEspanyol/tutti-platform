@@ -105,7 +105,7 @@
             <button class="lowPriority" v-on:click.prevent="addMember">Add new</button>
             <div class="userActions">
                 <small-profile type="Creator">You</small-profile>
-                <div class="partner" v-for="(item, n) in members" v-if="n>0">
+                <div class="partner" v-for="(item, n) in members" v-if="n>=0">
                     <small-profile type="Partner" :key="n">{{item}}</small-profile>
                     <div class="terms">
                         <input type="checkbox" name="partner_edit" v-model="editableMembers[n]">

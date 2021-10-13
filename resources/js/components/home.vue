@@ -87,10 +87,10 @@ export default {
             console.log('xd');
         },
         cutProjects(){
-            return JSON.parse(this.projects).slice(0,4);
+            return JSON.parse(this.projects).slice(0,10);
         },
         cutUsers(){
-            return JSON.parse(this.users).slice(0,6);
+            return JSON.parse(this.users).slice(0,5);
         },
         changeLocation(loc){
             window.location = loc;

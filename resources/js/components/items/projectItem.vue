@@ -31,7 +31,7 @@
                     <div><h4 class="num">{{project.projectState}}%</h4> <h5 class="percent-text">Done</h5></div>
                 </div>
                 <div class="tags">
-                    <tag v-for="(item, n) in divideTags()" v-if="item!=='none'" :key="n" :text="item" :index="n"></tag>
+                    <tag v-for="(item, n) in divideTags()" v-if="item!=='none'&&n<2" :key="n" :text="item" :index="n"></tag>
                 </div>
             </div>
         </div>

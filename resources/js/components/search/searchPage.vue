@@ -40,18 +40,14 @@
         <div class="header-extras">
             <h5 v-if="anySearch!==''">Showing results for "{{ anySearch }}"</h5>
             <div v-if="anySearch!==''" class="separator"/>
-            <h5>100 results</h5>
+            <h5>{{objects.length}} result{{objects.length === 1? '' : 's'}}</h5>
             <div v-if="searchType==='project'" class="tags">
-                <tag text="Design" :selectable="true" :index="1"></tag>
-                <tag text="Mechanical" :selectable="true" :index="2"></tag>
-                <tag text="Car" :selectable="true" :index="3"></tag>
-                <tag text="Engine" :selectable="true" :index="4"></tag>
-                <tag text="Racing" :selectable="true" :index="5"></tag>
+                <tag v-for="(item, index) in allTags" :key="index" :text="item" :selectable="true" :index="index" :select-func="toggleTag"></tag>
             </div>
         </div>
         <div v-if="searchType==='project'" class="projectSearchContent">
             <ul ref="projectsScroller" class="project-list">
-                <project-item v-for="item in JSON.parse(this.items)" :class="'child' + [selectedProject.id === item.id ? ' child--active' : '']" :key="item.id" :select-project="selectProject" :project="item" :selected="selectedProject.id === item.id"></project-item>
+                <project-item v-for="item in objects" :class="'child' + [selectedProject.id === item.id ? ' child--active' : '']" :key="item.id" :select-project="selectProject" :project="item" :selected="selectedProject.id === item.id"></project-item>
                 <li class="projectsEnd">
                     <div>
                         <h5>
@@ -70,7 +66,7 @@
         </div>
         <div v-else ref="usersScroller" class="userScroller">
             <div class="userSearchContent child">
-                <user-item v-for="item in JSON.parse(this.items)" v-if="item.userType === searchType" :key="item.id" :user="item" :following="false" :state="true"></user-item>
+                <user-item v-for="item in objects" v-if="item.userType === searchType" :key="item.id" :user="item" :following="false" :state="true"></user-item>
                 <div class="usersEnd">
                     <h5>
                         There's no more {{searchType + 's'}} to show
@@ -114,13 +110,28 @@ export default {
         searchType: {required: true, oneOf: ['project', 'entrepreneur', 'investor']},
         items: {required: true}
     },
+    created() {
+        this.objects = JSON.parse(this.items);
+        for(let i = 0; i < this.objects.length; i++){
+            this.objects[i].tags = this.objects[i].tags.split(',');
+        }
+        this.objects.forEach(value => {
+            value.tags.forEach(value => {
+                if(!this.allTags.includes(value)) this.allTags.push(value);
+            })
+        })
+    },
     data(){
         return{
             titleOpen: false,
             types: ['project', 'entrepreneur', 'investor'],
             value: 50,
             selectedProjectId: 0,
-            selectedProject: ''
+            selectedProject: '',
+            selectedTags: [],
+            objects: [],
+            allTags: [],
+            filteredObjects: []
         }
     },
     methods: {
@@ -135,6 +146,21 @@ export default {
         },
         selectProject(proj){
             this.selectedProject = proj;
+        },
+        toggleTag(name, selected){
+            if(selected){
+                this.selectedTags.push(name);
+            } else {
+                this.$delete(this.selectedTags, this.selectedTags.indexOf(name));
+            }
+            this.filter();
+        },
+        filter(){
+            this.objects.forEach(obj => {
+                this.selectedTags.forEach(value =>{
+                    if(this.objects.tags.includes(value)) this.filteredObjects.push(obj);
+                })
+            })
         }
     }
 }

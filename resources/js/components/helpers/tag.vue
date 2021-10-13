@@ -19,7 +19,8 @@ export default {
         selectable: {default: false},
         text: {required: true},
         closeFunction: {type: Function},
-        index: {required: true}
+        index: {required: true},
+        selectFunc: {type: Function}
     },
     data(){
         return{
@@ -30,7 +31,7 @@ export default {
     methods: {
         changeSelected(){
             this.selected=!this.selected;
-            console.log(this.selected);
+            this.selectFunc(this.text, this.selected);
         }
     }
 }
